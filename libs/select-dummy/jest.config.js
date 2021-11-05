@@ -1,7 +1,7 @@
 module.exports = {
   name: 'select-simple',
   preset: '../../jest.config.js',
-  coverageDirectory: '../../coverage/apps/select-simple',
+  coverageDirectory: '../../coverage/libs/select-simple',
   snapshotSerializers: [
     'jest-preset-angular/build/AngularNoNgAttributesSnapshotSerializer.js',
     'jest-preset-angular/build/AngularSnapshotSerializer.js',

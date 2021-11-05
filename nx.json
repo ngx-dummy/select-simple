@@ -4,11 +4,14 @@
     "defaultBase": "master"
   },
   "implicitDependencies": {
+    "angular.json": "*",
     "package.json": {
       "dependencies": "*",
       "devDependencies": "*"
     },
-    ".eslintrc.json": "*"
+    "tsconfig.json": "*",
+    "tslint.json": "*",
+    "nx.json": "*"
   },
   "tasksRunnerOptions": {
     "default": {
@@ -24,28 +27,18 @@
       }
     }
   },
-  "targetDependencies": {
-    "build": [
-      {
-        "target": "build",
-        "projects": "dependencies"
-      }
-    ]
-  },
   "projects": {
-    "select-sample": {
-      "tags": []
-    },
-    "select-sample-e2e": {
-      "tags": [],
-      "implicitDependencies": ["select-sample"]
-    },
     "select-simple": {
-      "tags": ["lib"]
+      "tags": []
     },
     "select-simple-e2e": {
       "tags": [],
-      "implicitDependencies": ["select-simple"]
+      "implicitDependencies": [
+        "select-simple"
+      ]
+    },
+    "select-simple": {
+      "tags": []
     }
   }
 }
