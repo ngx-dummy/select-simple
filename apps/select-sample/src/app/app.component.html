@@ -1,0 +1,35 @@
+<!-- <form [formGroup]="form">
+  <select formControlName="state">
+    <option *ngFor="let state of states" [ngValue]="state">
+      {{ state.abbrev }}
+    </option>
+  </select>
+</form>
+
+<p>Form value: {{ form.value | json }}</p> -->
+
+
+<!-- <div class="container">
+  <select id="base-sel">
+    <option value="0">0</option>
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+  </select>
+</div> -->
+
+
+<form [formGroup]="form">
+  <ngxd-dropdown [options]="cities" formControlName="selector" placeholder="Select a City" (onChange)="selectedCity1 = $event" optionLabel="name" ></ngxd-dropdown>
+</form>
+
+<!-- <ngxd-dropdown [options]="cities"  placeholder="Select a City" (onChange)="selectedCity1 = $event" optionLabel="name" ></ngxd-dropdown> -->
+
+<ng-template #btnTmpl>
+  <span>
+    Hello!
+  </span>
+</ng-template>
+
+<pre>{{ selectedCity1 | json }}</pre>

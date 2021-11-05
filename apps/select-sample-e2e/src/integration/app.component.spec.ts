@@ -1,0 +1,6 @@
+describe('select-sample', () => {
+  beforeEach(() => cy.visit('/iframe.html?id=appcomponent--primary&args=type;pTemplate;option;selected;label;disabled;visible;itemSize;template;dropBtnTemplate;scrollHeight:20rem;filter;name;style;panelStyle;styleClass;panelStyleClass;readonly;required;editable;appendTo;tabindex;placeholder;filterPlaceholder;filterLocale;inputId;selectId;dataKey;filterBy;autofocus;resetFilterOnHide:false;dropdownIcon:pi+pi-chevron-down;optionLabel;optionValue;optionDisabled;optionGroupLabel;optionGroupChildren:items;autoDisplayFirst:true;group;showClear;emptyFilterMessage;emptyMessage;virtualScroll;itemSize;autoZIndex:true;baseZIndex:0;showTransitionOptions:.12s+cubic-bezier(0,+0,+0.2,+1);hideTransitionOptions:.1s+linear;ariaFilterLabel;ariaLabelledBy;filterMatchMode:contains;maxlength;tooltip;tooltipPosition:right;tooltipPositionStyle:absolute;tooltipStyleClass;autofocusFilter:true;disabled;options;filterValue;'));
+  it('should render the component', () => {
+    cy.get('p-dropdownItem').should('exist');
+  });
+});
