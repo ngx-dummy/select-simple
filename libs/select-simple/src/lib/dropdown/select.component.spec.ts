@@ -1,25 +1,25 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DropdownComponent } from './dropdown.component';
-import { SelectDummyModule } from '../select-simple.module';
+import { SelectComponent } from './select.component';
+import { SelectSimpleModule } from '../select-simple.module';
 
 const panelSelector = '.dropdown.component';
 const overlaySelector = '.dropdown-panel';
-const coutries = ['Russia', 'USA', 'Germany'];
+const countries = ['Russia', 'USA', 'Germany'];
 
 describe('DropdownComponent', () => {
-  let component: DropdownComponent;
-  let fixture: ComponentFixture<DropdownComponent>;
+  let component: SelectComponent;
+  let fixture: ComponentFixture<SelectComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SelectDummyModule]
+      imports: [SelectSimpleModule]
     })
       .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DropdownComponent);
+    fixture = TestBed.createComponent(SelectComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -30,7 +30,7 @@ describe('DropdownComponent', () => {
   });
 
   it("should open overlay when clicked on container", async () => {
-    component.options = coutries;
+    component.options = countries;
 
 
     const elPanel: HTMLElement = fixture.nativeElement.querySelector(panelSelector);
@@ -55,4 +55,4 @@ describe('DropdownComponent', () => {
 
 });
 
-const selectEl = (fixture, selector) => fixture.nativeElement.querySelector(selector);
+const selectEl = (fixture: ComponentFixture<SelectComponent>, selector: string) => fixture.nativeElement.querySelector(selector);

@@ -12,17 +12,18 @@ export interface SelectItem<T = any> {
 }
 
 @Component({
-  selector: 'ngxd-dropdown-item',
+  selector: 'ngxd-select-item',
   template: `
         <li (click)="onOptionClick($event)" role="option" 
             [ngStyle]="{'height': itemSize + 'px'}"
-            [ngClass]="{'dropdown-item':true, 'item-highlight': selected, 'item-disabled': disabled}">
+            [ngClass]="{'select-item':true, 'item-highlight': selected, 'item-disabled': disabled}"
+        >
             <span *ngIf="!template">{{label||'empty'}}</span>
             <ng-container *ngTemplateOutlet="template; context: {$implicit: option}"></ng-container>
         </li>
     `
 })
-export class DropdownItemComponent {
+export class SelectItemComponent {
   @Input() option: SelectItem;
   @Input() selected: boolean;
   @Input() label: string;

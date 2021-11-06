@@ -10,7 +10,7 @@
       },
       "root": "apps/select-sample",
       "sourceRoot": "apps/select-sample/src",
-      "prefix": "ngx-dummy",
+      "prefix": "ngxd",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",

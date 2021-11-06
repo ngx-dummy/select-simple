@@ -21,10 +21,11 @@
 
 
 <form [formGroup]="form">
-  <ngxd-dropdown [options]="cities" formControlName="selector" placeholder="Select a City" (onChange)="selectedCity1 = $event" optionLabel="name" ></ngxd-dropdown>
+  <ngxd-select [options]="cities" formControlName="selector" placeholder="Select a City"
+    (onChange)="selectedCity1 = $event" optionLabel="name"></ngxd-select>
 </form>
 
-<!-- <ngxd-dropdown [options]="cities"  placeholder="Select a City" (onChange)="selectedCity1 = $event" optionLabel="name" ></ngxd-dropdown> -->
+<!-- <ngxd-select [options]="cities"  placeholder="Select a City" (onChange)="selectedCity1 = $event" optionLabel="name" ></ngxd-select> -->
 
 <ng-template #btnTmpl>
   <span>

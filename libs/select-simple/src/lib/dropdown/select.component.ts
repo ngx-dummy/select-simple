@@ -45,17 +45,17 @@ import {
 import { AbstractControl, ControlValueAccessor, FormControl, NgControl, NG_VALIDATORS, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
 import { fromEvent, of } from 'rxjs';
 import { switchMap } from "rxjs/operators";
-import { DropdownItemComponent } from './dropdown-item.component';
+import { SelectItemComponent } from './select-item.component';
 
 
-export const DROPDOWN_VALUE_ACCESSOR_PROVIDER: any = {
+export const SELECT_VALUE_ACCESSOR_PROVIDER: any = {
   provide: NG_VALUE_ACCESSOR,
-  useExisting: forwardRef(() => DropdownComponent),
+  useExisting: forwardRef(() => SelectComponent),
   multi: true
 };
 export const NG_VALIDATORS_PROVIDER: any = {
   provide: NG_VALIDATORS,
-  useExisting: forwardRef(() => DropdownComponent),
+  useExisting: forwardRef(() => SelectComponent),
   multi: true
 };
 
@@ -67,20 +67,20 @@ export interface ITemplates {
 }
 
 @Component({
-  selector: 'ngxd-dropdown',
+  selector: 'ngxd-select',
   template: `
-       <div #container [ngClass]="{'dropdown component':true, 'disabled':disabled, 'dropdown-open':overlayVisible }" (click)="onMouseclick($event)" [ngStyle]="headerStyle" [class]="styleClass">
+       <div #container [ngClass]="{'select component':true, 'disabled':disabled, 'select-open':overlayVisible }" (click)="onMouseclick($event)" [ngStyle]="headerStyle" [class]="styleClass">
           <span *ngIf="(label !== null)" >
               <ng-container *ngIf="!selectedItemTemplate">{{label||'empty'}}</ng-container>
               <ng-container *ngTemplateOutlet="selectedItemTemplate; context: { $implicit: label, selectedOption: selectedOption }"></ng-container>
           </span>
-          <span [ngClass]="{'dropdown-label placeholder':true,'dropdown-label-empty': (placeholder === null || placeholder?.length === 0)}" *ngIf="(label === null)">
+          <span [ngClass]="{'select-label placeholder':true,'select-label-empty': (placeholder === null || placeholder?.length === 0)}" *ngIf="(label === null)">
             {{placeholder||'empty'}}
           </span>
-          <div class="dropdown-trigger" role="button" [attr.aria-expanded]="overlayVisible">
+          <div class="select-trigger" role="button" [attr.aria-expanded]="overlayVisible">
             <ng-container *ngTemplateOutlet="opennerBtnTemplate; context: {$implicit: overlayVisible}"></ng-container>
           </div>
-          <div *ngIf="overlayVisible" [ngClass]="'dropdown-panel component'"  [ngStyle]="panelStyle" [class]="panelStyleClass">
+          <div *ngIf="overlayVisible" [ngClass]="'select-panel component'"  [ngStyle]="panelStyle" [class]="panelStyleClass">
             <ng-container *ngIf="!!options?.length && !!optionsToDisplay?.length">
                 <ng-container *ngTemplateOutlet="itemsListDefaultTmpl; context: {$implicit: optionsToDisplay, selectedOption: selectedOption}"></ng-container>
                 <button *ngIf="none" class="reset" (click)="reset()">Reset</button>
@@ -92,22 +92,22 @@ export interface ITemplates {
           </div>
       </div>
 
-      <!-- WARN: Using ionicons ! - Use something diffrente for you better default styling -->
-      <ng-template #defaultDropIconTmpl let-overlayVisible>
-          <span class="dropdown-trigger-icon" [ngClass]="dropdownIconClass" *ngIf="!overlayVisible">
+      <!-- WARN: Using ionicons ! - Use something different for you better default styling -->
+      <ng-template #defaultSelectIconTmpl let-overlayVisible>
+          <span class="select-trigger-icon" [ngClass]="selectIconClass" *ngIf="!overlayVisible">
             <ion-icon class="btn-chevron" name="chevron-down-outline"></ion-icon>
           </span>
-          <span class="dropdown-trigger-icon" [ngClass]="dropdownIconClass" *ngIf="overlayVisible">
+          <span class="select-trigger-icon" [ngClass]="selectIconClass" *ngIf="overlayVisible">
             <ion-icon class="btn-chevron" name="chevron-up-outline"></ion-icon>
           </span>
       </ng-template>
 
       <ng-template #itemsListDefaultTmpl let-options let-selectedOption="selectedOption">
         <ng-container >
-        <div class="dropdown-items-wrapper" >
-          <ul class="dropdown-items">
+        <div class="select-items-wrapper" >
+          <ul class="select-items">
             <ng-template ngFor let-option let-i="index" [ngForOf]="options">
-                <ngxd-dropdown-item 
+                <ngxd-select-item 
                   [option]="option" 
                   [selected]="selectedOption === option" 
                   [label]="getOptionLabel(option)" 
@@ -115,22 +115,22 @@ export interface ITemplates {
                   (onClick)="onItemClick($event)"
                   [template]="itemTemplate"
                   [itemSize]="itemSize"
-                  ></ngxd-dropdown-item>
+                  ></ngxd-select-item>
             </ng-template>
           </ul>
         </div>
         </ng-container>
         </ng-template>
   `,
-  providers: [DROPDOWN_VALUE_ACCESSOR_PROVIDER, NG_VALIDATORS_PROVIDER],
+  providers: [SELECT_VALUE_ACCESSOR_PROVIDER, NG_VALIDATORS_PROVIDER],
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  styleUrls: ['./dropdown.component.css']
+  styleUrls: ['./select.component.css']
 })
-export class DropdownComponent implements OnInit, AfterContentChecked, ControlValueAccessor {
-  @ViewChild('defaultDropIconTmpl', { read: TemplateRef }) defaultOpenerTemplate: TemplateRef<HTMLElement>;
+export class SelectComponent implements OnInit, AfterContentChecked, ControlValueAccessor {
+  @ViewChild('defaultSelectIconTmpl', { read: TemplateRef }) defaultOpenerTemplate: TemplateRef<HTMLElement>;
   @ViewChild('itemsListDefaultTmpl', { read: TemplateRef }) itemsListDefaultTmpl: TemplateRef<HTMLElement>;
-  @ContentChildren(DropdownItemComponent, { descendants: true }) projectedItems: QueryList<DropdownItemComponent>;
+  @ContentChildren(SelectItemComponent, { descendants: true }) projectedItems: QueryList<SelectItemComponent>;
   opennerBtnTemplate: TemplateRef<HTMLElement>;
   itemslistTemplate: TemplateRef<HTMLElement>;
 
@@ -176,7 +176,7 @@ export class DropdownComponent implements OnInit, AfterContentChecked, ControlVa
   @Input() none = false;
   @Input() placeholder: string;
   @Input() optionLabelKey: string;
-  @Input() dropdownIconClass: string;
+  @Input() selectIconClass: string;
   @Input() optionValue: string;
 
   @Input() optionDisabled: string;
@@ -269,8 +269,8 @@ export class DropdownComponent implements OnInit, AfterContentChecked, ControlVa
     this.updateSelectedOption(null);
 
     fromEvent(document, 'click').pipe(
-      switchMap(ev => {
-        const iconContainer = (<HTMLElement>ev.target)?.classList?.contains('dropdown-trigger-icon');
+      switchMap((ev: MouseEvent) => {
+        const iconContainer = (<HTMLElement>(ev.target))?.classList?.contains('select-trigger-icon');
 
         if (this.isOutsideClicked(ev) && !iconContainer) {
           // ev.preventDefault();
@@ -301,7 +301,7 @@ export class DropdownComponent implements OnInit, AfterContentChecked, ControlVa
 
   onItemClick(event) {
     if (this.readonly) {
-      return console.log('DropDown is READONLY');
+      return console.log('The SELECT is READONLY!');
     }
     const option = event.option;
 
@@ -403,18 +403,18 @@ export class DropdownComponent implements OnInit, AfterContentChecked, ControlVa
  * 
  * @param data - option value (could be simple string or complex object to resolve)
  * @param field - the key (or complex lookup object key) of data object to resolve value by
- * @returns resolved single option value (Input for DropdownItem)
+ * @returns resolved single option value (Input for SelectItem)
  */
-const resolveFieldData = (data, field) => {
+const resolveFieldData = (data: string | object, field: object | Function | string) => {
   if (data && field) {
     if (isFunction(field)) {
       return field(data);
     }
-    else if (field.indexOf('.') == -1) {
+    else if (isString(field) && field.indexOf('.') == -1) {
       return data[field];
     }
     else {
-      const fields: string[] = field.split('.');
+      const fields: string[] = isString(field) && field.split('.');
       let value = data;
       for (let i = 0, len = fields.length; i < len; ++i) {
         if (value == null) {
@@ -430,4 +430,5 @@ const resolveFieldData = (data, field) => {
   }
 };
 
-const isFunction = (obj: any) => !!(obj && obj.constructor && obj.call && obj.apply);
+const isFunction = (obj: any): obj is Function => !!(obj && obj.constructor && obj.call && obj.apply);
+const isString = (obj: any): obj is string => (typeof obj === 'string');

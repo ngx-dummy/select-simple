@@ -1,8 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { text, number, boolean, array, select, object, } from '@storybook/addon-knobs';
 import { } from "@storybook/angular/dist/client";
-import { DropdownComponent } from './dropdown.component';
-import { SelectDummyModule } from '../select-simple.module';
+import { SelectComponent } from './select.component';
+import { SelectSimpleModule } from '../select-simple.module';
 
 const cities = [
   { name: 'Moscow', code: 'MS' },
@@ -20,9 +20,9 @@ export default {
 
 export const primary = () => ({
   moduleMetadata: {
-    imports: [BrowserModule, SelectDummyModule],
+    imports: [BrowserModule, SelectSimpleModule],
   },
-  component: DropdownComponent,
+  component: SelectComponent,
   props: {
     dropBtnTemplate: text('dropBtnTemplate', undefined),
     name: text('name', 'Test'),

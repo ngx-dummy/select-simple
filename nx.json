@@ -37,8 +37,14 @@
         "select-simple"
       ]
     },
-    "select-simple": {
+    "select-sample": {
       "tags": []
+    },
+    "select-sample-e2e": {
+      "tags": [],
+      "implicitDependencies": [
+        "select-sample"
+      ]
     }
   }
 }

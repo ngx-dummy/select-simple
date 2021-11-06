@@ -139,7 +139,7 @@ button {
   overflow: hidden;
 }
 
-.dropdown {
+.select {
   min-height: 2rem;
   display: inline-flex;
   padding: 0.5rem;
@@ -154,30 +154,30 @@ button {
   border-radius: 3px;
 }
 
-.dropdown:not(.disabled):hover {
+.select:not(.disabled):hover {
   border-color: #2196f3;
 }
-.dropdown:not(.disabled).focus {
+.select:not(.disabled).focus {
   outline: 0 none;
   outline-offset: 0;
   box-shadow: 0 0 0 0.2rem #a6d5fa;
   border-color: #2196f3;
 }
 
-.dropdown-clear-icon {
+.select-clear-icon {
   position: absolute;
   top: 50%;
   margin-top: -0.5rem;
 }
 
-.dropdown-trigger {
+.select-trigger {
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
 }
 
-.dropdown-label {
+.select-label {
   display: block;
   white-space: nowrap;
   overflow: hidden;
@@ -187,16 +187,16 @@ button {
   cursor: pointer;
 }
 
-.dropdown-label-empty {
+.select-label-empty {
   overflow: hidden;
   visibility: hidden;
 }
 
-input.dropdown-label {
+input.select-label {
   cursor: default;
 }
 
-.dropdown-panel {
+.select-panel {
   min-width: 100%;
   position: absolute;
   top: 100%;
@@ -204,11 +204,11 @@ input.dropdown-label {
   padding: 0.5rem;
 }
 
-.dropdown-items-wrapper {
+.select-items-wrapper {
   overflow: auto;
 }
 
-.dropdown-item {
+.select-item {
   cursor: pointer;
   font-weight: normal;
   white-space: nowrap;
@@ -216,92 +216,34 @@ input.dropdown-label {
   overflow: hidden;
 }
 
-.dropdown-items {
+.select-items {
   margin: 0;
   padding: 0;
   list-style-type: none;
 }
 
-.dropdown-filter {
+.select-filter {
   width: 100%;
 }
 
-.dropdown-filter-container {
+.select-filter-container {
   position: relative;
 }
 
-.dropdown-filter-icon {
+.select-filter-icon {
   position: absolute;
   top: 50%;
   margin-top: -0.5rem;
 }
 
-.fluid .dropdown {
+.fluid .select {
   display: flex;
 }
 
-.fluid .dropdown .dropdown-label {
+.fluid .select .select-label {
   width: 1%;
 }
 
-.dropdown:not(.disabled):hover {
+.select:not(.disabled):hover {
   border-color: #2196f3;
 }
-
-/** -------------------------- icons --------------------------   **/
-
-.pi {
-  font-family: 'primeicons';
-  font-style: normal;
-  font-weight: normal;
-  font-variant: normal;
-  text-transform: none;
-  line-height: 1;
-  display: inline-block;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-.pi:before {
-  --webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-}
-
-.pi-fw {
-  width: 1.28571429em;
-  text-align: center;
-}
-
-.pi-spin {
-  -webkit-animation: fa-spin 2s infinite linear;
-  animation: fa-spin 2s infinite linear;
-}
-
-.reset {
-  width: 100%;
-  height: auto;
-  background-color: transparent;
-}
-
-@-webkit-keyframes fa-spin {
-  0% {
-    -webkit-transform: rotate(0deg);
-    transform: rotate(0deg);
-  }
-  100% {
-    -webkit-transform: rotate(359deg);
-    transform: rotate(359deg);
-  }
-}
-
-@keyframes fa-spin {
-  0% {
-    -webkit-transform: rotate(0deg);
-    transform: rotate(0deg);
-  }
-  100% {
-    -webkit-transform: rotate(359deg);
-    transform: rotate(359deg);
-  }
-}
-

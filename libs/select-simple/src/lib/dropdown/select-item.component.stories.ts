@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { text, number, boolean } from '@storybook/addon-knobs';
-import { DropdownItemComponent } from './dropdown-item.component';
+import { SelectItemComponent } from './select-item.component';
 
 export default {
   title: 'DropdownItemComponent'
@@ -10,7 +10,7 @@ export const primary = () => ({
   moduleMetadata: {
     imports: [CommonModule]
   },
-  component: DropdownItemComponent,
+  component: SelectItemComponent,
   props: {
     option: text('option', null),
     selected: boolean('selected', false),
