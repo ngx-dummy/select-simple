@@ -124,6 +124,33 @@
         }
       }
     },
+    "select-simple-e2e": {
+      "root": "libs/select-simple-e2e",
+      "sourceRoot": "libs/select-simple-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "libs/select-simple-e2e/cypress.json",
+            "tsConfig": "libs/select-simple-e2e/tsconfig.e2e.json",
+            "devServerTarget": "select-sample:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "select-sample:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": ["libs/select-simple-e2e/tsconfig.e2e.json"],
+            "exclude": ["**/node_modules/**", "!libs/select-simple-e2e/**/*"]
+          }
+        }
+      }
+    },
     "select-simple": {
       "projectType": "library",
       "root": "libs/select-simple",

@@ -3,19 +3,18 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SelectComponent } from './select.component';
 import { SelectSimpleModule } from '../select-simple.module';
 
-const panelSelector = '.dropdown.component';
-const overlaySelector = '.dropdown-panel';
+const panelSelector = '.select.component';
+const overlaySelector = '.select-panel';
 const countries = ['Russia', 'USA', 'Germany'];
 
-describe('DropdownComponent', () => {
+describe('SelectComponent', () => {
   let component: SelectComponent;
   let fixture: ComponentFixture<SelectComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SelectSimpleModule]
-    })
-      .compileComponents();
+      imports: [SelectSimpleModule],
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -29,11 +28,12 @@ describe('DropdownComponent', () => {
     expect(component.disabled).toBeFalsy();
   });
 
-  it("should open overlay when clicked on container", async () => {
+  it('should open overlay when clicked on container', async () => {
     component.options = countries;
 
-
-    const elPanel: HTMLElement = fixture.nativeElement.querySelector(panelSelector);
+    const elPanel: HTMLElement = fixture.nativeElement.querySelector(
+      panelSelector
+    );
     elPanel.click();
     fixture.detectChanges();
     expect(component.overlayVisible).toBe(true);
@@ -43,16 +43,18 @@ describe('DropdownComponent', () => {
   });
 
   it('should be disabled / non-clickable if disabled prop set to `true` ', async () => {
-
     component.disabled = true;
-    const elPanel: HTMLElement = fixture.nativeElement.querySelector(panelSelector);
+    const elPanel: HTMLElement = fixture.nativeElement.querySelector(
+      panelSelector
+    );
     elPanel.click();
     fixture.detectChanges();
 
     expect(component.overlayVisible).toBe(false);
   });
-
-
 });
 
-const selectEl = (fixture: ComponentFixture<SelectComponent>, selector: string) => fixture.nativeElement.querySelector(selector);
+const selectEl = (
+  fixture: ComponentFixture<SelectComponent>,
+  selector: string
+) => fixture.nativeElement.querySelector(selector);

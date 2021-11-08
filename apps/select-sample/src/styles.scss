@@ -1,1 +1,64 @@
-/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat+Alternates:ital,wght@0,500;1,400;1,900&display=swap');
+
+:root {
+  --light-bg: #fafafa;
+  --medium-bg: #f4f4f4;
+  --dark-bg: #e2e1e1;
+  --light-blue-color: #4d4dfa;
+  --yellow-color: #dcdf36;
+  --darker-color: #607386;
+  --item-color: #adbdce;
+  --accent-color: #42b883;
+  --warn-color: #f85a40;
+  --light-warn-color: #f07764;
+  --dark-blue-color: #52529b;
+}
+
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: var(--dark-bg);
+  box-sizing: border-box;
+  font-size: 14px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-weight: 400;
+}
+
+.header {
+  background-color: var(--accent-color);
+  color: var(--light-blue-color);
+  padding: 0.5rem;
+  width: 100%;
+  text-align: center;
+  font-family: 'Montserrat', sans-serif;
+  font-variant: small-caps;
+  h1 {
+    font-size: 1.4rem;
+  }
+  h2 {
+    font-size: 1rem;
+    font-style: italic;
+  }
+}
+
+h4 {
+  margin: 0;
+}
+
+*:focus {
+  outline: none;
+}
+
+.flex {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+.pad-1_2 {
+  padding: 1rem 2rem;
+}

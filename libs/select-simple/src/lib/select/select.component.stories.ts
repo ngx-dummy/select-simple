@@ -1,6 +1,13 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { text, number, boolean, array, select, object, } from '@storybook/addon-knobs';
-import { } from "@storybook/angular/dist/client";
+import {
+  text,
+  number,
+  boolean,
+  array,
+  select,
+  object,
+} from '@storybook/addon-knobs';
+import {} from '@storybook/angular/dist/client';
 import { SelectComponent } from './select.component';
 import { SelectSimpleModule } from '../select-simple.module';
 
@@ -15,7 +22,7 @@ const cities = [
 const testOpts = object('options', cities);
 
 export default {
-  title: 'DropdownComponent'
+  title: 'DropdownComponent',
 };
 
 export const primary = () => ({
@@ -39,5 +46,5 @@ export const primary = () => ({
     itemSize: text('itemSize', '100'),
     options: testOpts,
     disabled: boolean('disabled', false),
-  }
+  },
 });

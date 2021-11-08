@@ -28,13 +28,18 @@
 }
 
 .reset {
-  margin: 0;
-  padding: 0;
-  border: 0;
+  border: none;
   outline: 0;
   text-decoration: none;
   font-size: 100%;
   list-style: none;
+  margin-top: 0.5rem;
+  padding: 0.4rem 2rem;
+  width: 100%;
+  display: grid;
+  place-content: center;
+  border-radius: 0.2rem;
+  background-color: #ebebeb80;
 }
 
 .disabled,

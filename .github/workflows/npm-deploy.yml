@@ -1,0 +1,31 @@
+# A basic CI script to automate publishing @ngx-dummy/select-simple lib
+name: npm-deploy
+on:
+  release:
+    types: [created, published]
+  push:
+    tags:
+      - 'v*' # Push events to matching v*, i.e. v1.0, v2.0.1
+
+jobs:
+  build:
+    if: startsWith(github.repository_owner, 'ngx')
+    runs-on: ubuntu-latest
+
+    name: Deploying package to npm packages registry
+    steps:
+      - uses: actions/checkout@v2
+      # Setup .npmrc file to publish to npm
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14.x'
+          registry-url: 'https://registry.npmjs.org'
+          scope: '@ngx-dummy'
+      - run: |
+          echo Installing..!
+          npm install -g @angular/cli > /dev/null
+          npm ci
+          npm run build:prod --if-present
+      - run: npm run ci:publish:full --if-present
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}

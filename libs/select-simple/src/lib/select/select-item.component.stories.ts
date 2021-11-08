@@ -3,12 +3,12 @@ import { text, number, boolean } from '@storybook/addon-knobs';
 import { SelectItemComponent } from './select-item.component';
 
 export default {
-  title: 'DropdownItemComponent'
+  title: 'DropdownItemComponent',
 };
 
 export const primary = () => ({
   moduleMetadata: {
-    imports: [CommonModule]
+    imports: [CommonModule],
   },
   component: SelectItemComponent,
   props: {
@@ -19,5 +19,5 @@ export const primary = () => ({
     visible: boolean('visible', false),
     itemSize: number('itemSize', 0),
     template: text('template', null),
-  }
+  },
 });
