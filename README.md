@@ -56,6 +56,87 @@ npm install -save @ngx-dummy/select-simple@0.0.1-v9
 
 <br/>
 
+## Usage
+
+```ts
+import { SelectSimpleModule } from '@ngx-dummy/select-simple';
+
+@NgModule({
+	imports: [SelectSimpleModule],
+})
+export class AppModule {}
+```
+
+#### with `Options` (Array of Strings) binding:
+
+```html
+<ngxd-select id="select1" [options]="options" [readonly]="false" [required]="true" [none]="true" formControlName="selector" placeholder="Select a City"></ngxd-select>
+```
+
+```ts
+//... options as simple strings
+options = ['opt1', 'opt2', 'opt2'];
+//...
+```
+
+<br />
+
+#### with `Options` (Array of Strings) binding:
+
+```html
+<ngxd-select id="select1" [options]="options" [readonly]="false" [required]="true" [none]="true" formControlName="selector" placeholder="Select a City" optionLabelKey="name"></ngxd-select>
+```
+
+```ts
+//... Select-items's Captions resolved by `optionLabelKey` param
+options = [{ name: 'opt1' , value: { param1: 'para1', param2: 'para2' } }, ...];
+//...
+```
+
+<br />
+
+#### with `Options` (Array of Strings) binding:
+
+```html
+<ngxd-select id="select1" [options]="options" [readonly]="false" [required]="true" [none]="true" formControlName="selector" placeholder="Select a City" optionLabelKey="name"></ngxd-select>
+```
+
+```ts
+//... Select-items's Captions resolved by `optionLabelKey` param
+options = [{ name: 'opt1' , value: { param1: 'para1', param2: 'para2' } }, ...];
+//...
+```
+
+<br />
+
+#### and `Option` are declared directly:
+
+```html
+<ngxd-select id="select1" [options]="options" [readonly]="false" [required]="true" [none]="true" formControlName="selector" placeholder="Select a City" optionLabelKey="name">
+	<ngxd-select-item [label]="'Option 1'" [option]="'Opt1'" (onClick)="selected = $event"></ngxd-select-item>
+</ngxd-select>
+```
+
+```ts
+//...
+selected = undefined;
+//...
+```
+
+<br />
+
+#### _More detailed showcase (the video clip demonstrates most of use cases of the library):_
+
+[![Using @ngx-dummy/select-simple](./docs/Select-simple-usage.png)](https://vimeo.com/579375725/749b80e96c)
+
+<br />
+<br />
+
+---
+
+<br />
+<br />
+
 ## Versioning
 
 `@ngx-dummy/select-simple` versioned `*-v9` supports Angular 9 - 11.

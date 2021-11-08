@@ -1,4 +1,8 @@
-# Add files here to ignore them from prettier formatting
-
-/dist
-/coverage
+docs
+scripts
+**/dist
+**/coverage
+**/.vscode
+**/.nyc_output
+**/.github
+**/node_modules

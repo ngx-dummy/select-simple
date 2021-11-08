@@ -19,482 +19,329 @@
 /* eslint-disable @angular-eslint/component-selector */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
-  AfterContentChecked,
-  AfterContentInit,
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  ContentChildren,
-  ElementRef,
-  EventEmitter,
-  forwardRef,
-  Host,
-  Input,
-  NgZone,
-  OnInit,
-  Optional,
-  Output,
-  QueryList,
-  Renderer2,
-  Self,
-  TemplateRef,
-  ViewChild,
-  ViewEncapsulation,
-  ViewRef,
+	AfterContentChecked,
+	AfterContentInit,
+	ChangeDetectionStrategy,
+	ChangeDetectorRef,
+	Component,
+	ContentChildren,
+	ElementRef,
+	EventEmitter,
+	forwardRef,
+	Host,
+	Input,
+	NgZone,
+	OnInit,
+	Optional,
+	Output,
+	Provider,
+	QueryList,
+	Renderer2,
+	Self,
+	TemplateRef,
+	ViewChild,
+	ViewEncapsulation,
+	ViewRef,
 } from '@angular/core';
-import {
-  AbstractControl,
-  ControlValueAccessor,
-  FormControl,
-  NgControl,
-  NG_VALIDATORS,
-  NG_VALUE_ACCESSOR,
-  Validators,
-} from '@angular/forms';
+import { AbstractControl, ControlValueAccessor, FormControl, NgControl, NG_VALIDATORS, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
 import { fromEvent, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
+import { getSvgSafeRes } from '../settings/helpers';
+import { ITemplates } from '../settings/ISelectTemplate';
 import { SelectItemComponent } from './select-item.component';
+import { arrow_down } from '../theming/icons-base';
+import { DomSanitizer } from '@angular/platform-browser';
 
-export const SELECT_VALUE_ACCESSOR_PROVIDER: any = {
-  provide: NG_VALUE_ACCESSOR,
-  useExisting: forwardRef(() => SelectComponent),
-  multi: true,
+export const SELECT_VALUE_ACCESSOR_PROVIDER: Provider = {
+	provide: NG_VALUE_ACCESSOR,
+	useExisting: forwardRef(() => SelectComponent),
+	multi: true,
 };
-export const NG_VALIDATORS_PROVIDER: any = {
-  provide: NG_VALIDATORS,
-  useExisting: forwardRef(() => SelectComponent),
-  multi: true,
+export const NG_VALIDATORS_PROVIDER: Provider = {
+	provide: NG_VALIDATORS,
+	useExisting: forwardRef(() => SelectComponent),
+	multi: true,
 };
-
-export interface ITemplates {
-  containerTemplate?: TemplateRef<HTMLElement>;
-  selectedItemTemplate?: TemplateRef<HTMLElement>;
-  opennerBtnTemplate?: TemplateRef<HTMLElement>;
-  itemslistTemplate?: TemplateRef<HTMLElement>;
-}
 
 @Component({
-  selector: 'ngxd-select',
-  template: `
-    <div
-      #container
-      [ngClass]="{
-        'select component': true,
-        disabled: disabled,
-        'select-open': overlayVisible
-      }"
-      (click)="onMouseclick($event)"
-      [ngStyle]="headerStyle"
-      [class]="styleClass"
-    >
-      <span *ngIf="label !== null">
-        <ng-container *ngIf="!selectedItemTemplate">{{
-          label || 'empty'
-        }}</ng-container>
-        <ng-container
-          *ngTemplateOutlet="
-            selectedItemTemplate;
-            context: { $implicit: label, selectedOption: selectedOption }
-          "
-        ></ng-container>
-      </span>
-      <span
-        [ngClass]="{
-          'select-label placeholder': true,
-          'select-label-empty':
-            placeholder === null || placeholder?.length === 0
-        }"
-        *ngIf="label === null"
-      >
-        {{ placeholder || 'empty' }}
-      </span>
-      <div
-        class="select-trigger"
-        role="button"
-        [attr.aria-expanded]="overlayVisible"
-      >
-        <ng-container
-          *ngTemplateOutlet="
-            opennerBtnTemplate;
-            context: { $implicit: overlayVisible }
-          "
-        ></ng-container>
-      </div>
-      <div
-        *ngIf="overlayVisible"
-        [ngClass]="'select-panel component'"
-        [ngStyle]="panelStyle"
-        [class]="panelStyleClass"
-      >
-        <ng-container *ngIf="!!options?.length && !!optionsToDisplay?.length">
-          <ng-container
-            *ngTemplateOutlet="
-              itemsListDefaultTmpl;
-              context: {
-                $implicit: optionsToDisplay,
-                selectedOption: selectedOption
-              }
-            "
-          ></ng-container>
-          <button *ngIf="none" class="reset" (click)="reset()">
-            <span>Reset</span>
-          </button>
-        </ng-container>
-        <ng-container *ngIf="!!!options?.length || !!!optionsToDisplay?.length">
-          <ng-content select=".simple-items"></ng-content>
-          <button *ngIf="none" class="reset" (click)="reset()">
-            <span>Reset</span>
-          </button>
-        </ng-container>
-      </div>
-    </div>
-
-    <!-- WARN: Using ionicons ! - Use something different for you better default styling -->
-    <ng-template #defaultSelectIconTmpl let-overlayVisible>
-      <span
-        class="select-trigger-icon"
-        [ngClass]="selectIconClass"
-        *ngIf="!overlayVisible"
-      >
-        <ion-icon class="btn-chevron" name="chevron-down-outline"></ion-icon>
-      </span>
-      <span
-        class="select-trigger-icon"
-        [ngClass]="selectIconClass"
-        *ngIf="overlayVisible"
-      >
-        <ion-icon class="btn-chevron" name="chevron-up-outline"></ion-icon>
-      </span>
-    </ng-template>
-
-    <ng-template
-      #itemsListDefaultTmpl
-      let-options
-      let-selectedOption="selectedOption"
-    >
-      <ng-container>
-        <div class="select-items-wrapper">
-          <ul class="select-items">
-            <ng-template ngFor let-option let-i="index" [ngForOf]="options">
-              <ngxd-select-item
-                [option]="option"
-                [selected]="selectedOption === option"
-                [label]="getOptionLabel(option)"
-                [disabled]="isOptionDisabled(option)"
-                (onClick)="onItemClick($event)"
-                [template]="itemTemplate"
-                [itemSize]="itemSize"
-              ></ngxd-select-item>
-            </ng-template>
-          </ul>
-        </div>
-      </ng-container>
-    </ng-template>
-  `,
-  providers: [SELECT_VALUE_ACCESSOR_PROVIDER, NG_VALIDATORS_PROVIDER],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
-  styleUrls: ['./select.component.css'],
+	selector: 'ngxd-select',
+	templateUrl: 'select.component.html',
+	providers: [SELECT_VALUE_ACCESSOR_PROVIDER, NG_VALIDATORS_PROVIDER],
+	changeDetection: ChangeDetectionStrategy.OnPush,
+	encapsulation: ViewEncapsulation.None,
+	styleUrls: ['select.component.scss'],
 })
-export class SelectComponent
-  implements OnInit, AfterContentChecked, ControlValueAccessor {
-  @ViewChild('defaultSelectIconTmpl', { read: TemplateRef })
-  defaultOpenerTemplate: TemplateRef<HTMLElement>;
-  @ViewChild('itemsListDefaultTmpl', { read: TemplateRef })
-  itemsListDefaultTmpl: TemplateRef<HTMLElement>;
-  @ContentChildren(SelectItemComponent, { descendants: true })
-  projectedItems: QueryList<SelectItemComponent>;
-  opennerBtnTemplate: TemplateRef<HTMLElement>;
-  itemslistTemplate: TemplateRef<HTMLElement>;
+export class SelectComponent implements OnInit, AfterContentChecked, ControlValueAccessor {
+	@ViewChild('defaultSelectIconTmpl', { read: TemplateRef }) defaultOpenerTemplate: TemplateRef<HTMLElement>;
+	@ViewChild('itemsListDefaultTmpl', { read: TemplateRef }) itemsListDefaultTmpl: TemplateRef<HTMLElement>;
+	@ContentChildren(SelectItemComponent, { descendants: true }) projectedItems: QueryList<SelectItemComponent>;
 
-  @Input() templates: ITemplates;
-  @Input() name: string;
+	opennerBtnTemplate: TemplateRef<HTMLElement>;
+	itemslistTemplate: TemplateRef<HTMLElement>;
+	trigger_icon = getSvgSafeRes(arrow_down, this.sanitizer);
+	// trigger_icon = chevron_up;
 
-  _headerStyle = {};
-  @Input() set headerStyle(headStyleObj: any) {
-    if (!!headStyleObj && !!Object.keys(headStyleObj).length) {
-      this._headerStyle = {
-        ...this._headerStyle,
-        ...headStyleObj,
-      };
-    }
-  }
-  get headerStyle() {
-    return this._headerStyle;
-  }
+	@Input() templates: ITemplates;
+	@Input() name: string;
 
-  _panelStyle: any = {
-    backgroundColor: 'rgba(1, 1, 1, 0.45)',
-    color: '#fff',
-    border: '1px solid #ccd',
-    borderRadius: '0.1rem',
-    boxShadow: '2px 5px 10px rgba(55, 55, 55, 0.8)',
-  };
-  get panelStyle() {
-    return this._panelStyle;
-  }
+	private _headerStyle = {};
+	@Input() set headerStyle(headStyleObj: any) {
+		if (!!headStyleObj && !!Object.keys(headStyleObj).length) {
+			this._headerStyle = {
+				...this._headerStyle,
+				...headStyleObj,
+			};
+		}
+	}
+	get headerStyle() {
+		return this._headerStyle;
+	}
 
-  @Input() set panelStyle(stylesObj: Object) {
-    if (!!stylesObj && !!Object.keys(stylesObj).length) {
-      this._panelStyle = {
-        ...this._panelStyle,
-        ...stylesObj,
-      };
-    }
-  }
-  @Input() panelStyleClass = 'panel';
-  @Input() styleClass: string;
-  @Input() readonly = false;
-  @Input() required = false;
-  @Input() none = false;
-  @Input() placeholder: string;
-  @Input() optionLabelKey: string;
-  @Input() selectIconClass: string;
-  @Input() optionValue: string;
+	private _panelStyle: any = {
+		backgroundColor: 'rgba(1, 1, 1, 0.45)',
+		color: '#fff',
+		border: '1px solid #ccd',
+		borderRadius: '0.1rem',
+		boxShadow: '2px 5px 10px rgba(55, 55, 55, 0.8)',
+	};
+	get panelStyle() {
+		return this._panelStyle;
+	}
+	@Input() set panelStyle(stylesObj: Object) {
+		if (!!stylesObj && !!Object.keys(stylesObj).length) {
+			this._panelStyle = {
+				...this._panelStyle,
+				...stylesObj,
+			};
+		}
+	}
+	@Input() panelStyleClass = 'panel';
+	@Input() styleClass: string;
+	@Input() readonly = false;
+	@Input() required = false;
+	@Input() none = false;
+	@Input() placeholder: string;
+	@Input() optionLabelKey: string;
+	@Input() selectIconClass: string;
+	@Input() optionValue: string;
 
-  @Input() optionDisabled: string;
-  @Input() itemSize: number;
-  @Input() get options(): any[] {
-    return this._options;
-  }
-  set options(val: any[]) {
-    this._options = val;
-    this.optionsToDisplay = this._options;
-    this.updateSelectedOption(this.value);
-    this.optionsChanged = true;
-  }
+	@Input() optionDisabled: string;
+	@Input() itemSize: number;
 
-  private _disabled: boolean;
-  @Input() get disabled(): boolean {
-    return this._disabled;
-  }
-  set disabled(_disabled: boolean) {
-    if (_disabled) {
-      if (this.overlayVisible) this.hide();
-    }
+	private _options: any[];
+	@Input() get options(): any[] {
+		return this._options;
+	}
+	set options(val: any[]) {
+		this._options = val;
+		this.optionsToDisplay = this._options;
+		this.updateSelectedOption(this.value);
+		this.optionsChanged = true;
+	}
 
-    this._disabled = _disabled;
-    if (!(this.cd as ViewRef).destroyed) {
-      this.cd.detectChanges();
-    }
-  }
+	private _disabled: boolean;
+	@Input() get disabled(): boolean {
+		return this._disabled;
+	}
+	set disabled(_disabled: boolean) {
+		if (_disabled) {
+			if (this.overlayVisible) this.hide();
+		}
 
-  @Output() onChange: EventEmitter<any> = new EventEmitter();
-  @Output() onClick: EventEmitter<any> = new EventEmitter();
-  @Output() onShow: EventEmitter<any> = new EventEmitter();
-  @Output() onHide: EventEmitter<any> = new EventEmitter();
+		this._disabled = _disabled;
+		if (!(this.cd as ViewRef).destroyed) {
+			this.cd.detectChanges();
+		}
+	}
 
-  itemTemplate: TemplateRef<any>;
-  selectedItemTemplate: TemplateRef<any>;
-  selectedOption: any;
-  _options: any[];
+	@Output() onChange: EventEmitter<any> = new EventEmitter();
+	@Output() onClick: EventEmitter<any> = new EventEmitter();
+	@Output() onShow: EventEmitter<any> = new EventEmitter();
+	@Output() onHide: EventEmitter<any> = new EventEmitter();
 
-  value: any;
+	itemTemplate: TemplateRef<any>;
+	selectedItemTemplate: TemplateRef<any>;
+	selectedOption: any;
 
-  onModelChange: Function = () => {};
+	value: any;
 
-  onModelTouched: Function = () => {};
+	onModelChange: Function = () => {};
 
-  optionsToDisplay: any[];
+	onModelTouched: Function = () => {};
 
-  hover: boolean;
+	optionsToDisplay: any[];
 
-  // focused: boolean;
+	hover: boolean;
 
-  overlayVisible = false;
+	// focused: boolean;
 
-  optionsChanged: boolean;
+	overlayVisible = false;
 
-  panel: HTMLDivElement;
+	optionsChanged: boolean;
 
-  selectedOptionUpdated: boolean;
+	panel: HTMLDivElement;
 
-  constructor(
-    // @Self() @Optional() ngControl: NgControl,
-    public el: ElementRef,
-    public renderer: Renderer2,
-    public cd: ChangeDetectorRef,
-    public zone: NgZone
-  ) {
-    // if (ngControl) {
-    //   ngControl.valueAccessor = this;
-    // }
-  }
+	selectedOptionUpdated: boolean;
 
-  ngAfterContentChecked() {
-    this.opennerBtnTemplate = this.templates?.opennerBtnTemplate
-      ? this.templates.opennerBtnTemplate
-      : this.defaultOpenerTemplate;
-    this.itemsListDefaultTmpl = this.templates?.itemslistTemplate
-      ? this.templates.itemslistTemplate
-      : this.itemsListDefaultTmpl;
-    if (this.templates?.selectedItemTemplate) {
-      this.selectedItemTemplate = this.templates.selectedItemTemplate;
-    }
+	constructor(
+		// @Self() @Optional() ngControl: NgControl,
+		public el: ElementRef,
+		public renderer: Renderer2,
+		public cd: ChangeDetectorRef,
+		private sanitizer: DomSanitizer,
+		public zone: NgZone
+	) {
+		// if (ngControl) {
+		//   ngControl.valueAccessor = this;
+		// }
+	}
 
-    this.projectedItems.forEach((itemCmp) => {
-      itemCmp.onClick.subscribe((e) => this.onItemClick(e));
-    });
-    this.cd.detectChanges();
-  }
+	ngAfterContentChecked() {
+		this.opennerBtnTemplate = this.templates?.opennerBtnTemplate ? this.templates.opennerBtnTemplate : this.defaultOpenerTemplate;
+		this.itemsListDefaultTmpl = this.templates?.itemslistTemplate ? this.templates.itemslistTemplate : this.itemsListDefaultTmpl;
+		if (this.templates?.selectedItemTemplate) {
+			this.selectedItemTemplate = this.templates.selectedItemTemplate;
+		}
 
-  ngOnInit() {
-    this.optionsToDisplay = this.options;
-    this.updateSelectedOption(null);
+		this.projectedItems.forEach((itemCmp) => {
+			itemCmp.onClick.subscribe((e) => this.onItemClick(e));
+		});
+		this.cd.detectChanges();
+	}
 
-    fromEvent(document, 'click')
-      .pipe(
-        switchMap((ev: MouseEvent) => {
-          const iconContainer = (<HTMLElement>ev.target)?.classList?.contains(
-            'select-trigger-icon'
-          );
+	ngOnInit() {
+		this.optionsToDisplay = this.options;
+		this.updateSelectedOption(null);
 
-          if (this.isOutsideClicked(ev) && !iconContainer) {
-            // ev.preventDefault();
-            this.hide();
-          }
-          return of(ev);
-        })
-      )
-      .subscribe();
-  }
+		fromEvent(document, 'click')
+			.pipe(
+				switchMap((ev: MouseEvent) => {
+					const iconContainer = (<HTMLElement>ev.target)?.classList?.contains('select-trigger-icon');
 
-  get label(): string {
-    const label = this.selectedOption
-      ? this.getOptionLabel(this.selectedOption)
-      : null;
-    return label;
-  }
+					if (this.isOutsideClicked(ev) && !iconContainer) {
+						// ev.preventDefault();
+						this.hide();
+					}
+					return of(ev);
+				})
+			)
+			.subscribe();
+	}
 
-  getOptionLabel(option: any) {
-    return this.optionLabelKey
-      ? resolveFieldData(option, this.optionLabelKey)
-      : option.label != undefined
-      ? option.label
-      : option;
-  }
+	get label(): string {
+		const label = this.selectedOption ? this.getOptionLabel(this.selectedOption) : null;
+		return label;
+	}
 
-  getOptionValue(option: any) {
-    return this.optionValue
-      ? resolveFieldData(option, this.optionValue)
-      : this.optionLabelKey || option.value === undefined
-      ? option
-      : option.value;
-  }
+	getOptionLabel(option: any) {
+		return this.optionLabelKey ? resolveFieldData(option, this.optionLabelKey) : option.label != undefined ? option.label : option;
+	}
 
-  isOptionDisabled(option: any) {
-    return this.optionDisabled
-      ? resolveFieldData(option, this.optionDisabled)
-      : option.disabled !== undefined
-      ? option.disabled
-      : false;
-  }
+	getOptionValue(option: any) {
+		return this.optionValue ? resolveFieldData(option, this.optionValue) : this.optionLabelKey || option.value === undefined ? option : option.value;
+	}
 
-  onItemClick(event) {
-    if (this.readonly) {
-      return console.log('The SELECT is READONLY!');
-    }
-    const option = event.option;
+	isOptionDisabled(option: any) {
+		return this.optionDisabled ? resolveFieldData(option, this.optionDisabled) : option.disabled !== undefined ? option.disabled : false;
+	}
 
-    if (!this.isOptionDisabled(option)) {
-      this.selectItem(event, option);
-    }
+	onItemClick(event) {
+		if (this.readonly) {
+			return console.log('The SELECT is READONLY!');
+		}
+		const option = event.option;
 
-    setTimeout(() => {
-      this.hide();
-    }, 150);
-  }
+		if (!this.isOptionDisabled(option)) {
+			this.selectItem(event, option);
+		}
 
-  selectItem(event, option) {
-    if (this.selectedOption != option) {
-      this.selectedOption = option;
-      this.value = this.getOptionValue(option);
+		setTimeout(() => {
+			this.hide();
+		}, 150);
+	}
 
-      this.onModelChange(this.value);
-      this.onChange.emit({
-        originalEvent: event?.originalEvent,
-        value: this.value,
-      });
-    }
-  }
+	selectItem(event, option) {
+		if (this.selectedOption != option) {
+			this.selectedOption = option;
+			this.value = this.getOptionValue(option);
 
-  writeValue(value: any): void {
-    this.value = value;
-    this.updateSelectedOption(value);
-    this.cd.markForCheck();
-  }
+			this.onModelChange(this.value);
+			this.onChange.emit({
+				originalEvent: event?.originalEvent,
+				value: this.value,
+			});
+		}
+	}
 
-  validate({ value }: AbstractControl) {
-    if (!!!value) return { invalid: true };
-    const isNotValid = this.required && !value && !!Validators.required(value);
-    return (
-      isNotValid && {
-        invalid: true,
-      }
-    );
-  }
+	writeValue(value: any): void {
+		this.value = value;
+		this.updateSelectedOption(value);
+		this.cd.markForCheck();
+	}
 
-  updateSelectedOption(val: any): void {
-    // this.selectedOption = this.findOption(val, this.optionsToDisplay);
-    if (
-      !this.placeholder &&
-      !this.selectedOption &&
-      this.optionsToDisplay &&
-      this.optionsToDisplay.length
-    ) {
-      this.selectedOption = this.optionsToDisplay[0];
-    }
-    this.selectedOptionUpdated = true;
-  }
+	validate({ value }: AbstractControl) {
+		if (!!!value) return { invalid: true };
+		const isNotValid = this.required && !value && !!Validators.required(value);
+		return (
+			isNotValid && {
+				invalid: true,
+			}
+		);
+	}
 
-  registerOnChange(fn: Function): void {
-    this.onModelChange = fn;
-  }
+	updateSelectedOption(val: any): void {
+		// this.selectedOption = this.findOption(val, this.optionsToDisplay);
+		if (!this.placeholder && !this.selectedOption && this.optionsToDisplay && this.optionsToDisplay.length) {
+			this.selectedOption = this.optionsToDisplay[0];
+		}
+		this.selectedOptionUpdated = true;
+	}
 
-  registerOnTouched(fn: Function): void {
-    this.onModelTouched = fn;
-  }
+	registerOnChange(fn: Function): void {
+		this.onModelChange = fn;
+	}
 
-  setDisabledState(val: boolean): void {
-    this.disabled = val;
-    this.cd.markForCheck();
-  }
+	registerOnTouched(fn: Function): void {
+		this.onModelTouched = fn;
+	}
 
-  onMouseclick(event) {
-    if (this.disabled) {
-      return;
-    }
-    if (!this.readonly) {
-      this.onClick.emit(event);
-    }
+	setDisabledState(val: boolean): void {
+		this.disabled = val;
+		this.cd.markForCheck();
+	}
 
-    if (this.overlayVisible) this.hide();
-    else this.show();
+	onMouseclick(event) {
+		if (this.disabled) {
+			return;
+		}
+		if (!this.readonly) {
+			this.onClick.emit(event);
+		}
 
-    this.cd.detectChanges();
-  }
+		if (this.overlayVisible) this.hide();
+		else this.show();
 
-  reset() {
-    this.selectItem(new MouseEvent('click'), null);
-  }
+		this.cd.detectChanges();
+	}
 
-  isOutsideClicked(event: Event): boolean {
-    return !(
-      this.el.nativeElement.isSameNode(event.target) ||
-      this.el.nativeElement.contains(event.target)
-    );
-  }
+	reset() {
+		this.selectItem(new MouseEvent('click'), null);
+	}
 
-  show() {
-    this.overlayVisible = true;
-    this.onShow.emit(true);
-  }
+	isOutsideClicked(event: Event): boolean {
+		return !(this.el.nativeElement.isSameNode(event.target) || this.el.nativeElement.contains(event.target));
+	}
 
-  hide() {
-    this.onHide.emit(false);
-    this.overlayVisible = false;
-    this.cd.markForCheck();
-  }
+	show() {
+		this.overlayVisible = true;
+		this.onShow.emit(true);
+	}
+
+	hide() {
+		this.onHide.emit(false);
+		this.overlayVisible = false;
+		this.cd.markForCheck();
+	}
 }
 
 /**
@@ -503,31 +350,27 @@ export class SelectComponent
  * @param field - the key (or complex lookup object key) of data object to resolve value by
  * @returns resolved single option value (Input for SelectItem)
  */
-const resolveFieldData = (
-  data: string | object,
-  field: object | Function | string
-) => {
-  if (data && field) {
-    if (isFunction(field)) {
-      return field(data);
-    } else if (isString(field) && field.indexOf('.') == -1) {
-      return data[field];
-    } else {
-      const fields: string[] = isString(field) && field.split('.');
-      let value = data;
-      for (let i = 0, len = fields.length; i < len; ++i) {
-        if (value == null) {
-          return null;
-        }
-        value = value[fields[i]];
-      }
-      return value;
-    }
-  } else {
-    return null;
-  }
+const resolveFieldData = (data: string | object, field: object | Function | string) => {
+	if (data && field) {
+		if (isFunction(field)) {
+			return field(data);
+		} else if (isString(field) && field.indexOf('.') == -1) {
+			return data[field];
+		} else {
+			const fields: string[] = isString(field) && field.split('.');
+			let value = data;
+			for (let i = 0, len = fields.length; i < len; ++i) {
+				if (value == null) {
+					return null;
+				}
+				value = value[fields[i]];
+			}
+			return value;
+		}
+	} else {
+		return null;
+	}
 };
 
-const isFunction = (obj: any): obj is Function =>
-  !!(obj && obj.constructor && obj.call && obj.apply);
+const isFunction = (obj: any): obj is Function => !!(obj && obj.constructor && obj.call && obj.apply);
 const isString = (obj: any): obj is string => typeof obj === 'string';

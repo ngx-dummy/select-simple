@@ -1,0 +1,21 @@
+/*!
+ * @ngx-dummy/Accordion-Simple library
+ * Simple accordion created for angular / ionic projects.
+ * https://github.com/ngx-dummy/accordion-simple
+ *
+ * Copyright  Vladimir Ovsyukov <ovsyukov@yandex.com>
+ * Published under GNU GPLv3 License
+ */
+$white: #fff;
+$color-primary: #056;
+$color-icon-primary: #00556640;
+$item-header__bg--active: lighten($color-primary, 15%);
+$item-header__bg--opened: darken($color-primary, 10%);
+
+:root {
+	--color-white: #{$white};
+	--ngxd-primary-color: #{$color-primary};
+	--ngxd-primary-icon-color: #{$color-icon-primary};
+	--ngxd-primary-color--active: #{$item-header__bg--active};
+	--ngxd-primary-color--opened: #{$item-header__bg--opened};
+}
