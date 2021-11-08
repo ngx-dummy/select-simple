@@ -125,9 +125,13 @@ selected = undefined;
 
 <br />
 
-#### _More detailed showcase (the video clip demonstrates most of use cases of the library):_
+#### [More detailed showcase (the video clip demonstrates most of use cases of the library):](https://vimeo.com/579375725/749b80e96c)
 
-[![Using @ngx-dummy/select-simple](./docs/Select-simple-usage.png)](https://vimeo.com/579375725/749b80e96c)
+<center>
+
+[![Using @ngx-dummy/select-simple](https://raw.githubusercontent.com/ngx-dummy/select-simple/v9/docs/Select-simple-usage.png)](https://vimeo.com/579375725/749b80e96c)
+
+</center>
 
 <br />
 <br />

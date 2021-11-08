@@ -1,23 +1,22 @@
 import { CommonModule } from '@angular/common';
-import { text, number, boolean } from '@storybook/addon-knobs';
-import { SelectItemComponent } from './select-item.component';
+import { text, number, boolean, object } from '@storybook/addon-knobs';
+// import { SelectDummyModule } from '../select-dummy.module';
+import { ISelectItem, SelectItemComponent } from './select-item.component';
 
 export default {
-  title: 'DropdownItemComponent',
+	title: 'DropdownItemComponent',
 };
 
 export const primary = () => ({
-  moduleMetadata: {
-    imports: [CommonModule],
-  },
-  component: SelectItemComponent,
-  props: {
-    option: text('option', null),
-    selected: boolean('selected', false),
-    label: text('label', 'Option1'),
-    disabled: boolean('disabled', false),
-    visible: boolean('visible', false),
-    itemSize: number('itemSize', 0),
-    template: text('template', null),
-  },
+	moduleMetadata: {
+		imports: [CommonModule],
+	},
+	component: SelectItemComponent,
+	props: {
+		selected: boolean('selected', true),
+		label: text('label', 'Test Value'),
+		disabled: boolean('disabled', false),
+		visible: boolean('visible', true),
+		itemSize: number('itemSize', 50),
+	},
 });
