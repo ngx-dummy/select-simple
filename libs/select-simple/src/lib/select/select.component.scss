@@ -1,5 +1,27 @@
 @import '../theming/vars.scss';
 
+ngxd-select {
+	display: block;
+}
+
+.select {
+	&:not(.disabled):hover {
+		border-color: #2196f3;
+	}
+	&:not(.disabled).focus {
+		// outline: 0 none;
+		outline-offset: 0;
+		box-shadow: 0 0 0 0.2rem #a6d5fa;
+		border-color: #2196f3;
+	}
+	dropdown:not(.disabled).wrapper-focus {
+		box-shadow: none;
+		background-color: rgba(255, 255, 255, 0.1);
+		border-color: transparent;
+		background-size: 100% 2px, 100% 1px;
+	}
+}
+
 .disabled,
 .disabled * {
 	cursor: not-allowed !important;

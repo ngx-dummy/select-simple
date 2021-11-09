@@ -13,6 +13,27 @@ export interface ISelectItem<T = any> {
 
 @Component({
 	selector: 'ngxd-select-item',
+	styles: [
+		`
+			:host li {
+				list-style: none;
+				display: flex;
+				align-items: center;
+			}
+			.item-disabled {
+				cursor: not-allowed !important;
+				pointer-events: none;
+				color: #16161640;
+				user-select: none;
+			}
+			.item-highlight:not(.item-disabled) {
+				user-select: none;
+				cursor: pointer;
+				pointer-events: all;
+				background: #ccc5;
+			}
+		`,
+	],
 	template: `
 		<li
 			(click)="onOptionClick($event)"

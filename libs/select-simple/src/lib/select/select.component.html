@@ -3,24 +3,26 @@
 	[ngClass]="{
 		select: true,
 		disabled: disabled,
-		'select-open': overlayVisible
+		'select-open': overlayVisible,
+		focus: focused
 	}"
+	[attr.autofocus]="autofocus"
+	[attr.tabindex]="tabindex"
 	(click)="onMouseclick($event)"
 	[ngStyle]="headerStyle"
 	[class]="styleClass"
 >
-	<span *ngIf="label !== null">
-		<ng-container *ngIf="!selectedItemTemplate">{{ label || 'empty' }}</ng-container>
-
+	<span *ngIf="!!label">
+		<ng-container *ngIf="!selectedItemTemplate">{{ label || 'Nothing selected' }}</ng-container>
 		<ng-container *ngTemplateOutlet="selectedItemTemplate; context: { $implicit: label, selectedOption: selectedOption }"></ng-container>
 	</span>
 
 	<span
+		*ngIf="!!!label"
 		[ngClass]="{
 			'select-label': true,
-			'select-label-empty': placeholder === null || placeholder?.length === 0
+			'select-label-empty': !!!placeholder || !!!placeholder?.length
 		}"
-		*ngIf="label === null"
 	>
 		{{ placeholder || 'empty' }}
 	</span>
@@ -31,18 +33,8 @@
 
 	<div *ngIf="overlayVisible" [ngClass]="'select-panel'" [ngStyle]="panelStyle" [class]="panelStyleClass">
 		<ng-container *ngIf="!!options?.length && !!optionsToDisplay?.length">
-			<ng-container
-				*ngTemplateOutlet="
-					itemsListDefaultTmpl;
-					context: {
-						$implicit: optionsToDisplay,
-						selectedOption: selectedOption
-					}
-				"
-			></ng-container>
-			<button *ngIf="none" class="reset" (click)="reset()">
-				<span>Reset</span>
-			</button>
+			<ng-container *ngTemplateOutlet="itemsListDefaultTmpl; context: { $implicit: optionsToDisplay, selectedOption: selectedOption }"></ng-container>
+			<button *ngIf="none" class="reset" (click)="reset()">Reset</button>
 		</ng-container>
 
 		<ng-container *ngIf="!!!options?.length || !!!optionsToDisplay?.length">
@@ -70,9 +62,9 @@
 						[selected]="selectedOption === option"
 						[label]="getOptionLabel(option)"
 						[disabled]="isOptionDisabled(option)"
-						(onClick)="onItemClick($event)"
 						[template]="itemTemplate"
 						[itemSize]="itemSize"
+						(onClick)="onItemClick($event)"
 					></ngxd-select-item>
 				</ng-template>
 			</ul>

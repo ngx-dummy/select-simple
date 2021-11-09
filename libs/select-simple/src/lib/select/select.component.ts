@@ -70,6 +70,14 @@ export const NG_VALIDATORS_PROVIDER: Provider = {
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	encapsulation: ViewEncapsulation.None,
 	styleUrls: ['select.component.scss'],
+	host: {
+		'[class.wrapper-focus]': 'focused || overlayVisible',
+		'[attr.tabIndex]': 'tabindex',
+		'[attr.autofocus]': 'autofocus',
+		'(blur)': 'onHostBlur($event)',
+		'(focus)': 'onHostFocus($event)',
+		'(keydown)': 'onKeydown($event)',
+	},
 })
 export class SelectComponent implements OnInit, AfterContentChecked, ControlValueAccessor {
 	@ViewChild('defaultSelectIconTmpl', { read: TemplateRef }) defaultOpenerTemplate: TemplateRef<HTMLElement>;
@@ -79,12 +87,20 @@ export class SelectComponent implements OnInit, AfterContentChecked, ControlValu
 	opennerBtnTemplate: TemplateRef<HTMLElement>;
 	itemslistTemplate: TemplateRef<HTMLElement>;
 	trigger_icon = getSvgSafeRes(arrow_down, this.sanitizer);
-	// trigger_icon = chevron_up;
+
+	onHostFocus(_$event) {
+		console.log('Focus, prev value :: ', this.prevValue);
+	}
+	onHostBlur(_$event) {
+		this.prevValue = this.selectedOption || null;
+		console.log('BLUR, prev val :: ', this.prevValue);
+	}
 
 	@Input() templates: ITemplates;
 	@Input() name: string;
 
-	private _headerStyle = {};
+	_headerStyle = {};
+	// Change header styles
 	@Input() set headerStyle(headStyleObj: any) {
 		if (!!headStyleObj && !!Object.keys(headStyleObj).length) {
 			this._headerStyle = {
@@ -97,7 +113,8 @@ export class SelectComponent implements OnInit, AfterContentChecked, ControlValu
 		return this._headerStyle;
 	}
 
-	private _panelStyle: any = {
+	// Default panel styling , change via the input
+	_panelStyle: any = {
 		backgroundColor: 'rgba(1, 1, 1, 0.45)',
 		color: '#fff',
 		border: '1px solid #ccd',
@@ -107,8 +124,10 @@ export class SelectComponent implements OnInit, AfterContentChecked, ControlValu
 	get panelStyle() {
 		return this._panelStyle;
 	}
+
 	@Input() set panelStyle(stylesObj: Object) {
 		if (!!stylesObj && !!Object.keys(stylesObj).length) {
+			//extending the panels' stylings
 			this._panelStyle = {
 				...this._panelStyle,
 				...stylesObj,
@@ -120,15 +139,16 @@ export class SelectComponent implements OnInit, AfterContentChecked, ControlValu
 	@Input() readonly = false;
 	@Input() required = false;
 	@Input() none = false;
+	@Input() autofocus = false;
 	@Input() placeholder: string;
+	// IMPORTANT: Used to resolve the item name (in case the complex object provided as @Input() option` )
 	@Input() optionLabelKey: string;
 	@Input() selectIconClass: string;
 	@Input() optionValue: string;
+	@Input() tabindex = 0;
 
 	@Input() optionDisabled: string;
 	@Input() itemSize: number;
-
-	private _options: any[];
 	@Input() get options(): any[] {
 		return this._options;
 	}
@@ -145,6 +165,7 @@ export class SelectComponent implements OnInit, AfterContentChecked, ControlValu
 	}
 	set disabled(_disabled: boolean) {
 		if (_disabled) {
+			this.focused = false;
 			if (this.overlayVisible) this.hide();
 		}
 
@@ -158,11 +179,15 @@ export class SelectComponent implements OnInit, AfterContentChecked, ControlValu
 	@Output() onClick: EventEmitter<any> = new EventEmitter();
 	@Output() onShow: EventEmitter<any> = new EventEmitter();
 	@Output() onHide: EventEmitter<any> = new EventEmitter();
+	@Output() onFocus: EventEmitter<any> = new EventEmitter();
+	@Output() onBlur: EventEmitter<any> = new EventEmitter();
 
 	itemTemplate: TemplateRef<any>;
 	selectedItemTemplate: TemplateRef<any>;
 	selectedOption: any;
+	_options: any[];
 
+	prevValue: any;
 	value: any;
 
 	onModelChange: Function = () => {};
@@ -173,15 +198,12 @@ export class SelectComponent implements OnInit, AfterContentChecked, ControlValu
 
 	hover: boolean;
 
-	// focused: boolean;
-
 	overlayVisible = false;
 
 	optionsChanged: boolean;
+	focused: boolean;
 
 	panel: HTMLDivElement;
-
-	selectedOptionUpdated: boolean;
 
 	constructor(
 		// @Self() @Optional() ngControl: NgControl,
@@ -219,13 +241,22 @@ export class SelectComponent implements OnInit, AfterContentChecked, ControlValu
 					const iconContainer = (<HTMLElement>ev.target)?.classList?.contains('select-trigger-icon');
 
 					if (this.isOutsideClicked(ev) && !iconContainer) {
-						// ev.preventDefault();
 						this.hide();
 					}
 					return of(ev);
 				})
 			)
 			.subscribe();
+	}
+
+	onInputFocus(event) {
+		this.focused = true;
+		this.onFocus.emit(event);
+	}
+
+	onInputBlur(event) {
+		this.focused = false;
+		this.onBlur.emit(event);
 	}
 
 	get label(): string {
@@ -247,8 +278,10 @@ export class SelectComponent implements OnInit, AfterContentChecked, ControlValu
 
 	onItemClick(event) {
 		if (this.readonly) {
-			return console.log('The SELECT is READONLY!');
+			console.log('DropDown is READONLY');
+			return;
 		}
+
 		const option = event.option;
 
 		if (!this.isOptionDisabled(option)) {
@@ -260,17 +293,19 @@ export class SelectComponent implements OnInit, AfterContentChecked, ControlValu
 		}, 150);
 	}
 
-	selectItem(event, option) {
-		if (this.selectedOption != option) {
-			this.selectedOption = option;
-			this.value = this.getOptionValue(option);
+	selectItem(event, option, update = true) {
+		// if (this.selectedOption != option) {
+		this.selectedOption = option;
 
+		if (update) {
+			this.value = this.getOptionValue(option);
 			this.onModelChange(this.value);
 			this.onChange.emit({
 				originalEvent: event?.originalEvent,
 				value: this.value,
 			});
 		}
+		// }
 	}
 
 	writeValue(value: any): void {
@@ -280,8 +315,8 @@ export class SelectComponent implements OnInit, AfterContentChecked, ControlValu
 	}
 
 	validate({ value }: AbstractControl) {
-		if (!!!value) return { invalid: true };
-		const isNotValid = this.required && !value && !!Validators.required(value);
+		if (this.required && !!!value) return { invalid: true };
+		const isNotValid = this.required && !!!value && !!Validators.required(value);
 		return (
 			isNotValid && {
 				invalid: true,
@@ -294,7 +329,6 @@ export class SelectComponent implements OnInit, AfterContentChecked, ControlValu
 		if (!this.placeholder && !this.selectedOption && this.optionsToDisplay && this.optionsToDisplay.length) {
 			this.selectedOption = this.optionsToDisplay[0];
 		}
-		this.selectedOptionUpdated = true;
 	}
 
 	registerOnChange(fn: Function): void {
@@ -342,6 +376,148 @@ export class SelectComponent implements OnInit, AfterContentChecked, ControlValu
 		this.overlayVisible = false;
 		this.cd.markForCheck();
 	}
+	selectedItemIndex = 0;
+
+	onKeydown($event: KeyboardEvent) {
+		if (this.isOutsideClicked($event)) {
+			console.log('Clicked outside of the component ...');
+			return;
+		}
+
+		if (this.readonly || !!!this.optionsToDisplay?.length) {
+			return;
+		}
+
+		switch ($event.which) {
+			//down
+			case 40:
+				if (!this.overlayVisible && $event.altKey) {
+					this.show();
+				} else {
+					this.selectedItemIndex = this.selectedOption ? this.findOptionIndex(this.getOptionValue(this.selectedOption), this.optionsToDisplay) : -1;
+					let nextEnabledOption = this.findNextEnabledOption(this.selectedItemIndex);
+					if (nextEnabledOption) {
+						this.selectItem($event, nextEnabledOption, false);
+					}
+				}
+				$event.preventDefault();
+				break;
+
+			//up
+			case 38:
+				this.selectedItemIndex = this.selectedOption ? this.findOptionIndex(this.getOptionValue(this.selectedOption), this.optionsToDisplay) : -1;
+				let prevEnabledOption = this.findPrevEnabledOption(this.selectedItemIndex);
+				if (prevEnabledOption) {
+					this.selectItem($event, prevEnabledOption, false);
+				}
+
+				$event.preventDefault();
+				break;
+
+			//space
+			case 32:
+				if (!this.overlayVisible) {
+					this.show();
+				} else {
+					this.hide();
+				}
+				$event.preventDefault();
+				break;
+
+			//enter
+			case 13:
+				this.hide();
+				this.prevValue = this.selectedOption;
+				this.selectItem($event, this.selectedOption, true);
+				break;
+
+			//escape
+			case 27:
+				$event.preventDefault();
+				this.selectItem($event, this.prevValue);
+				this.hide();
+				break;
+
+			// tab
+			case 9:
+				this.hide();
+				break;
+		}
+	}
+
+	findOptionIndex(val: any, opts: any[]): number {
+		let index: number = -1;
+		if (opts) {
+			for (let i = 0; i < opts.length; i++) {
+				if ((val == null && this.getOptionValue(opts[i]) == null) || equals(val, this.getOptionValue(opts[i]))) {
+					index = i;
+					break;
+				}
+			}
+		}
+
+		return index;
+	}
+
+	findPrevEnabledOption(index) {
+		let prevEnabledOption;
+
+		if (this.optionsToDisplay && this.optionsToDisplay.length) {
+			for (let i = index - 1; 0 <= i; i--) {
+				let option = this.optionsToDisplay[i];
+				if (option.disabled) {
+					continue;
+				} else {
+					prevEnabledOption = option;
+					break;
+				}
+			}
+
+			if (!prevEnabledOption) {
+				for (let i = this.optionsToDisplay.length - 1; i >= index; i--) {
+					let option = this.optionsToDisplay[i];
+					if (this.isOptionDisabled(option)) {
+						continue;
+					} else {
+						prevEnabledOption = option;
+						break;
+					}
+				}
+			}
+		}
+
+		return prevEnabledOption;
+	}
+
+	findNextEnabledOption(index) {
+		let nextEnabledOption;
+
+		if (this.optionsToDisplay && this.optionsToDisplay.length) {
+			for (let i = index + 1; i < this.optionsToDisplay.length; i++) {
+				let option = this.optionsToDisplay[i];
+				if (this.isOptionDisabled(option)) {
+					continue;
+				} else {
+					nextEnabledOption = option;
+					break;
+				}
+			}
+
+			if (!nextEnabledOption) {
+				for (let i = 0; i < index; i++) {
+					let option = this.optionsToDisplay[i];
+					if (this.isOptionDisabled(option)) {
+						continue;
+					} else {
+						nextEnabledOption = option;
+						break;
+					}
+				}
+			}
+		}
+
+		return nextEnabledOption;
+	}
 }
 
 /**
@@ -374,3 +550,7 @@ const resolveFieldData = (data: string | object, field: object | Function | stri
 
 const isFunction = (obj: any): obj is Function => !!(obj && obj.constructor && obj.call && obj.apply);
 const isString = (obj: any): obj is string => typeof obj === 'string';
+const equals = (obj1: any, obj2: any, field?: string): boolean => {
+	if (field) return resolveFieldData(obj1, field) === resolveFieldData(obj2, field);
+	else return JSON.stringify(obj1) === JSON.stringify(obj2);
+};

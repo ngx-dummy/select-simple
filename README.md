@@ -16,6 +16,8 @@
 [![GitHub forks](https://img.shields.io/github/forks/ngx-dummy/select-simple)](https://github.com/ngx-dummy/select-simple/network)
 [![GitHub stars](https://img.shields.io/github/stars/ngx-dummy/select-simple)](https://github.com/ngx-dummy/select-simple/stargazers)
 
+[![](https://data.jsdelivr.com/v1/package/npm/@ngx-dummy/select-simple/badge)](https://www.jsdelivr.com/package/npm/@ngx-dummy/select-simple)
+
 <!--
 
 [![Twitter](https://img.shields.io/twitter/url?style=social)](https://twitter.com/intent/tweet?text=Wow:&url=https%3A%2F%2Fgithub.com%2Fngx-dummy%2Fselect-simple) -->
@@ -57,6 +59,14 @@ npm install -save @ngx-dummy/select-simple@0.0.1-v9
 <br/>
 
 ## Usage
+
+### See the sample app setup [Stackblitz](https://stackblitz.com/edit/ngx-dummyselect-simple-tester?file=src/app/app.component.html)
+
+[![Using @ngx-dummy/select-simple](https://user-images.githubusercontent.com/969302/140906480-cc2b597d-7ac2-4c12-b752-61b8ba1c704b.png)](https://stackblitz.com/edit/ngx-dummyselect-simple-tester?file=src/app/app.component.html)
+
+<br />
+
+### samples
 
 ```ts
 import { SelectSimpleModule } from '@ngx-dummy/select-simple';
