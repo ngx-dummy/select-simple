@@ -1,6 +1,6 @@
 <section class="demo">
 	<h4>Reactive form sample:</h4>
-	<form [formGroup]="form">
+	<form [formGroup]="form" (ngSubmit)="checkFormValid($event)">
 		<ngxd-select
 			id="select1"
 			[options]="cities"
@@ -73,7 +73,7 @@
 			border-radius: 0.2rem;
 			color: #ffffff;
 			font-size: 14px;
-			border-color: blue;
+			border-color: red;
 			position: relative;
 			background: blue
 				url("data:image/svg+xml;utf8,<svg viewBox='0 0 140 140' width='24' height='24' xmlns='http://www.w3.org/2000/svg'><g><path d='m121.3,34.6c-1.6-1.6-4.2-1.6-5.8,0l-51,51.1-51.1-51.1c-1.6-1.6-4.2-1.6-5.8,0-1.6,1.6-1.6,4.2 0,5.8l53.9,53.9c0.8,0.8 1.8,1.2 2.9,1.2 1,0 2.1-0.4 2.9-1.2l53.9-53.9c1.7-1.6 1.7-4.2 0.1-5.8z' fill='white'/></g></svg>")
@@ -91,8 +91,10 @@
 	<style>
 		.selected-container {
 			background-color: aqua;
-			height: 100%;
-			width: 100%;
+			border-radius: 0.1rem;
+			min-height: 2rem;
+			padding: 0.2rem 0.4rem;
+			margin: 0.1rem;
 			display: flex;
 			justify-content: space-around;
 			align-items: center;

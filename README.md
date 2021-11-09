@@ -1,28 +1,29 @@
 <center>
-  <a href="https://www.npmjs.com/package/@ngx-dummy/accordion-simple" target="_blank">
+  <a href="https://www.npmjs.com/package/@ngx-dummy/select-simple" target="_blank">
     <p align="center">
       <img src="https://avatars3.githubusercontent.com/u/62136587?s=400&u=4580be0183d1496d982253d3a0d803de82465626&v=4" width="200" height="200" />
     </p>
   </a>
   <h2 align="center"><b style="color: teal;"><a href="https://www.npmjs.com/package/@ngx-dummy/select-simple" target="_blank">@Ngx-dummy/Select-simple</a></b> <i>library</i></h2>
 
-[![GitHub version](https://badge.fury.io/gh/ngx-dummy%2Fselect-simple.svg)](https://badge.fury.io/gh/ngx-dummy%2Fselect-simple)
+[![npm version](https://badge.fury.io/js/@ngx-dummy%2Fselect-simple.svg?style=flat-square)](https://badge.fury.io/js/@ngx-dummy%2Fselect-simple)
 
 </center>
 
-[![GitHub license](https://img.shields.io/github/license/ngx-dummy/select-simple)](https://github.com/ngx-dummy/select-simple/blob/main/LICENSE)
+[![GitHub license](https://img.shields.io/github/license/ngx-dummy/select-simple?style=flat-square)](https://github.com/ngx-dummy/select-simple/blob/main/LICENSE)
 
-[![GitHub issues](https://img.shields.io/github/issues/ngx-dummy/select-simple)](https://github.com/ngx-dummy/select-simple/issues)
-[![GitHub forks](https://img.shields.io/github/forks/ngx-dummy/select-simple)](https://github.com/ngx-dummy/select-simple/network)
-[![GitHub stars](https://img.shields.io/github/stars/ngx-dummy/select-simple)](https://github.com/ngx-dummy/select-simple/stargazers)
+[![GitHub issues](https://img.shields.io/github/issues/ngx-dummy/select-simple?style=flat-square)](https://github.com/ngx-dummy/select-simple/issues)
+[![GitHub forks](https://img.shields.io/github/forks/ngx-dummy/select-simple?style=flat-square)](https://github.com/ngx-dummy/select-simple/network)
+[![GitHub stars](https://img.shields.io/github/stars/ngx-dummy/select-simple?style=flat-square)](https://github.com/ngx-dummy/select-simple/stargazers)
 
-[![](https://data.jsdelivr.com/v1/package/npm/@ngx-dummy/select-simple/badge)](https://www.jsdelivr.com/package/npm/@ngx-dummy/select-simple)
+[![](https://data.jsdelivr.com/v1/package/npm/@ngx-dummy/select-simple/badge?style=flat-square)](https://www.jsdelivr.com/package/npm/@ngx-dummy/select-simple)
 
 <!--
 
 [![Twitter](https://img.shields.io/twitter/url?style=social)](https://twitter.com/intent/tweet?text=Wow:&url=https%3A%2F%2Fgithub.com%2Fngx-dummy%2Fselect-simple) -->
 
-[![Donations](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://paypal.me/ovsyukov)
+[![Donations](https://img.shields.io/badge/Donate-PayPal-green.svg?style=flat-square)](https://paypal.me/ovsyukov)
+
 [![Twitter Follow](https://img.shields.io/twitter/follow/OvsyukovV.svg?style=social)](https://twitter.com/OvsyukovV)
 
 ---
@@ -51,7 +52,7 @@ yarn add @ngx-dummy/select-simple
 <summary>With Npm</summary>
 
 ```bash
-npm install -save @ngx-dummy/select-simple@0.0.1-v9
+npm install -save @ngx-dummy/select-simple@0.0.5-v9
 ```
 
 </details>
@@ -135,13 +136,17 @@ selected = undefined;
 
 <br />
 
-#### [More detailed showcase (the video clip demonstrates most of use cases of the library):](https://vimeo.com/579375725/749b80e96c)
-
+<details closed>
+<summary>More detailed showcase (the video clip demonstrates most of use cases of the library)</summary>
 <center>
 
 [![Using @ngx-dummy/select-simple](https://raw.githubusercontent.com/ngx-dummy/select-simple/v9/docs/Select-simple-usage.png)](https://vimeo.com/579375725/749b80e96c)
 
 </center>
+
+</details>
+
+<br/>
 
 <br />
 <br />
@@ -165,7 +170,7 @@ selected = undefined;
 
 <br />
 
-## To support my work, consider:
+## To support my work, maybe ..👏 🍭 :
 
 <a href="https://www.buymeacoffee.com/vovan_super" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-green.png" alt="Buy Me A Coffee" height="40" width="140" style="border-radius: 5px;"></a>
 

@@ -1,5 +1,3 @@
-/* eslint-disable @angular-eslint/no-output-on-prefix */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Component, Input, TemplateRef, Output, EventEmitter } from '@angular/core';
 
 export interface ISelectItem<T = any> {
@@ -38,27 +36,33 @@ export interface ISelectItem<T = any> {
 		<li
 			(click)="onOptionClick($event)"
 			role="option"
-			[ngStyle]="{ height: itemSize + 'px' }"
+			[ngStyle]="{ height: getItemHeight(), visibility: getItemVisibility(), 'background-color': itemBg }"
 			[ngClass]="{
 				'select-item': true,
 				'item-highlight': selected,
 				'item-disabled': disabled
 			}"
 		>
-			<span *ngIf="!template">{{ label || 'empty' }}</span>
+			<span *ngIf="!template">{{ getItemCaption() }}</span>
 			<ng-container *ngTemplateOutlet="template; context: { $implicit: option }"></ng-container>
 		</li>
 	`,
 })
 export class SelectItemComponent {
 	@Input() option: string | ISelectItem;
-	@Input() selected: boolean;
+	@Input() selected = false;
+	@Input() disabled = false;
+	@Input() visible = true;
+	@Input() itemSize: string | number = 25;
 	@Input() label?: string;
-	@Input() disabled?: boolean;
-	@Input() visible?: boolean;
-	@Input() itemSize?: number;
+	@Input() itemBg?: string;
 	@Input() template?: TemplateRef<HTMLElement>;
 	@Output() onClick: EventEmitter<{ originalEvent: MouseEvent; option: string | ISelectItem }> = new EventEmitter();
+
+	// To resolve caption of the item
+	getItemCaption = () => (!!this.option && typeof this.option === 'string' ? this.option : !!this.label?.trim().length ? this.label : 'Empty');
+	getItemHeight = () => (typeof this.itemSize === 'number' ? `${this.itemSize}px` : this.itemSize);
+	getItemVisibility = () => (this.visible ? 'visible' : 'hidden');
 
 	onOptionClick(event: MouseEvent) {
 		this.onClick.emit({

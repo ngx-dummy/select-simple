@@ -13,8 +13,7 @@ import { ITemplates } from '@ngx-dummy/select-simple';
 })
 export class AppComponent implements OnInit {
 	@ViewChild('btnTmpl', { static: true }) bntOpenTmpl: TemplateRef<HTMLElement>;
-	@ViewChild('selectedItemTemplate', { static: true })
-	selectedItemTemplate: TemplateRef<HTMLElement>;
+	@ViewChild('selectedItemTemplate', { static: true }) selectedItemTemplate: TemplateRef<HTMLElement>;
 	title = 'Select-sample';
 
 	selectedCity1: any;
@@ -55,6 +54,11 @@ export class AppComponent implements OnInit {
 	form = new FormGroup({
 		selector: new FormControl(this.cities[0]),
 	});
+
+	checkFormValid($event) {
+		$event.preventDefault();
+		alert('Is form valid: ' + this.form.valid);
+	}
 
 	ngOnInit() {
 		this.templates = {

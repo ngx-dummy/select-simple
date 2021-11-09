@@ -62,9 +62,9 @@
 						[selected]="selectedOption === option"
 						[label]="getOptionLabel(option)"
 						[disabled]="isOptionDisabled(option)"
+						(onClick)="onItemClick($event)"
 						[template]="itemTemplate"
 						[itemSize]="itemSize"
-						(onClick)="onItemClick($event)"
 					></ngxd-select-item>
 				</ng-template>
 			</ul>
