@@ -1,0 +1,43 @@
+{
+	"name": "@ngx-dummy/select-simple",
+	"version": "0.0.1",
+	"author": {
+		"name": "Vladimir Ovsyukov",
+		"email": "vovansuper@mail.ru",
+		"url": "https://github.com/VovanSuper"
+	},
+	"engines": {
+		"node": ">14.0.1",
+		"npm": ">=6.12.1"
+	},
+	"description": "Simple select implementation",
+	"keywords": [
+		"Select",
+		"Angular",
+		"Ionic",
+		"Typescript",
+		"Javascript",
+		"widget",
+		"expandable",
+		"dropdown",
+		"ui"
+	],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/ngx-dummy/select-simple.git"
+	},
+	"bugs": {
+		"email": "ovsyukov@yandex.com",
+		"url": "https://github.com/ngx-dummy/select-simple/issues"
+	},
+	"homepage": "https://github.com/ngx-dummy/select-simple#README",
+	"license": "MIT",
+	"private": false,
+	"peerDependencies": {
+		"@angular/common": "^12.2.0",
+		"@angular/core": "^12.2.0"
+	},
+	"dependencies": {
+		"tslib": "^2.3.0"
+	}
+}
