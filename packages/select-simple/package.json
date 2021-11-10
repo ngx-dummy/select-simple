@@ -1,6 +1,6 @@
 {
 	"name": "@ngx-dummy/select-simple",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"author": {
 		"name": "Vladimir Ovsyukov",
 		"email": "vovansuper@mail.ru",
@@ -10,9 +10,11 @@
 		"node": ">14.0.1",
 		"npm": ">=6.12.1"
 	},
-	"description": "Simple select implementation",
+	"description": "A simple Select component to use in Angular / Ionic projects",
 	"keywords": [
 		"Select",
+		"Select component",
+		"Dropdown",
 		"Angular",
 		"Ionic",
 		"Typescript",
