@@ -5,15 +5,7 @@
 			<ngxd-select
 				id="select1"
 				[options]="cities"
-				[templates]="templates"
-				[readonly]="false"
-				[required]="true"
-				[none]="true"
 				formControlName="selector"
-				placeholder="Select a City"
-				optionLabelKey="name"
-				[tabindex]="1"
-				[autofocus]="true"
 			></ngxd-select>
 			<button class="resource gutter-1" type="submit" [disabled]="!form.valid || form.pristine">Submit (is the form Valid)</button>
 		</div>

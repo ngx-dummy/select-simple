@@ -49,7 +49,7 @@ export class AppComponent implements OnInit {
 		{ name: 'London', code: 'LDN' },
 		{ name: 'Paris', code: 'PRS' },
 	];
-
+	
 	simpleCitiesArray = [...this.cities].map(({ name }) => name);
 
 	form = new FormGroup({

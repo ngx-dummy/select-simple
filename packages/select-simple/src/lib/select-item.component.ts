@@ -59,14 +59,14 @@ export class SelectItemComponent {
 	@Input() selected = false;
 	@Input() disabled = false;
 	@Input() visible = true;
-	@Input() itemSize? = 25;
-	@Input() label?: string;
-	@Input() itemBg?: string;
+	@Input() itemBg = 'transparent';
+	@Input() itemSize: number | undefined = 25;
+	@Input() label?: string = undefined;
 	@Input() template?: TemplateRef<HTMLElement>;
 	@Output() optionClick: EventEmitter<IOptionClickEvent> = new EventEmitter();
 
 	// To resolve caption of the item
-	getItemCaption = () => (!!this.option && typeof this.option === 'string' ? this.option : this.label?.trim().length ? this.label : 'Empty');
+	getItemCaption = () => (!!this.option && typeof this.option === 'string' ? this.option : (!!this.label?.trim && this.label?.trim().length) ? this.label : 'Empty');
 	// To resolve height of the item
 	getItemHeight = () => (typeof this.itemSize === 'number' ? `${this.itemSize}px` : this.itemSize);
 	// To resolve visibility of the item

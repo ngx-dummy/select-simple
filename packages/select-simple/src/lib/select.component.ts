@@ -142,7 +142,7 @@ export class SelectComponent implements OnInit, AfterContentChecked, ControlValu
 	@Input() required = false;
 	@Input() none = false;
 	@Input() autofocus = false;
-	@Input() placeholder?: string;
+	@Input() placeholder?: string = undefined;
 	// IMPORTANT: Used to resolve the item name (in case the complex object provided as @Input() option` )
 	@Input() optionLabelKey?: string;
 	@Input() selectIconClass = '';
@@ -192,8 +192,8 @@ export class SelectComponent implements OnInit, AfterContentChecked, ControlValu
 
 	prevValue: any;
 	value: any;
-	onModelChange: Function = () => {};
-	onModelTouched: Function = () => {};
+	onModelChange: Function = () => { };
+	onModelTouched: Function = () => { };
 	optionsToDisplay?: any[];
 	hover = false;
 	overlayVisible = false;
@@ -256,12 +256,14 @@ export class SelectComponent implements OnInit, AfterContentChecked, ControlValu
 	}
 
 	get label(): string {
-		const label = this.selectedOption ? this.getOptionLabel(this.selectedOption) : null;
+		if (!!this.placeholder?.length) return this.placeholder.trim();
+
+		const label = this.selectedOption ? this.getOptionLabel(this.selectedOption) : (!!this.options?.length) ? this.getOptionLabel(this.options[0]) : null;
 		return label;
 	}
 
 	getOptionLabel(option: any) {
-		return this.optionLabelKey ? resolveFieldData(option, this.optionLabelKey) : option.label != undefined ? option.label : option;
+		return this.optionLabelKey ? resolveFieldData(option, this.optionLabelKey) : resolveFieldData(option);
 	}
 
 	getOptionValue(option: any) {
@@ -522,7 +524,10 @@ export class SelectComponent implements OnInit, AfterContentChecked, ControlValu
  * @param field - the key (or complex lookup object key) of data object to resolve value by
  * @returns resolved single option value (Input for SelectItem)
  */
-const resolveFieldData = (data: { [x: string]: any }, field: string | object) => {
+const resolveFieldData = (data: { [x: string]: any; } | string, field?: string | object) => {
+	if (typeof data === 'string')
+		return data;
+
 	if (!!data && !!field) {
 		if (isString(field) && field.indexOf('.') == -1) {
 			return data[field];
@@ -539,9 +544,17 @@ const resolveFieldData = (data: { [x: string]: any }, field: string | object) =>
 				return value;
 			}
 		}
-	} else {
+	} else if (!!data) {
+
+		if (!!data && !!data['label'])
+			return data['label'];
+
+		else {
+			return Object.values(data)[0] || null;
+		}
+	} else
 		return null;
-	}
+
 };
 
 const isFunction = (obj: any): obj is Function => !!(obj && obj.constructor && obj.call && obj.apply);
