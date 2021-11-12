@@ -127,9 +127,9 @@ input.select-label {
 	white-space: nowrap;
 	position: relative;
 	overflow: hidden;
-	&:hover {
-		background-color: var(--ngxd-primary-color);
-		color: var(--ngxd-primary-color--opened);
+	&.item-highlight, :hover {
+		background-color: var(--ngxd-primary-color--opened);
+		color: var($color-secondary);
 	}
 }
 

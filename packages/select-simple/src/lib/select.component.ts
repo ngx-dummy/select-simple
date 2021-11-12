@@ -47,7 +47,7 @@ import {
 import { AbstractControl, ControlValueAccessor, FormControl, NgControl, NG_VALIDATORS, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
 import { fromEvent, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
-import { getSvgSafeRes, OptionKeyboardEventHandleKeys } from './settings/helpers';
+import { equals, getSvgSafeRes, OptionKeyboardEventHandleKeys, resolveFieldData } from './settings/helpers';
 import { ITemplates } from './settings/ISelectTemplate';
 import { IOptionClickEvent, ISelectItem, SelectItemComponent } from './select-item.component';
 import { arrow_down } from './theming/icons-base';
@@ -119,8 +119,8 @@ export class SelectComponent implements OnInit, AfterContentChecked, ControlValu
 	_panelStyle: any = {
 		backgroundColor: 'rgba(1, 1, 1, 0.45)',
 		color: '#fff',
-		border: '1px solid #ccd',
-		borderRadius: '0.1rem',
+		border: '1px solid var(--ngxd-primary-color)',
+		borderRadius: '0.2rem',
 		boxShadow: '2px 5px 10px rgba(55, 55, 55, 0.8)',
 	};
 	get panelStyle() {
@@ -256,9 +256,9 @@ export class SelectComponent implements OnInit, AfterContentChecked, ControlValu
 	}
 
 	get label(): string {
-		if (!!this.placeholder?.length) return this.placeholder.trim();
-
-		const label = this.selectedOption ? this.getOptionLabel(this.selectedOption) : (!!this.options?.length) ? this.getOptionLabel(this.options[0]) : null;
+		const label = this.selectedOption ? this.getOptionLabel(this.selectedOption)
+			: (!!this.placeholder?.length) ? this.placeholder
+				: (!!this.options?.length) ? this.getOptionLabel(this.options[0]) : null;
 		return label;
 	}
 
@@ -400,6 +400,7 @@ export class SelectComponent implements OnInit, AfterContentChecked, ControlValu
 						this.selectItem($event, nextEnabledOption, false);
 					}
 				}
+				$event.preventDefault();
 				break;
 
 			//up
@@ -410,6 +411,7 @@ export class SelectComponent implements OnInit, AfterContentChecked, ControlValu
 				if (!!prevEnabledOption) {
 					this.selectItem($event, prevEnabledOption, false);
 				}
+				$event.preventDefault();
 				break;
 
 			//space
@@ -419,6 +421,7 @@ export class SelectComponent implements OnInit, AfterContentChecked, ControlValu
 				} else {
 					this.hide();
 				}
+				$event.preventDefault();
 				break;
 
 			//enter
@@ -426,6 +429,7 @@ export class SelectComponent implements OnInit, AfterContentChecked, ControlValu
 				this.hide();
 				this.prevValue = this.selectedOption;
 				this.selectItem($event, this.selectedOption, true);
+				$event.preventDefault();
 				break;
 
 			//escape
@@ -433,15 +437,16 @@ export class SelectComponent implements OnInit, AfterContentChecked, ControlValu
 			case OptionKeyboardEventHandleKeys.Esc:
 				this.selectItem($event, this.prevValue);
 				this.hide();
+				$event.preventDefault();
 				break;
 
 			// tab
 			case OptionKeyboardEventHandleKeys.Tab:
 				this.hide();
+				// $event.preventDefault();
 				break;
 		}
-		$event.preventDefault();
-		console.log(this.selectedOption)
+		console.log(this.selectedOption);
 	}
 
 	findOptionIndex(val: any, opts: any[]): number {
@@ -519,48 +524,6 @@ export class SelectComponent implements OnInit, AfterContentChecked, ControlValu
 	}
 }
 
-/**
- *
- * @param data - option value (could be simple string or complex object to resolve)
- * @param field - the key (or complex lookup object key) of data object to resolve value by
- * @returns resolved single option value (Input for SelectItem)
- */
-const resolveFieldData = (data: { [x: string]: any; } | string, field?: string | object) => {
-	if (typeof data === 'string')
-		return data;
 
-	if (!!data && !!field) {
-		if (isString(field) && field.indexOf('.') == -1) {
-			return data[field];
-		} else {
-			if (isString(field)) {
-				const fields: string[] = field.split('.');
-				let value = data;
-				for (let i = 0, len = fields.length; i < len; ++i) {
-					if (value == null) {
-						return null;
-					}
-					value = value[fields[i]];
-				}
-				return value;
-			}
-		}
-	} else if (!!data) {
 
-		if (!!data && !!data['label'])
-			return data['label'];
 
-		else {
-			return Object.values(data)[0] || null;
-		}
-	} else
-		return null;
-
-};
-
-const isFunction = (obj: any): obj is Function => !!(obj && obj.constructor && obj.call && obj.apply);
-const isString = (obj: any): obj is string => typeof obj === 'string';
-const equals = (obj1: any, obj2: any, field?: string): boolean => {
-	if (field) return resolveFieldData(obj1, field) === resolveFieldData(obj2, field);
-	else return JSON.stringify(obj1) === JSON.stringify(obj2);
-};
