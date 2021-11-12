@@ -47,7 +47,7 @@ import {
 import { AbstractControl, ControlValueAccessor, FormControl, NgControl, NG_VALIDATORS, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
 import { fromEvent, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
-import { getSvgSafeRes } from './settings/helpers';
+import { getSvgSafeRes, OptionKeyboardEventHandleKeys } from './settings/helpers';
 import { ITemplates } from './settings/ISelectTemplate';
 import { IOptionClickEvent, ISelectItem, SelectItemComponent } from './select-item.component';
 import { arrow_down } from './theming/icons-base';
@@ -377,6 +377,7 @@ export class SelectComponent implements OnInit, AfterContentChecked, ControlValu
 	selectedItemIndex = 0;
 
 	onKeydown($event: KeyboardEvent) {
+		console.log($event.key, $event.code);
 		if (this.isOutsideClicked($event)) {
 			console.log('Clicked outside of the component ...');
 			return;
@@ -386,9 +387,10 @@ export class SelectComponent implements OnInit, AfterContentChecked, ControlValu
 			return;
 		}
 
-		switch ($event.which) {
+		switch ($event.key) {
 			//down
-			case 40:
+			case OptionKeyboardEventHandleKeys.ArrowDown:
+			case OptionKeyboardEventHandleKeys.Down:
 				if (!this.overlayVisible && $event.altKey) {
 					this.show();
 				} else {
@@ -398,53 +400,52 @@ export class SelectComponent implements OnInit, AfterContentChecked, ControlValu
 						this.selectItem($event, nextEnabledOption, false);
 					}
 				}
-				$event.preventDefault();
 				break;
 
 			//up
-			case 38:
+			case OptionKeyboardEventHandleKeys.ArrowUp:
+			case OptionKeyboardEventHandleKeys.Up:
 				this.selectedItemIndex = this.selectedOption ? this.findOptionIndex(this.getOptionValue(this.selectedOption), this.optionsToDisplay) : -1;
 				let prevEnabledOption = this.findPrevEnabledOption(this.selectedItemIndex);
 				if (!!prevEnabledOption) {
 					this.selectItem($event, prevEnabledOption, false);
 				}
-
-				$event.preventDefault();
 				break;
 
 			//space
-			case 32:
+			case OptionKeyboardEventHandleKeys.Space:
 				if (!this.overlayVisible) {
 					this.show();
 				} else {
 					this.hide();
 				}
-				$event.preventDefault();
 				break;
 
 			//enter
-			case 13:
+			case OptionKeyboardEventHandleKeys.Enter:
 				this.hide();
 				this.prevValue = this.selectedOption;
 				this.selectItem($event, this.selectedOption, true);
 				break;
 
 			//escape
-			case 27:
-				$event.preventDefault();
+			case OptionKeyboardEventHandleKeys.Escape:
+			case OptionKeyboardEventHandleKeys.Esc:
 				this.selectItem($event, this.prevValue);
 				this.hide();
 				break;
 
 			// tab
-			case 9:
+			case OptionKeyboardEventHandleKeys.Tab:
 				this.hide();
 				break;
 		}
+		$event.preventDefault();
+		console.log(this.selectedOption)
 	}
 
 	findOptionIndex(val: any, opts: any[]): number {
-		let index: number = -1;
+		let index = -1;
 		if (opts) {
 			for (let i = 0; i < opts.length; i++) {
 				if ((val == null && this.getOptionValue(opts[i]) == null) || equals(val, this.getOptionValue(opts[i]))) {

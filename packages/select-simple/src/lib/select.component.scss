@@ -8,18 +8,17 @@ ngxd-select {
 	box-sizing: border-box;
 
 	&:not(.disabled):hover {
-		border-color: #2196f3;
+		border-color: var(--ngxd-primary-color-t50);
 	}
 	&:not(.disabled).focus {
-		// outline: 0 none;
 		outline-offset: 0;
-		box-shadow: 0 0 0 0.2rem #a6d5fa;
-		border-color: #2196f3;
+		box-shadow: 0 0 0 0.2rem var(--ngxd-primary-color-t50);
+		border-color: var(--ngxd-primary-color--active);
 	}
 	dropdown:not(.disabled).wrapper-focus {
 		box-shadow: none;
-		background-color: rgba(255, 255, 255, 0.1);
-		border-color: transparent;
+		background-color: var(--ngxd-primary-color-t50);
+		border-color: var(--ngxd-secondary-color);
 		background-size: 100% 2px, 100% 1px;
 	}
 }
@@ -27,7 +26,7 @@ ngxd-select {
 .disabled {
 	cursor: not-allowed !important;
 	pointer-events: none;
-	color: #16161640;
+	color: var(--ngxd-disabled);
 }
 
 .select {
@@ -38,20 +37,20 @@ ngxd-select {
 	cursor: pointer;
 	position: relative;
 	user-select: none;
-	background: #ffffff;
-	border: 1px solid #ced4da;
+	background: var(--ngxd-primary-color);
+	border: 1px solid var(--color-white);
 	transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
 	border-radius: 3px;
 }
 
 .select:not(.disabled):hover {
-	border-color: #2196f3;
+	border-color: var(--ngxd-secondary-color);
 }
 .select:not(.disabled).focus {
 	outline: 0 none;
 	outline-offset: 0;
-	box-shadow: 0 0 0 0.2rem #a6d5fa;
-	border-color: #2196f3;
+	box-shadow: 0 0 0 0.2rem var(--ngxd-secondary-color);
+	border-color: var(--ngxd-primary-color);
 }
 
 .select-clear-icon {
@@ -71,7 +70,7 @@ ngxd-select {
 	padding: 0.1rem;
 	display: grid;
 	place-content: center;
-	color: #ccc;
+	color: var(--ngxd-primary-color);
 	border-radius: 50%;
 	background-color: var(--ngxd-primary-icon-color);
 }
@@ -109,6 +108,7 @@ input.select-label {
 }
 
 .select-panel {
+	height: auto;
 	min-width: 100%;
 	position: absolute;
 	top: 100%;
@@ -127,6 +127,10 @@ input.select-label {
 	white-space: nowrap;
 	position: relative;
 	overflow: hidden;
+	&:hover {
+		background-color: var(--ngxd-primary-color);
+		color: var(--ngxd-primary-color--opened);
+	}
 }
 
 .select-items {

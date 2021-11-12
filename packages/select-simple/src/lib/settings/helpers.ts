@@ -26,7 +26,14 @@ export const getSvgSafeRes = (file: string, sanitizer: DomSanitizer) => prepRes(
 export const getPngSafeRes = (file: string, sanitizer: DomSanitizer) => prepRes(URL.createObjectURL(imgBase64ToBlob(file)), sanitizer);
 export const blobToSafeRes = (blob: Blob, sanitizer: DomSanitizer) => prepRes(URL.createObjectURL(blob), sanitizer);
 
-export enum KeyboardEventKeys {
+export enum OptionKeyboardEventHandleKeys {
 	ArrowDown = 'ArrowDown',
+	Down = 'Down',
 	ArrowUp = 'ArrowUp',
+	Enter = 'Enter',
+	Escape = 'Escape',
+	Esc = 'Esc',
+	Up = 'Up',
+	Tab = 'Tab',
+	Space = ' '
 }
