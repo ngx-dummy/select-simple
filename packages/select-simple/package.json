@@ -1,6 +1,6 @@
 {
 	"name": "@ngx-dummy/select-simple",
-	"version": "0.0.2",
+	"version": "0.0.3",
 	"author": {
 		"name": "Vladimir Ovsyukov",
 		"email": "vovansuper@mail.ru",
@@ -37,9 +37,7 @@
 	"private": false,
 	"peerDependencies": {
 		"@angular/common": "^12.2.0",
-		"@angular/core": "^12.2.0"
-	},
-	"dependencies": {
+		"@angular/core": "^12.2.0",
 		"tslib": "^2.3.0"
 	}
 }
