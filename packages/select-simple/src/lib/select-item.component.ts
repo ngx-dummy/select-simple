@@ -1,4 +1,5 @@
-import { Component, Input, TemplateRef, Output, EventEmitter } from '@angular/core';
+/* eslint-disable @angular-eslint/no-host-metadata-property */
+import { Component, Input, TemplateRef, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
 
 export interface ISelectItem<T = unknown> {
 	label?: string;
@@ -15,44 +16,38 @@ export interface IOptionClickEvent {
 
 @Component({
 	selector: 'ngxd-select-item',
-	styles: [
-		`
-			:host li {
-				list-style: none;
-				display: flex;
-				align-items: center;
-			}
+	styles: [`
+		:host {
+			display: block;
+			padding: .1rem;
+
 			.item-disabled {
 				cursor: not-allowed !important;
 				pointer-events: none;
-				color: #16161640;
+				color: var(--ngxd-disabled);
 				user-select: none;
 			}
 			.item-highlight:not(.item-disabled) {
 				user-select: none;
 				cursor: pointer;
 				pointer-events: all;
-				background: #ccc5;
 			}
-		`,
-	],
+		}
+	`],
 	template: `
-		<li
-			(click)="onOptionClick($event)"
-			role="option"
-			[ngStyle]="{ height: getItemHeight(), visibility: getItemVisibility(), 'background-color': itemBg }"
-			[ngClass]="{
-				'select-item': true,
-				'item-highlight': selected,
-				'item-disabled': disabled
-			}"
-		>
-			<span *ngIf="!template">{{ getItemCaption() }}</span>
-			<ng-container *ngIf="template">
-				<ng-container *ngTemplateOutlet="template; context: { $implicit: option }"></ng-container>
-			</ng-container>
-		</li>
+		<span *ngIf="!template">{{ getItemCaption() }}</span>
+		<ng-container *ngIf="template">
+			<ng-container *ngTemplateOutlet="template; context: { $implicit: option }"></ng-container>
+		</ng-container>
 	`,
+	host: {
+		'[attr.role]': '"option"',
+		'[ngStyle]': '{  "height": "getItemHeight()", "visibility": "getItemVisibility()", "background-color": "itemBg" }',
+		'[class.select-item]': 'true',
+		'[class.item-highlight]': 'selected',
+		'[class.item-disabled]': 'disabled',
+		'(click)': 'onOptionClick($event)'
+	},
 })
 export class SelectItemComponent {
 	@Input() option: string | ISelectItem | undefined = undefined;
@@ -65,13 +60,9 @@ export class SelectItemComponent {
 	@Input() template?: TemplateRef<HTMLElement>;
 	@Output() optionClick: EventEmitter<IOptionClickEvent> = new EventEmitter();
 
-	// To resolve caption of the item
 	getItemCaption = () => (!!this.option && typeof this.option === 'string' ? this.option : (!!this.label?.trim && this.label?.trim().length) ? this.label : 'Empty');
-	// To resolve height of the item
 	getItemHeight = () => (typeof this.itemSize === 'number' ? `${this.itemSize}px` : this.itemSize);
-	// To resolve visibility of the item
 	getItemVisibility = () => (this.visible ? 'visible' : 'hidden');
-
 	onOptionClick($event: MouseEvent) {
 		this.optionClick.emit({
 			originalEvent: $event,

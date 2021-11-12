@@ -1,3 +1,4 @@
+/* eslint-disable @angular-eslint/no-host-metadata-property */
 /* eslint-disable no-case-declarations */
 /* eslint-disable @angular-eslint/no-input-rename */
 /* eslint-disable no-extra-boolean-cast */
@@ -71,16 +72,24 @@ export const NG_VALIDATORS_PROVIDER: Provider = {
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	encapsulation: ViewEncapsulation.None,
 	styleUrls: ['select.component.scss'],
-	// eslint-disable-next-line @angular-eslint/no-host-metadata-property
 	host: {
+		'[class]': 'styleClass',
+		'[ngStyle]': 'headerStyle',
 		'[class.wrapper-focus]': 'focused || overlayVisible',
+		'[class.select]': 'true',
+		'[class.disabled]': 'disabled',
+		'[class.focus]': 'focused || overlayVisible',
+		'[class.select-open]': 'overlayVisible',
 		'[attr.tabIndex]': 'tabindex',
 		'[attr.autofocus]': 'autofocus',
 		'(blur)': 'onHostBlur($event)',
 		'(focus)': 'onHostFocus($event)',
 		'(keydown)': 'onKeydown($event)',
+		'(click)': 'onMouseclick($event)'
 	},
 })
+
+
 export class SelectComponent implements OnInit, AfterContentChecked, ControlValueAccessor {
 	@ViewChild('defaultSelectIconTmpl', { read: TemplateRef }) defaultOpenerTemplate: TemplateRef<HTMLElement> | undefined;
 	@ViewChild('itemsListDefaultTmpl', { read: TemplateRef }) itemsListDefaultTmpl: TemplateRef<HTMLElement> | undefined;
@@ -102,7 +111,6 @@ export class SelectComponent implements OnInit, AfterContentChecked, ControlValu
 	@Input() name: string | undefined;
 
 	_headerStyle = {};
-	// Change header styles
 	@Input() set headerStyle(headStyleObj: any) {
 		if (!!headStyleObj && !!Object.keys(headStyleObj).length) {
 			this._headerStyle = {
@@ -115,7 +123,6 @@ export class SelectComponent implements OnInit, AfterContentChecked, ControlValu
 		return this._headerStyle;
 	}
 
-	// Default panel styling , change via the input
 	_panelStyle: any = {
 		backgroundColor: 'rgba(1, 1, 1, 0.45)',
 		color: '#fff',
@@ -129,7 +136,6 @@ export class SelectComponent implements OnInit, AfterContentChecked, ControlValu
 
 	@Input() set panelStyle(stylesObj: Object) {
 		if (!!stylesObj && !!Object.keys(stylesObj).length) {
-			//extending the panels' stylings
 			this._panelStyle = {
 				...this._panelStyle,
 				...stylesObj,
@@ -143,6 +149,7 @@ export class SelectComponent implements OnInit, AfterContentChecked, ControlValu
 	@Input() none = false;
 	@Input() autofocus = false;
 	@Input() placeholder?: string = undefined;
+
 	// IMPORTANT: Used to resolve the item name (in case the complex object provided as @Input() option` )
 	@Input() optionLabelKey?: string;
 	@Input() selectIconClass = '';
@@ -388,7 +395,6 @@ export class SelectComponent implements OnInit, AfterContentChecked, ControlValu
 		}
 
 		switch ($event.key) {
-			//down
 			case OptionKeyboardEventHandleKeys.ArrowDown:
 			case OptionKeyboardEventHandleKeys.Down:
 				if (!this.overlayVisible && $event.altKey) {
@@ -403,7 +409,6 @@ export class SelectComponent implements OnInit, AfterContentChecked, ControlValu
 				$event.preventDefault();
 				break;
 
-			//up
 			case OptionKeyboardEventHandleKeys.ArrowUp:
 			case OptionKeyboardEventHandleKeys.Up:
 				this.selectedItemIndex = this.selectedOption ? this.findOptionIndex(this.getOptionValue(this.selectedOption), this.optionsToDisplay) : -1;
@@ -414,7 +419,6 @@ export class SelectComponent implements OnInit, AfterContentChecked, ControlValu
 				$event.preventDefault();
 				break;
 
-			//space
 			case OptionKeyboardEventHandleKeys.Space:
 				if (!this.overlayVisible) {
 					this.show();
@@ -424,7 +428,6 @@ export class SelectComponent implements OnInit, AfterContentChecked, ControlValu
 				$event.preventDefault();
 				break;
 
-			//enter
 			case OptionKeyboardEventHandleKeys.Enter:
 				this.hide();
 				this.prevValue = this.selectedOption;
@@ -432,7 +435,6 @@ export class SelectComponent implements OnInit, AfterContentChecked, ControlValu
 				$event.preventDefault();
 				break;
 
-			//escape
 			case OptionKeyboardEventHandleKeys.Escape:
 			case OptionKeyboardEventHandleKeys.Esc:
 				this.selectItem($event, this.prevValue);
@@ -440,10 +442,8 @@ export class SelectComponent implements OnInit, AfterContentChecked, ControlValu
 				$event.preventDefault();
 				break;
 
-			// tab
 			case OptionKeyboardEventHandleKeys.Tab:
 				this.hide();
-				// $event.preventDefault();
 				break;
 		}
 		console.log(this.selectedOption);

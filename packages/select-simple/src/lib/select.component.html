@@ -1,75 +1,60 @@
-<div
-	[class]="styleClass"
-	[ngClass]="{
-		'select': true,
-		'disabled': disabled,
-		'select-open': overlayVisible,
-		'focus': focused
-	}"
-	[attr.autofocus]="autofocus"
-	[attr.tabindex]="tabindex"
-	(click)="onMouseclick($event)"
-	[ngStyle]="headerStyle"
->
-	<span *ngIf="!!label">
-		<ng-container *ngIf="!selectedItemTemplate">{{ label || 'Nothing selected' }}</ng-container>
-		<ng-container *ngIf="selectedItemTemplate">
-			<ng-container *ngTemplateOutlet="selectedItemTemplate; context: { $implicit: label, selectedOption: selectedOption }"></ng-container>
+<span *ngIf="!!label">
+	<ng-container *ngIf="!selectedItemTemplate">{{ label || 'Nothing selected' }}</ng-container>
+	<ng-container *ngIf="selectedItemTemplate">
+		<ng-container
+			*ngTemplateOutlet="selectedItemTemplate; context: { $implicit: label, selectedOption: selectedOption }">
 		</ng-container>
-	</span>
+	</ng-container>
+</span>
 
-	<span *ngIf="!!!label"
-		[ngClass]="{
+<span *ngIf="!!!label" [ngClass]="{
 			'select-label': true,
 			'select-label-empty': !!!placeholder || !!!placeholder?.length
-		}"
-	>
-		{{ placeholder || 'empty' }}
-	</span>
+		}">
+	{{ placeholder || 'empty' }}
+</span>
 
-	<div class="select-trigger" role="button" [attr.aria-expanded]="overlayVisible">
-		<ng-container *ngIf="opennerBtnTemplate">
-			<ng-container *ngTemplateOutlet="opennerBtnTemplate; context: { $implicit: overlayVisible }"></ng-container>
-		</ng-container>
-	</div>
+<div class="select-trigger" role="button" [attr.aria-expanded]="overlayVisible">
+	<ng-container *ngIf="opennerBtnTemplate">
+		<ng-container *ngTemplateOutlet="opennerBtnTemplate; context: { $implicit: overlayVisible }"></ng-container>
+	</ng-container>
+</div>
 
-	<div *ngIf="overlayVisible" [ngClass]="'select-panel'" [ngStyle]="panelStyle" [class]="panelStyleClass">
-		<ng-container *ngIf="!!options?.length && !!optionsToDisplay?.length">
-			<ng-container *ngTemplateOutlet="itemsListDefaultTmpl; context: { $implicit: optionsToDisplay, selectedOption: selectedOption }"></ng-container>
-			<button *ngIf="none" class="reset" (click)="reset()">Reset</button>
+<div *ngIf="overlayVisible" [ngClass]="'select-panel'" [ngStyle]="panelStyle" [class]="panelStyleClass">
+	<ng-container *ngIf="!!options?.length && !!optionsToDisplay?.length">
+		<ng-container
+			*ngTemplateOutlet="itemsListDefaultTmpl; context: { $implicit: optionsToDisplay, selectedOption: selectedOption }">
 		</ng-container>
+		<button *ngIf="none" class="reset" (click)="reset()">Reset</button>
+	</ng-container>
 
-		<ng-container *ngIf="!!!options?.length || !!!optionsToDisplay?.length">
-			<ng-content select=".simple-items"></ng-content>
-			<button *ngIf="none" class="reset" (click)="reset()">
-				<span>Reset</span>
-			</button>
-		</ng-container>
-	</div>
+	<ng-container *ngIf="!!!options?.length || !!!optionsToDisplay?.length">
+		<div class="select-items-wrapper">
+			<div class="select-items">
+				<ng-content select=".simple-items"></ng-content>
+			</div>
+		</div>
+		<button *ngIf="none" class="reset" (click)="reset()">
+			<span>Reset</span>
+		</button>
+	</ng-container>
 </div>
 
 <ng-template #defaultSelectIconTmpl let-overlayVisible>
-	<span class="select-trigger-icon" [ngClass]="selectIconClass" [ngClass]="{ open: overlayVisible, close: !overlayVisible }">
+	<span class="select-trigger-icon" [ngClass]="selectIconClass"
+		[ngClass]="{ open: overlayVisible, close: !overlayVisible }">
 		<img class="select-trigger__default-img" [src]="trigger_icon" />
 	</span>
 </ng-template>
 
 <ng-template #itemsListDefaultTmpl let-options let-selectedOption="selectedOption">
-	<ng-container>
-		<div class="select-items-wrapper">
-			<ul class="select-items">
-				<ng-template ngFor let-option let-i="index" [ngForOf]="options">
-					<ngxd-select-item
-						[option]="option"
-						[selected]="selectedOption === option"
-						[label]="getOptionLabel(option)"
-						[disabled]="isOptionDisabled(option)"
-						(optionClick)="onItemClick($event)"
-						[template]="itemTemplate"
-						[itemSize]="itemSize"
-					></ngxd-select-item>
-				</ng-template>
-			</ul>
+	<div class="select-items-wrapper">
+		<div class="select-items">
+			<ng-template ngFor let-option let-i="index" [ngForOf]="options">
+				<ngxd-select-item [option]="option" [selected]="selectedOption === option" [label]="getOptionLabel(option)"
+					[disabled]="isOptionDisabled(option)" (optionClick)="onItemClick($event)" [template]="itemTemplate"
+					[itemSize]="itemSize"></ngxd-select-item>
+			</ng-template>
 		</div>
-	</ng-container>
+	</div>
 </ng-template>
