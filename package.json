@@ -38,6 +38,7 @@
 	"scripts": {
 		"start": "nx serve select-sample --open --port=8081",
 		"build": "nx build",
+		"build:app": "nx build select-sample",
 		"build:prod": "nx build --prod",
 		"lint": "nx workspace-lint && nx lint",
 		"test:lib": "nx test select-simple",
