@@ -14,7 +14,9 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@ngx-dummy/select-simple": ["packages/select-simple/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }

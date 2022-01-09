@@ -1,0 +1,42 @@
+{
+  "projectType": "library",
+  "root": "packages/select-simple",
+  "sourceRoot": "packages/select-simple/src",
+  "prefix": "ngxd",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/angular:package",
+      "outputs": ["dist/packages/select-simple"],
+      "options": {
+        "project": "packages/select-simple/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "packages/select-simple/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "packages/select-simple/tsconfig.lib.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/packages/select-simple"],
+      "options": {
+        "jestConfig": "packages/select-simple/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "packages/select-simple/src/**/*.ts",
+          "packages/select-simple/src/**/*.html"
+        ]
+      }
+    }
+  },
+  "tags": []
+}
