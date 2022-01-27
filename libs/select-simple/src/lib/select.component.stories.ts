@@ -3,8 +3,8 @@ import { moduleMetadata, storiesOf } from '@storybook/angular';
 import { Parameters, OptionsParameter } from '@storybook/addons';
 import { ActionOptions, ActionsMap, action, withActions } from '@storybook/addon-actions';
 import { text, number, boolean, array, select, object } from '@storybook/addon-knobs';
-import {} from '@storybook/angular/dist/client';
-import { SelectSimpleModule } from '../select-simple.module';
+import { } from '@storybook/angular/dist/client';
+import { SelectSimpleModule } from './select-simple.module';
 
 // const cities = [
 //   { name: 'Moscow', code: 'MS' },
@@ -46,8 +46,8 @@ import { SelectSimpleModule } from '../select-simple.module';
 
 const optsParams: OptionsParameter = {
 	theme: {
-		brandTitle: 'Storybook sample',
-		base: 'Storybook sample',
+		brandTitle: 'Select Component',
+		base: 'Components',
 	},
 };
 

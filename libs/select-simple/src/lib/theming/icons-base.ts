@@ -1,11 +1,11 @@
 /* eslint-disable max-len */
 /*!
- * @ngx-dummy/Accordion-Simple library
- * Simple accordion created for angular / ionic projects.
- * https://github.com/ngx-dummy/accordion-simple
+ * @ngx-dummy/select-Simple library
+ * Simple select created for angular / ionic projects.
+ * https://github.com/ngx-dummy/select-simple
  *
  * Copyright  Vladimir Ovsyukov <ovsyukov@yandex.com>
- * Published under GNU GPLv3 License
+ * Published under MIT License
  */
 
 export const arrow_down =

@@ -1,19 +1,23 @@
 <section class="demo">
 	<h4>Reactive form sample:</h4>
 	<form [formGroup]="form" (ngSubmit)="checkFormValid($event)">
-		<ngxd-select
-			id="select1"
-			[options]="cities"
-			[templates]="templates"
-			[readonly]="false"
-			[required]="true"
-			[none]="true"
-			formControlName="selector"
-			placeholder="Select a City"
-			optionLabelKey="name"
-			[tabindex]="1"
-			[autofocus]="true"
-		></ngxd-select>
+		<div class="resources">
+			<ngxd-select
+				id="select1"
+				[options]="cities"
+				[templates]="templates"
+				[readonly]="false"
+				[required]="true"
+				[resetBtn]="true"
+				[searchField]="true"
+				formControlName="selector"
+				placeholder="Select a City"
+				optionLabelKey="name"
+				[tabindex]="1"
+				[autofocus]="true"
+			></ngxd-select>
+			<button class="resource gutter-1" type="submit" [disabled]="!form.valid || form.pristine">Submit (is the form Valid)</button>
+		</div>
 	</form>
 
 	<div class="box">
@@ -91,7 +95,7 @@
 	<style>
 		.selected-container {
 			background-color: aqua;
-			border-radius: 0.1rem;
+			border-radius: .1rem;
 			min-height: 2rem;
 			padding: 0.2rem 0.4rem;
 			margin: 0.1rem;

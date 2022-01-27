@@ -1,4 +1,5 @@
-import { Component, Host, OnInit, TemplateRef, ViewChild } from '@angular/core';
+/* eslint-disable @angular-eslint/no-host-metadata-property */
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 
 import { ITemplates } from '@ngx-dummy/select-simple';
@@ -12,13 +13,13 @@ import { ITemplates } from '@ngx-dummy/select-simple';
 	},
 })
 export class AppComponent implements OnInit {
-	@ViewChild('btnTmpl', { static: true }) bntOpenTmpl: TemplateRef<HTMLElement>;
-	@ViewChild('selectedItemTemplate', { static: true }) selectedItemTemplate: TemplateRef<HTMLElement>;
+	@ViewChild('btnTmpl', { static: true }) bntOpenTmpl!: TemplateRef<HTMLElement>;
+	@ViewChild('selectedItemTemplate', { static: true }) selectedItemTemplate!: TemplateRef<HTMLElement>;
 	title = 'Select-sample';
 
-	selectedCity1: any;
-	selectedCity2: any;
-	selectedCity3: any;
+	selectedCity1: unknown = undefined;
+	selectedCity2: unknown = undefined;
+	selectedCity3: unknown = undefined;
 	templates: ITemplates = {};
 
 	headStyle = {
@@ -48,26 +49,26 @@ export class AppComponent implements OnInit {
 		{ name: 'London', code: 'LDN' },
 		{ name: 'Paris', code: 'PRS' },
 	];
-
-	simpleCitiesArray = [...this.cities].map(({ name, code }) => name);
+	
+	simpleCitiesArray = [...this.cities].map(({ name }) => name);
 
 	form = new FormGroup({
 		selector: new FormControl(this.cities[0]),
 	});
 
-	checkFormValid($event) {
+	checkFormValid($event: MouseEvent) {
 		$event.preventDefault();
 		alert('Is form valid: ' + this.form.valid);
 	}
 
 	ngOnInit() {
 		this.templates = {
-			opennerBtnTemplate: this.bntOpenTmpl,
+			openerBtnTemplate: this.bntOpenTmpl,
 			selectedItemTemplate: this.selectedItemTemplate,
 		};
 		this.form.valueChanges.subscribe((formValue) => {
 			console.log({ formValue, formValid: this.form.valid });
-			this.selectedCity1 = formValue;
+			this.selectedCity1 = { formValue, formValid: this.form.valid };
 		});
 	}
 }

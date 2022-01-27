@@ -15,15 +15,22 @@
 [![GitHub issues](https://img.shields.io/github/issues/ngx-dummy/select-simple?style=flat-square)](https://github.com/ngx-dummy/select-simple/issues)
 [![GitHub forks](https://img.shields.io/github/forks/ngx-dummy/select-simple?style=flat-square)](https://github.com/ngx-dummy/select-simple/network)
 [![GitHub stars](https://img.shields.io/github/stars/ngx-dummy/select-simple?style=flat-square)](https://github.com/ngx-dummy/select-simple/stargazers)
+[![GitHub Release](https://badgen.net/github/release/ngx-dummy/select-simple)](https://github.com/ngx-dummy/select-simple/releases)
+[![GitHub Branches](https://badgen.net/github/branches/ngx-dummy/select-simple)](https://github.com/ngx-dummy/select-simple/branches)
+[![GitHub Tags](https://badgen.net/github/tags/ngx-dummy/select-simple)](https://github.com/ngx-dummy/select-simple/tags)
+[![GitHub Issues](https://badgen.net/github/issues/ngx-dummy/select-simple)](https://github.com/ngx-dummy/select-simple/issues)
+[![GitHub Forks](https://badgen.net/github/forks/ngx-dummy/select-simple)](https://github.com/ngx-dummy/select-simple/network/members)
+[![GitHub Status](https://badgen.net/github/status/ngx-dummy/select-simple)](https://github.com/ngx-dummy/select-simple/network/members)
+[![Npm downloads](https://badgen.net/npm/dt/@ngx-dummy/select-simple)](https://www.npmjs.com/package/@ngx-dummy/select-simple)
+[![GitHub monthly downloads](https://badgen.net/npm/dm/@ngx-dummy/select-simple)](https://www.npmjs.com/package/@ngx-dummy/select-simple)
+[![bundle size](https://badgen.net/bundlephobia/minzip/@ngx-dummy/select-simple)](https://bundlephobia.com/result?p=@ngx-dummy/select-simple)
+[![bundle size](https://badgen.net/bundlephobia/min/@ngx-dummy/select-simple)](https://bundlephobia.com/result?p=@ngx-dummy/select-simple)
+[![size](https://badgen.net/packagephobia/publish/@ngx-dummy/select-simple)](https://bundlephobia.com/result?p=ngx-dummy/select-simple)
+
 
 [![](https://data.jsdelivr.com/v1/package/npm/@ngx-dummy/select-simple/badge?style=flat-square)](https://www.jsdelivr.com/package/npm/@ngx-dummy/select-simple)
 
-<!--
-
-[![Twitter](https://img.shields.io/twitter/url?style=social)](https://twitter.com/intent/tweet?text=Wow:&url=https%3A%2F%2Fgithub.com%2Fngx-dummy%2Fselect-simple) -->
-
 [![Donations](https://img.shields.io/badge/Donate-PayPal-green.svg?style=flat-square)](https://paypal.me/ovsyukov)
-
 [![Twitter Follow](https://img.shields.io/twitter/follow/OvsyukovV.svg?style=social)](https://twitter.com/OvsyukovV)
 
 ---
@@ -137,7 +144,7 @@ selected = undefined;
 <br />
 
 <details closed>
-<summary>More detailed showcase (the video clip demonstrates most of use cases of the library)</summary>
+<summary>More detailed showcase (the video clip demonstrates some of use cases of the library (outdated))</summary>
 <center>
 
 [![Using @ngx-dummy/select-simple](https://raw.githubusercontent.com/ngx-dummy/select-simple/v9/docs/Select-simple-usage.png)](https://vimeo.com/579375725/749b80e96c)
@@ -174,8 +181,25 @@ selected = undefined;
 
 <a href="https://www.buymeacoffee.com/vovan_super" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-green.png" alt="Buy Me A Coffee" height="40" width="140" style="border-radius: 5px;"></a>
 
-<br/>
 <br />
+<br />
+
+---
+
+<br/>
+
+<details closed>
+<summary>Other projects:</summary>
+
+|     Name      |                    URL                     |
+| :-----------: | :----------------------------------------: |
+| **Accordion Simple** | *https://github.com/ngx-dummy/accordion-simple* |
+
+</details>
+
+<br/>
+
+---
 
 #### Usage
 
