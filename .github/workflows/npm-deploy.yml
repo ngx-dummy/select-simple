@@ -1,8 +1,13 @@
-# A basic CI script to automate publishing @ngx-dummy/accordion-simple lib
+# A basic CI script to automate publishing @ngx-dummy/select-simple lib
 name: npm-deploy
 on:
   release:
     types: [created, published]
+
+  push:
+    branches:
+      - main
+      - '*-v9'
 
 jobs:
   build:
