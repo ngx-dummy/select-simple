@@ -11,7 +11,6 @@ if [[ ! -e $WORKING_DIR ]]; then
     mkdir -p $WORKING_DIR
 fi
 
-
 echo "Building the library..."
 npm run build:prod
 
@@ -23,6 +22,6 @@ cp -ruf $ROOT/README.md $WORKING_DIR/
 cp -ruf $ROOT/LICENSE $WORKING_DIR/
 # cp -ruf $ROOT/docs/ $WORKING_DOC_DIR
 
-cd $WORKING_DIR
-npm pack
-npm publish --access public
+# cd $WORKING_DIR
+# npm pack
+# npm publish --access public

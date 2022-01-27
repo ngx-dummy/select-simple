@@ -1,6 +1,6 @@
 {
   "name": "ngx-dummy",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "author": {
     "name": "Vladimir Ovsyukov",
     "email": "vovansuper@mail.ru",
@@ -46,9 +46,8 @@
     "test": "npm run test:lib",
     "test:w": "npm run test:lib -- --watch",
     "story:select": "nx run select-simple:storybook",
-    "postinstall": "ngcc --properties es2015 browser module main",
     "pretty-quick": "pretty-quick",
-    "publish:npm": "rimraf dist && sh ./scripts/publish.sh"
+    "prepublish:npm": "rimraf dist && sh ./scripts/prepublish.sh"
   },
   "dependencies": {
     "@angular-architects/module-federation": "^14.0.1",

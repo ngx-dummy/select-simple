@@ -20,7 +20,6 @@ export interface IOptionClickEvent {
 		:host {
 			display: block;
 			padding: .1rem;
-
 			.item-disabled {
 				cursor: not-allowed !important;
 				pointer-events: none;

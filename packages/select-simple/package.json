@@ -1,6 +1,6 @@
 {
 	"name": "@ngx-dummy/select-simple",
-	"version": "0.0.3",
+	"version": "0.0.4",
 	"author": {
 		"name": "Vladimir Ovsyukov",
 		"email": "vovansuper@mail.ru",
@@ -35,9 +35,11 @@
 	"homepage": "https://github.com/ngx-dummy/select-simple#README",
 	"license": "MIT",
 	"private": false,
+	"dependencies": {
+		"tslib": "^2.3.1"
+	},
 	"peerDependencies": {
 		"@angular/common": "^13.2.0",
-		"@angular/core": "^13.2.0",
-		"tslib": "^2.3.1"
+		"@angular/core": "^13.2.0"
 	}
 }
