@@ -47,7 +47,7 @@ import {
 } from '@angular/core';
 import { AbstractControl, ControlValueAccessor, FormControl, NgControl, NG_VALIDATORS, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
 import { fromEvent, of } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { concatMap, debounceTime, map, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { equals, getSvgSafeRes, OptionKeyboardEventHandleKeys, resolveFieldData } from './settings/helpers';
 import { ITemplates } from './settings/ISelectTemplate';
 import { IOptionClickEvent, ISelectItem, SelectItemComponent } from './select-item.component';
@@ -88,8 +88,6 @@ export const NG_VALIDATORS_PROVIDER: Provider = {
 		'(click)': 'onMouseclick($event)'
 	},
 })
-
-
 export class SelectComponent implements OnInit, AfterContentChecked, ControlValueAccessor {
 	@ViewChild('defaultSelectIconTmpl', { read: TemplateRef }) defaultOpenerTemplate: TemplateRef<HTMLElement> | undefined;
 	@ViewChild('itemsListDefaultTmpl', { read: TemplateRef }) itemsListDefaultTmpl: TemplateRef<HTMLElement> | undefined;
@@ -110,7 +108,6 @@ export class SelectComponent implements OnInit, AfterContentChecked, ControlValu
 	@Input() templates: ITemplates | undefined;
 	@Input() name: string | undefined;
 
-	_headerStyle = {};
 	@Input() set headerStyle(headStyleObj: any) {
 		if (!!headStyleObj && !!Object.keys(headStyleObj).length) {
 			this._headerStyle = {
@@ -122,17 +119,7 @@ export class SelectComponent implements OnInit, AfterContentChecked, ControlValu
 	get headerStyle() {
 		return this._headerStyle;
 	}
-
-	_panelStyle: any = {
-		backgroundColor: 'rgba(1, 1, 1, 0.45)',
-		color: '#fff',
-		border: '1px solid var(--ngxd-primary-color)',
-		borderRadius: '0.2rem',
-		boxShadow: '2px 5px 10px rgba(55, 55, 55, 0.8)',
-	};
-	get panelStyle() {
-		return this._panelStyle;
-	}
+	private _headerStyle = {};
 
 	@Input() set panelStyle(stylesObj: Object) {
 		if (!!stylesObj && !!Object.keys(stylesObj).length) {
@@ -142,11 +129,23 @@ export class SelectComponent implements OnInit, AfterContentChecked, ControlValu
 			};
 		}
 	}
+	get panelStyle() {
+		return this._panelStyle;
+	}
+	private _panelStyle: any = {
+		backgroundColor: 'rgba(1, 1, 1, 0.45)',
+		color: '#fff',
+		border: '1px solid var(--ngxd-primary-color)',
+		borderRadius: '0.2rem',
+		boxShadow: '2px 5px 10px rgba(55, 55, 55, 0.8)',
+	};
+
 	@Input() panelStyleClass = 'panel';
 	@Input() styleClass = '';
 	@Input() readonly = false;
 	@Input() required = false;
-	@Input() none = false;
+	@Input() resetBtn = false;
+	@Input() searchField = false;
 	@Input() autofocus = false;
 	@Input() placeholder?: string = undefined;
 
@@ -194,7 +193,7 @@ export class SelectComponent implements OnInit, AfterContentChecked, ControlValu
 	@Output() onBlur: EventEmitter<any> = new EventEmitter();
 
 	itemTemplate: TemplateRef<any> | undefined;
-	selectedItemTemplate: TemplateRef<any> | undefined;
+	selectedItemTemplate: TemplateRef<any> | null = null;
 	selectedOption: any;
 
 	prevValue: any;
@@ -210,7 +209,7 @@ export class SelectComponent implements OnInit, AfterContentChecked, ControlValu
 
 	constructor(
 		// @Self() @Optional() ngControl: NgControl,
-		public el: ElementRef,
+		public el: ElementRef<Element>,
 		public renderer: Renderer2,
 		public cd: ChangeDetectorRef,
 		private sanitizer: DomSanitizer,
@@ -235,7 +234,7 @@ export class SelectComponent implements OnInit, AfterContentChecked, ControlValu
 	}
 
 	ngOnInit() {
-		this.optionsToDisplay = this.options;
+		// this.optionsToDisplay = this.options;
 		this.updateSelectedOption(null);
 
 		fromEvent<MouseEvent>(document, 'click')
@@ -290,7 +289,7 @@ export class SelectComponent implements OnInit, AfterContentChecked, ControlValu
 		const option = $itemEvent.option;
 
 		if (!this.isOptionDisabled(option)) {
-			this.selectItem($itemEvent.originalEvent, option);
+			this.selectItem($itemEvent.baseEvent, option);
 		}
 
 		setTimeout(() => {
@@ -367,24 +366,44 @@ export class SelectComponent implements OnInit, AfterContentChecked, ControlValu
 		this.selectItem(new MouseEvent('click'), null);
 	}
 
+
 	isOutsideClicked(event: Event): boolean {
-		return !(this.el.nativeElement.isSameNode(event.target) || this.el.nativeElement.contains(event.target));
+		return !(this.el.nativeElement.isSameNode(event.target as Node) || this.el.nativeElement.contains(event.target as Node));
 	}
 
 	show() {
 		this.overlayVisible = true;
 		this.onShow.emit(true);
+		if (this.searchField && !!this.options?.length) {
+			setTimeout(() => {
+				const searchFieldInputEl = this.el.nativeElement?.querySelector('.search-term') as HTMLInputElement;
+				searchFieldInputEl?.focus();
+
+				!!searchFieldInputEl && fromEvent<InputEvent>(searchFieldInputEl, 'input').pipe(
+					takeUntil(this.onHide),
+					debounceTime(200),
+					switchMap(($event) => of((<HTMLInputElement>$event.target).value))
+				).subscribe(searchTerm => this.optionsToDisplay = !!searchTerm.length ?
+					this.options?.filter((opt) => {
+						const optionValue = this.getOptionValue(opt);
+						const found = !!(this.optionLabelKey?.length && (<string>optionValue[this.optionLabelKey].toLowerCase()).includes(searchTerm.toLowerCase()));
+						return found;
+					})
+					: this.options
+				);
+			});
+		}
 	}
 
 	hide() {
 		this.onHide.emit(false);
 		this.overlayVisible = false;
+		this.optionsToDisplay = this.options;
 		this.cd.markForCheck();
 	}
 	selectedItemIndex = 0;
 
 	onKeydown($event: KeyboardEvent) {
-		console.log($event.key, $event.code);
 		if (this.isOutsideClicked($event)) {
 			console.log('Clicked outside of the component ...');
 			return;
@@ -446,7 +465,6 @@ export class SelectComponent implements OnInit, AfterContentChecked, ControlValu
 				this.hide();
 				break;
 		}
-		console.log(this.selectedOption);
 	}
 
 	findOptionIndex(val: any, opts: any[]): number {

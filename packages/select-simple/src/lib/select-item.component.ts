@@ -1,5 +1,5 @@
 /* eslint-disable @angular-eslint/no-host-metadata-property */
-import { Component, Input, TemplateRef, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
+import { Component, Input, TemplateRef, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 
 export interface ISelectItem<T = unknown> {
 	label?: string;
@@ -10,7 +10,7 @@ export interface ISelectItem<T = unknown> {
 	disabled?: boolean;
 }
 export interface IOptionClickEvent {
-	originalEvent: MouseEvent;
+	baseEvent: MouseEvent;
 	option: string | ISelectItem;
 }
 
@@ -27,6 +27,7 @@ export interface IOptionClickEvent {
 				color: var(--ngxd-disabled);
 				user-select: none;
 			}
+			
 			.item-highlight:not(.item-disabled) {
 				user-select: none;
 				cursor: pointer;
@@ -35,10 +36,10 @@ export interface IOptionClickEvent {
 		}
 	`],
 	template: `
-		<span *ngIf="!template">{{ getItemCaption() }}</span>
-		<ng-container *ngIf="template">
+		<ng-container *ngIf="template; else simpleItemTmpl">
 			<ng-container *ngTemplateOutlet="template; context: { $implicit: option }"></ng-container>
 		</ng-container>
+		<ng-template #simpleItemTmpl>{{ getItemCaption() }}</ng-template>
 	`,
 	host: {
 		'[attr.role]': '"option"',
@@ -46,8 +47,10 @@ export interface IOptionClickEvent {
 		'[class.select-item]': 'true',
 		'[class.item-highlight]': 'selected',
 		'[class.item-disabled]': 'disabled',
+		'[ngClass]': 'option.styleClass',
 		'(click)': 'onOptionClick($event)'
 	},
+	changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SelectItemComponent {
 	@Input() option: string | ISelectItem | undefined = undefined;
@@ -65,8 +68,8 @@ export class SelectItemComponent {
 	getItemVisibility = () => (this.visible ? 'visible' : 'hidden');
 	onOptionClick($event: MouseEvent) {
 		this.optionClick.emit({
-			originalEvent: $event,
-			option: this.option as ISelectItem | string,
+			baseEvent: $event,
+			option: this.option ?? (this.label || 'Nothing selected'),
 		});
 	}
 }

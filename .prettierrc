@@ -6,8 +6,7 @@
 	"bracketSpacing": true,
 	"singleQuote": true,
 	"trailingComma": "es5",
-	"printWidth": 200,
-	"htmlWhitespaceSensitivity": "ignore",
+	"printWidth": 180,
 	"useTabs": true,
 	"proseWrap": "preserve",
 	"overrides": [
@@ -15,6 +14,12 @@
 			"files": ["*.scss"],
 			"options": {
 				"singleQuote": true
+			}
+		},
+		{
+			"files": ["*.html"],
+			"options": {
+				"printWidth": 180
 			}
 		}
 	]

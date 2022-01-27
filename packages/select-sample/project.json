@@ -69,7 +69,8 @@
 			},
 			"defaultConfiguration": "development",
 			"options": {
-				"port": 8088
+				"port": 8088,
+				"publicHost": "http://localhost:8088"
 			}
 		},
 		"extract-i18n": {

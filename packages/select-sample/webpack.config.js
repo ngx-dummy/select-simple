@@ -23,14 +23,19 @@ sharedMappings.register(
 	workspaceRootPath
 );
 
+const share = mf.share;
+mf.setInferVersion(true);
 module.exports = {
+	experiments: {
+		outputModule: true,
+	},
 	output: {
 		uniqueName: 'select-sample',
 		publicPath: 'auto',
 	},
 	optimization: {
 		runtimeChunk: false,
-		minimize: false,
+		minimize: true,
 	},
 	resolve: {
 		alias: {
@@ -39,14 +44,17 @@ module.exports = {
 	},
 	plugins: [
 		new ModuleFederationPlugin({
+			library: {
+				type: 'module',
+			},
 			remotes: {},
-			shared: {
+			shared: share({
 				'@angular/core': { singleton: true, strictVersion: true },
 				'@angular/common': { singleton: true, strictVersion: true },
 				'@angular/common/http': { singleton: true, strictVersion: true },
 				'@angular/router': { singleton: true, strictVersion: true },
 				...sharedMappings.getDescriptors(),
-			},
+			}),
 		}),
 		sharedMappings.getPlugin(),
 	],
