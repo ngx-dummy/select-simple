@@ -1,94 +1,220 @@
+<center>
+  <a href="https://www.npmjs.com/package/@ngx-dummy/select-simple" target="_blank">
+    <p align="center">
+      <img src="https://avatars3.githubusercontent.com/u/62136587?s=400&u=4580be0183d1496d982253d3a0d803de82465626&v=4" width="200" height="200" />
+    </p>
+  </a>
+  <h2 align="center"><b style="color: teal;"><a href="https://www.npmjs.com/package/@ngx-dummy/select-simple" target="_blank">@Ngx-dummy/Select-simple</a></b> <i>library</i></h2>
 
+[![npm version](https://badge.fury.io/js/@ngx-dummy%2Fselect-simple.svg?style=flat-square)](https://badge.fury.io/js/@ngx-dummy%2Fselect-simple)
 
-# NgxDummy
+</center>
 
-This project was generated using [Nx](https://nx.dev).
+[![GitHub license](https://img.shields.io/github/license/ngx-dummy/select-simple?style=flat-square)](https://github.com/ngx-dummy/select-simple/blob/main/LICENSE)
 
-<p style="text-align: center;"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="450"></p>
+[![npm-deploy](https://github.com/ngx-dummy/select-simple/actions/workflows/npm-deploy.yml/badge.svg)](https://github.com/ngx-dummy/select-simple/actions/workflows/npm-deploy.yml)
 
-🔎 **Smart, Fast and Extensible Build System**
+[![GitHub issues](https://img.shields.io/github/issues/ngx-dummy/select-simple?style=flat-square)](https://github.com/ngx-dummy/select-simple/issues)
+[![GitHub forks](https://img.shields.io/github/forks/ngx-dummy/select-simple?style=flat-square)](https://github.com/ngx-dummy/select-simple/network)
+[![GitHub stars](https://img.shields.io/github/stars/ngx-dummy/select-simple?style=flat-square)](https://github.com/ngx-dummy/select-simple/stargazers)
+[![GitHub Release](https://badgen.net/github/release/ngx-dummy/select-simple)](https://github.com/ngx-dummy/select-simple/releases)
+[![GitHub Branches](https://badgen.net/github/branches/ngx-dummy/select-simple)](https://github.com/ngx-dummy/select-simple/branches)
+[![GitHub Tags](https://badgen.net/github/tags/ngx-dummy/select-simple)](https://github.com/ngx-dummy/select-simple/tags)
+[![GitHub Issues](https://badgen.net/github/issues/ngx-dummy/select-simple)](https://github.com/ngx-dummy/select-simple/issues)
+[![GitHub Forks](https://badgen.net/github/forks/ngx-dummy/select-simple)](https://github.com/ngx-dummy/select-simple/network/members)
+[![GitHub Status](https://badgen.net/github/status/ngx-dummy/select-simple)](https://github.com/ngx-dummy/select-simple/network/members)
+[![size](https://badgen.net/packagephobia/publish/@ngx-dummy/select-simple)](https://bundlephobia.com/result?p=ngx-dummy/select-simple)
+[![Npm downloads](https://badgen.net/npm/dt/@ngx-dummy/select-simple)](https://www.npmjs.com/package/@ngx-dummy/select-simple)
+[![GitHub monthly downloads](https://badgen.net/npm/dm/@ngx-dummy/select-simple)](https://www.npmjs.com/package/@ngx-dummy/select-simple)
 
-## Adding capabilities to your workspace
+[![](https://data.jsdelivr.com/v1/package/npm/@ngx-dummy/select-simple/badge?style=flat-square)](https://www.jsdelivr.com/package/npm/@ngx-dummy/select-simple)
 
-Nx supports many plugins which add capabilities for developing different types of applications and different tools.
+<!--
 
-These capabilities include generating applications, libraries, etc as well as the devtools to test, and build projects as well.
+[![Twitter](https://img.shields.io/twitter/url?style=social)](https://twitter.com/intent/tweet?text=Wow:&url=https%3A%2F%2Fgithub.com%2Fngx-dummy%2Fselect-simple) -->
 
-Below are our core plugins:
+[![Donations](https://img.shields.io/badge/Donate-PayPal-green.svg?style=flat-square)](https://paypal.me/ovsyukov)
 
-- [React](https://reactjs.org)
-  - `npm install --save-dev @nrwl/react`
-- Web (no framework frontends)
-  - `npm install --save-dev @nrwl/web`
-- [Angular](https://angular.io)
-  - `npm install --save-dev @nrwl/angular`
-- [Nest](https://nestjs.com)
-  - `npm install --save-dev @nrwl/nest`
-- [Express](https://expressjs.com)
-  - `npm install --save-dev @nrwl/express`
-- [Node](https://nodejs.org)
-  - `npm install --save-dev @nrwl/node`
+[![Twitter Follow](https://img.shields.io/twitter/follow/OvsyukovV.svg?style=social)](https://twitter.com/OvsyukovV)
 
-There are also many [community plugins](https://nx.dev/community) you could add.
+---
 
-## Generate an application
+## Features
 
-Run `nx g @nrwl/react:app my-app` to generate an application.
+This is an Angular "version" of html [select](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/select) element (which could hardly be styled / templated ... hence the library)
 
-> You can use any of the plugins above to generate applications as well.
+- :gear: **Completely customizable:** you can change the colors, styles ...
+- :pencil2: **Create your own templates:** create your own Options' templates
+- :ok_hand: **You can use right away:** there are basic items styles included
+- :rocket: **No extra deps:** depends only on `@angular/core / @angular/common`
+- :satellite: **Options' Elements object bindings** data-bind `Option`s to **_string_** of complex objects
 
-When using Nx, you can create multiple applications and libraries in the same workspace.
+<br/>
 
-## Generate a library
+## Install
 
-Run `nx g @nrwl/react:lib my-lib` to generate a library.
+### Yarn
 
-> You can also use any of the plugins above to generate libraries as well.
+```bash
+yarn add @ngx-dummy/select-simple
+```
 
-Libraries are shareable across libraries and applications. They can be imported from `@ngx-dummy/mylib`.
+<details closed>
+<summary>With Npm</summary>
 
-## Development server
+```bash
+npm install -save @ngx-dummy/select-simple@0.0.5-v9
+```
 
-Run `nx serve my-app` for a dev server. Navigate to http://localhost:4200/. The app will automatically reload if you change any of the source files.
+</details>
 
-## Code scaffolding
+<br/>
 
-Run `nx g @nrwl/react:component my-component --project=my-app` to generate a new component.
+## Usage
 
-## Build
+### See the sample app setup [Stackblitz](https://stackblitz.com/edit/ngx-dummyselect-simple-tester?file=src/app/app.component.html)
 
-Run `nx build my-app` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+[![Using @ngx-dummy/select-simple](https://user-images.githubusercontent.com/969302/140906480-cc2b597d-7ac2-4c12-b752-61b8ba1c704b.png)](https://stackblitz.com/edit/ngx-dummyselect-simple-tester?file=src/app/app.component.html)
 
-## Running unit tests
+<br />
 
-Run `nx test my-app` to execute the unit tests via [Jest](https://jestjs.io).
+### samples
 
-Run `nx affected:test` to execute the unit tests affected by a change.
+```ts
+import { SelectSimpleModule } from '@ngx-dummy/select-simple';
 
-## Running end-to-end tests
+@NgModule({
+	imports: [SelectSimpleModule],
+})
+export class AppModule {}
+```
 
-Run `ng e2e my-app` to execute the end-to-end tests via [Cypress](https://www.cypress.io).
+#### with `Options` (Array of Strings) binding:
 
-Run `nx affected:e2e` to execute the end-to-end tests affected by a change.
+```html
+<ngxd-select id="select1" [options]="options" [readonly]="false" [required]="true" [none]="true" formControlName="selector" placeholder="Select a City"></ngxd-select>
+```
 
-## Understand your workspace
+```ts
+//... options as simple strings
+options = ['opt1', 'opt2', 'opt2'];
+//...
+```
 
-Run `nx dep-graph` to see a diagram of the dependencies of your projects.
+<br />
 
-## Further help
+#### with `Options` (Array of Strings) binding:
 
-Visit the [Nx Documentation](https://nx.dev) to learn more.
+```html
+<ngxd-select id="select1" [options]="options" [readonly]="false" [required]="true" [none]="true" formControlName="selector" placeholder="Select a City" optionLabelKey="name"></ngxd-select>
+```
 
+```ts
+//... Select-items's Captions resolved by `optionLabelKey` param
+options = [{ name: 'opt1' , value: { param1: 'para1', param2: 'para2' } }, ...];
+//...
+```
 
+<br />
 
-## ☁ Nx Cloud
+#### with `Options` (Array of Strings) binding:
 
-### Distributed Computation Caching & Distributed Task Execution
+```html
+<ngxd-select id="select1" [options]="options" [readonly]="false" [required]="true" [none]="true" formControlName="selector" placeholder="Select a City" optionLabelKey="name"></ngxd-select>
+```
 
-<p style="text-align: center;"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-cloud-card.png"></p>
+```ts
+//... Select-items's Captions resolved by `optionLabelKey` param
+options = [{ name: 'opt1' , value: { param1: 'para1', param2: 'para2' } }, ...];
+//...
+```
 
-Nx Cloud pairs with Nx in order to enable you to build and test code more rapidly, by up to 10 times. Even teams that are new to Nx can connect to Nx Cloud and start saving time instantly.
+<br />
 
-Teams using Nx gain the advantage of building full-stack applications with their preferred framework alongside Nx’s advanced code generation and project dependency graph, plus a unified experience for both frontend and backend developers.
+#### and `Option` are declared directly:
 
-Visit [Nx Cloud](https://nx.app/) to learn more.
+```html
+<ngxd-select id="select1" [options]="options" [readonly]="false" [required]="true" [none]="true" formControlName="selector" placeholder="Select a City" optionLabelKey="name">
+	<ngxd-select-item [label]="'Option 1'" [option]="'Opt1'" (onClick)="selected = $event"></ngxd-select-item>
+</ngxd-select>
+```
+
+```ts
+//...
+selected = undefined;
+//...
+```
+
+<br />
+
+<details>
+<summary>More detailed showcase (the video clip demonstrates most of use cases of the library)</summary>
+<center>
+
+[![Using @ngx-dummy/select-simple](https://raw.githubusercontent.com/ngx-dummy/select-simple/v9/docs/Select-simple-usage.png)](https://vimeo.com/579375725/749b80e96c)
+
+</center>
+
+</details>
+
+<br/>
+
+<br />
+<br />
+
+---
+
+<br />
+<br />
+
+## Versioning
+
+supports Angular 11 - 13.
+
+ <details>
+ <summary>-*v9</summary>
+`@ngx-dummy/select-simple` versioned `*-v9` supports Angular 9 - 11.
+ </details>
+
+<br />
+
+## Browser Support
+
+| [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png" alt="Chrome" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Chrome | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png" alt="Firefox" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Firefox | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png" alt="IE / Edge" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Edge | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari/safari_48x48.png" alt="Safari" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Safari | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/opera/opera_48x48.png" alt="Opera" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Opera |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| last 2 versions                                                                                                                                                                                               | last 2 versions                                                                                                                                                                                                   | Edge versions                                                                                                                                                                                              | last 2 versions                                                                                                                                                                                               | last 2 versions                                                                                                                                                                                           |
+
+<br />
+
+## To support my work, maybe ..👏 🍭 :
+
+<a href="https://www.buymeacoffee.com/vovan_super" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-green.png" alt="Buy Me A Coffee" height="40" width="140" style="border-radius: 5px;"></a>
+
+<br/>
+
+---
+
+<br/>
+
+<details closed>
+<summary>Other projects:</summary>
+
+|     Name      |                    URL                     |
+| :-----------: | :----------------------------------------: |
+| **Accordion Simple** | *https://github.com/ngx-dummy/accordion-simple* |
+
+</details>
+
+<br/>
+
+---
+
+<br />
+
+#### Usage
+
+Licensed under
+[![GitHub license](https://img.shields.io/github/license/ngx-dummy/select-simple)](https://github.com/ngx-dummy/select-simple/blob/main/LICENSE)
+
+Licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+\_Copyright (c) belongs to Vladimir Ovsyukov <<ovsyukov@yandex.com>>

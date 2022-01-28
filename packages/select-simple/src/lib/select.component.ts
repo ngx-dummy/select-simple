@@ -1,3 +1,4 @@
+/* eslint-disable @angular-eslint/no-host-metadata-property */
 /* eslint-disable no-case-declarations */
 /* eslint-disable @angular-eslint/no-input-rename */
 /* eslint-disable no-extra-boolean-cast */
@@ -46,8 +47,8 @@ import {
 } from '@angular/core';
 import { AbstractControl, ControlValueAccessor, FormControl, NgControl, NG_VALIDATORS, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
 import { fromEvent, of } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
-import { getSvgSafeRes } from './settings/helpers';
+import { concatMap, debounceTime, map, switchMap, takeUntil, tap } from 'rxjs/operators';
+import { equals, getSvgSafeRes, OptionKeyboardEventHandleKeys, resolveFieldData } from './settings/helpers';
 import { ITemplates } from './settings/ISelectTemplate';
 import { IOptionClickEvent, ISelectItem, SelectItemComponent } from './select-item.component';
 import { arrow_down } from './theming/icons-base';
@@ -71,14 +72,20 @@ export const NG_VALIDATORS_PROVIDER: Provider = {
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	encapsulation: ViewEncapsulation.None,
 	styleUrls: ['select.component.scss'],
-	// eslint-disable-next-line @angular-eslint/no-host-metadata-property
 	host: {
+		'[class]': 'styleClass',
+		'[ngStyle]': 'headerStyle',
 		'[class.wrapper-focus]': 'focused || overlayVisible',
+		'[class.select]': 'true',
+		'[class.disabled]': 'disabled',
+		'[class.focus]': 'focused || overlayVisible',
+		'[class.select-open]': 'overlayVisible',
 		'[attr.tabIndex]': 'tabindex',
 		'[attr.autofocus]': 'autofocus',
 		'(blur)': 'onHostBlur($event)',
 		'(focus)': 'onHostFocus($event)',
 		'(keydown)': 'onKeydown($event)',
+		'(click)': 'onMouseclick($event)'
 	},
 })
 export class SelectComponent implements OnInit, AfterContentChecked, ControlValueAccessor {
@@ -101,8 +108,6 @@ export class SelectComponent implements OnInit, AfterContentChecked, ControlValu
 	@Input() templates: ITemplates | undefined;
 	@Input() name: string | undefined;
 
-	_headerStyle = {};
-	// Change header styles
 	@Input() set headerStyle(headStyleObj: any) {
 		if (!!headStyleObj && !!Object.keys(headStyleObj).length) {
 			this._headerStyle = {
@@ -114,35 +119,36 @@ export class SelectComponent implements OnInit, AfterContentChecked, ControlValu
 	get headerStyle() {
 		return this._headerStyle;
 	}
-
-	// Default panel styling , change via the input
-	_panelStyle: any = {
-		backgroundColor: 'rgba(1, 1, 1, 0.45)',
-		color: '#fff',
-		border: '1px solid #ccd',
-		borderRadius: '0.1rem',
-		boxShadow: '2px 5px 10px rgba(55, 55, 55, 0.8)',
-	};
-	get panelStyle() {
-		return this._panelStyle;
-	}
+	private _headerStyle = {};
 
 	@Input() set panelStyle(stylesObj: Object) {
 		if (!!stylesObj && !!Object.keys(stylesObj).length) {
-			//extending the panels' stylings
 			this._panelStyle = {
 				...this._panelStyle,
 				...stylesObj,
 			};
 		}
 	}
+	get panelStyle() {
+		return this._panelStyle;
+	}
+	private _panelStyle: any = {
+		backgroundColor: 'rgba(1, 1, 1, 0.45)',
+		color: '#fff',
+		border: '1px solid var(--ngxd-primary-color)',
+		borderRadius: '0.2rem',
+		boxShadow: '2px 5px 10px rgba(55, 55, 55, 0.8)',
+	};
+
 	@Input() panelStyleClass = 'panel';
 	@Input() styleClass = '';
 	@Input() readonly = false;
 	@Input() required = false;
-	@Input() none = false;
+	@Input() resetBtn = false;
+	@Input() searchField = false;
 	@Input() autofocus = false;
-	@Input() placeholder?: string;
+	@Input() placeholder?: string = undefined;
+
 	// IMPORTANT: Used to resolve the item name (in case the complex object provided as @Input() option` )
 	@Input() optionLabelKey?: string;
 	@Input() selectIconClass = '';
@@ -187,13 +193,13 @@ export class SelectComponent implements OnInit, AfterContentChecked, ControlValu
 	@Output() onBlur: EventEmitter<any> = new EventEmitter();
 
 	itemTemplate: TemplateRef<any> | undefined;
-	selectedItemTemplate: TemplateRef<any> | undefined;
+	selectedItemTemplate: TemplateRef<any> | null = null;
 	selectedOption: any;
 
 	prevValue: any;
 	value: any;
-	onModelChange: Function = () => {};
-	onModelTouched: Function = () => {};
+	onModelChange: Function = () => { };
+	onModelTouched: Function = () => { };
 	optionsToDisplay?: any[];
 	hover = false;
 	overlayVisible = false;
@@ -203,7 +209,7 @@ export class SelectComponent implements OnInit, AfterContentChecked, ControlValu
 
 	constructor(
 		// @Self() @Optional() ngControl: NgControl,
-		public el: ElementRef,
+		public el: ElementRef<Element>,
 		public renderer: Renderer2,
 		public cd: ChangeDetectorRef,
 		private sanitizer: DomSanitizer,
@@ -228,7 +234,7 @@ export class SelectComponent implements OnInit, AfterContentChecked, ControlValu
 	}
 
 	ngOnInit() {
-		this.optionsToDisplay = this.options;
+		// this.optionsToDisplay = this.options;
 		this.updateSelectedOption(null);
 
 		fromEvent<MouseEvent>(document, 'click')
@@ -256,12 +262,14 @@ export class SelectComponent implements OnInit, AfterContentChecked, ControlValu
 	}
 
 	get label(): string {
-		const label = this.selectedOption ? this.getOptionLabel(this.selectedOption) : null;
+		const label = this.selectedOption ? this.getOptionLabel(this.selectedOption)
+			: (!!this.placeholder?.length) ? this.placeholder
+				: (!!this.options?.length) ? this.getOptionLabel(this.options[0]) : null;
 		return label;
 	}
 
 	getOptionLabel(option: any) {
-		return this.optionLabelKey ? resolveFieldData(option, this.optionLabelKey) : option.label != undefined ? option.label : option;
+		return this.optionLabelKey ? resolveFieldData(option, this.optionLabelKey) : resolveFieldData(option);
 	}
 
 	getOptionValue(option: any) {
@@ -281,7 +289,7 @@ export class SelectComponent implements OnInit, AfterContentChecked, ControlValu
 		const option = $itemEvent.option;
 
 		if (!this.isOptionDisabled(option)) {
-			this.selectItem($itemEvent.originalEvent, option);
+			this.selectItem($itemEvent.baseEvent, option);
 		}
 
 		setTimeout(() => {
@@ -358,18 +366,39 @@ export class SelectComponent implements OnInit, AfterContentChecked, ControlValu
 		this.selectItem(new MouseEvent('click'), null);
 	}
 
+
 	isOutsideClicked(event: Event): boolean {
-		return !(this.el.nativeElement.isSameNode(event.target) || this.el.nativeElement.contains(event.target));
+		return !(this.el.nativeElement.isSameNode(event.target as Node) || this.el.nativeElement.contains(event.target as Node));
 	}
 
 	show() {
 		this.overlayVisible = true;
 		this.onShow.emit(true);
+		if (this.searchField && !!this.options?.length) {
+			setTimeout(() => {
+				const searchFieldInputEl = this.el.nativeElement?.querySelector('.search-term') as HTMLInputElement;
+				searchFieldInputEl?.focus();
+
+				!!searchFieldInputEl && fromEvent<InputEvent>(searchFieldInputEl, 'input').pipe(
+					takeUntil(this.onHide),
+					debounceTime(200),
+					switchMap(($event) => of((<HTMLInputElement>$event.target).value))
+				).subscribe(searchTerm => this.optionsToDisplay = !!searchTerm.length ?
+					this.options?.filter((opt) => {
+						const optionValue = this.getOptionValue(opt);
+						const found = !!(this.optionLabelKey?.length && (<string>optionValue[this.optionLabelKey].toLowerCase()).includes(searchTerm.toLowerCase()));
+						return found;
+					})
+					: this.options
+				);
+			});
+		}
 	}
 
 	hide() {
 		this.onHide.emit(false);
 		this.overlayVisible = false;
+		this.optionsToDisplay = this.options;
 		this.cd.markForCheck();
 	}
 	selectedItemIndex = 0;
@@ -384,9 +413,9 @@ export class SelectComponent implements OnInit, AfterContentChecked, ControlValu
 			return;
 		}
 
-		switch ($event.which) {
-			//down
-			case 40:
+		switch ($event.key) {
+			case OptionKeyboardEventHandleKeys.ArrowDown:
+			case OptionKeyboardEventHandleKeys.Down:
 				if (!this.overlayVisible && $event.altKey) {
 					this.show();
 				} else {
@@ -399,19 +428,17 @@ export class SelectComponent implements OnInit, AfterContentChecked, ControlValu
 				$event.preventDefault();
 				break;
 
-			//up
-			case 38:
+			case OptionKeyboardEventHandleKeys.ArrowUp:
+			case OptionKeyboardEventHandleKeys.Up:
 				this.selectedItemIndex = this.selectedOption ? this.findOptionIndex(this.getOptionValue(this.selectedOption), this.optionsToDisplay) : -1;
 				let prevEnabledOption = this.findPrevEnabledOption(this.selectedItemIndex);
 				if (!!prevEnabledOption) {
 					this.selectItem($event, prevEnabledOption, false);
 				}
-
 				$event.preventDefault();
 				break;
 
-			//space
-			case 32:
+			case OptionKeyboardEventHandleKeys.Space:
 				if (!this.overlayVisible) {
 					this.show();
 				} else {
@@ -420,29 +447,28 @@ export class SelectComponent implements OnInit, AfterContentChecked, ControlValu
 				$event.preventDefault();
 				break;
 
-			//enter
-			case 13:
+			case OptionKeyboardEventHandleKeys.Enter:
 				this.hide();
 				this.prevValue = this.selectedOption;
 				this.selectItem($event, this.selectedOption, true);
+				$event.preventDefault();
 				break;
 
-			//escape
-			case 27:
-				$event.preventDefault();
+			case OptionKeyboardEventHandleKeys.Escape:
+			case OptionKeyboardEventHandleKeys.Esc:
 				this.selectItem($event, this.prevValue);
 				this.hide();
+				$event.preventDefault();
 				break;
 
-			// tab
-			case 9:
+			case OptionKeyboardEventHandleKeys.Tab:
 				this.hide();
 				break;
 		}
 	}
 
 	findOptionIndex(val: any, opts: any[]): number {
-		let index: number = -1;
+		let index = -1;
 		if (opts) {
 			for (let i = 0; i < opts.length; i++) {
 				if ((val == null && this.getOptionValue(opts[i]) == null) || equals(val, this.getOptionValue(opts[i]))) {
@@ -516,37 +542,6 @@ export class SelectComponent implements OnInit, AfterContentChecked, ControlValu
 	}
 }
 
-/**
- *
- * @param data - option value (could be simple string or complex object to resolve)
- * @param field - the key (or complex lookup object key) of data object to resolve value by
- * @returns resolved single option value (Input for SelectItem)
- */
-const resolveFieldData = (data: { [x: string]: any }, field: string | object) => {
-	if (!!data && !!field) {
-		if (isString(field) && field.indexOf('.') == -1) {
-			return data[field];
-		} else {
-			if (isString(field)) {
-				const fields: string[] = field.split('.');
-				let value = data;
-				for (let i = 0, len = fields.length; i < len; ++i) {
-					if (value == null) {
-						return null;
-					}
-					value = value[fields[i]];
-				}
-				return value;
-			}
-		}
-	} else {
-		return null;
-	}
-};
 
-const isFunction = (obj: any): obj is Function => !!(obj && obj.constructor && obj.call && obj.apply);
-const isString = (obj: any): obj is string => typeof obj === 'string';
-const equals = (obj1: any, obj2: any, field?: string): boolean => {
-	if (field) return resolveFieldData(obj1, field) === resolveFieldData(obj2, field);
-	else return JSON.stringify(obj1) === JSON.stringify(obj2);
-};
+
+
