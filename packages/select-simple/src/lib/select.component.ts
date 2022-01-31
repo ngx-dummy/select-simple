@@ -49,10 +49,10 @@ import { AbstractControl, ControlValueAccessor, FormControl, NgControl, NG_VALID
 import { fromEvent, of } from 'rxjs';
 import { concatMap, debounceTime, map, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { equals, getSvgSafeRes, OptionKeyboardEventHandleKeys, resolveFieldData } from './settings/helpers';
-import { ITemplates } from './settings/ISelectTemplate';
-import { IOptionClickEvent, ISelectItem, SelectItemComponent } from './select-item.component';
+import { SelectItemComponent } from './select-item.component';
 import { arrow_down } from './theming/icons-base';
 import { DomSanitizer } from '@angular/platform-browser';
+import { IOptionClickEvent, ISelectItem, ITemplates } from './settings/models';
 
 export const SELECT_VALUE_ACCESSOR_PROVIDER: Provider = {
 	provide: NG_VALUE_ACCESSOR,
@@ -65,6 +65,15 @@ export const NG_VALIDATORS_PROVIDER: Provider = {
 	multi: true,
 };
 
+type StylesSet = {
+	[K in keyof CSSStyleDeclaration]: CSSStyleDeclaration[K]
+};
+
+/**
+ * @type {StylesSet} BasicStylesSet - common styles' set to be applied to header / overlay of the Select component
+ */
+export type BasicStylesSet = Partial<StylesSet>;
+
 @Component({
 	selector: 'ngxd-select',
 	templateUrl: 'select.component.html',
@@ -74,7 +83,7 @@ export const NG_VALIDATORS_PROVIDER: Provider = {
 	styleUrls: ['select.component.scss'],
 	host: {
 		'[class]': 'styleClass',
-		'[ngStyle]': 'headerStyle',
+		'[style]': 'headerStyle',
 		'[class.wrapper-focus]': 'focused || overlayVisible',
 		'[class.select]': 'true',
 		'[class.disabled]': 'disabled',
@@ -82,6 +91,7 @@ export const NG_VALIDATORS_PROVIDER: Provider = {
 		'[class.select-open]': 'overlayVisible',
 		'[attr.tabIndex]': 'tabindex',
 		'[attr.autofocus]': 'autofocus',
+		'[attr.name]': 'name',
 		'(blur)': 'onHostBlur($event)',
 		'(focus)': 'onHostFocus($event)',
 		'(keydown)': 'onKeydown($event)',
@@ -93,7 +103,7 @@ export class SelectComponent implements OnInit, AfterContentChecked, ControlValu
 	@ViewChild('itemsListDefaultTmpl', { read: TemplateRef }) itemsListDefaultTmpl: TemplateRef<HTMLElement> | undefined;
 	@ContentChildren(SelectItemComponent, { descendants: true }) projectedItems: QueryList<SelectItemComponent> | undefined;
 
-	opennerBtnTemplate: TemplateRef<HTMLElement> | undefined;
+	openerBtnTemplate: TemplateRef<HTMLElement> | undefined;
 	itemslistTemplate: TemplateRef<HTMLElement> | undefined;
 	trigger_icon = getSvgSafeRes(arrow_down, this.sanitizer);
 
@@ -106,22 +116,26 @@ export class SelectComponent implements OnInit, AfterContentChecked, ControlValu
 	}
 
 	@Input() templates: ITemplates | undefined;
-	@Input() name: string | undefined;
+	@Input() name: string | null = null;
 
-	@Input() set headerStyle(headStyleObj: any) {
+	@Input() set headerStyle(headStyleObj: BasicStylesSet) {
 		if (!!headStyleObj && !!Object.keys(headStyleObj).length) {
 			this._headerStyle = {
 				...this._headerStyle,
-				...headStyleObj,
+				...headStyleObj
 			};
 		}
 	}
+	/**
+	 * @property 
+	 * @param {BasicStylesSet} headStyleObj - styles to override the defaults of Select component panel 
+	 */
 	get headerStyle() {
 		return this._headerStyle;
 	}
 	private _headerStyle = {};
 
-	@Input() set panelStyle(stylesObj: Object) {
+	@Input() set panelStyle(stylesObj: BasicStylesSet) {
 		if (!!stylesObj && !!Object.keys(stylesObj).length) {
 			this._panelStyle = {
 				...this._panelStyle,
@@ -140,22 +154,29 @@ export class SelectComponent implements OnInit, AfterContentChecked, ControlValu
 		boxShadow: '2px 5px 10px rgba(55, 55, 55, 0.8)',
 	};
 
+	/** set additional custom classList to the Select component's panel   */
 	@Input() panelStyleClass = 'panel';
+	/** set additional custom classList to the Select component   */
 	@Input() styleClass = '';
 	@Input() readonly = false;
 	@Input() required = false;
+
+	/** whether to display reset button in the end of the options   */
 	@Input() resetBtn = false;
+
+	/** whether to display search field */
 	@Input() searchField = false;
+	/** whether to set auto focus to component */
 	@Input() autofocus = false;
+	/** default component caption (panel caption) */
 	@Input() placeholder?: string = undefined;
 
-	// IMPORTANT: Used to resolve the item name (in case the complex object provided as @Input() option` )
+
+	/** string key of the Options input (in case of complex object) of kind: 'key' / 'key.subkey'...  if set, would resolve the options' captions */
 	@Input() optionLabelKey?: string;
 	@Input() selectIconClass = '';
-	@Input() optionValue?: string;
 	@Input() tabindex = 0;
 
-	@Input() optionDisabled?: string;
 	@Input() itemSize?: number | undefined;
 
 	private _options: any[] | undefined;
@@ -166,7 +187,7 @@ export class SelectComponent implements OnInit, AfterContentChecked, ControlValu
 		this._options = val;
 		this.optionsToDisplay = this._options;
 		this.updateSelectedOption(this.value);
-		this.optionsChanged = true;
+
 	}
 
 	private _disabled = false;
@@ -200,7 +221,8 @@ export class SelectComponent implements OnInit, AfterContentChecked, ControlValu
 	value: any;
 	onModelChange: Function = () => { };
 	onModelTouched: Function = () => { };
-	optionsToDisplay?: any[];
+	// optionsToDisplay?: ISelectItem<unknown>[] | Array<Record<string, unknown>> | string[];
+	optionsToDisplay?: any[] = [];
 	hover = false;
 	overlayVisible = false;
 	optionsChanged = false;
@@ -221,7 +243,7 @@ export class SelectComponent implements OnInit, AfterContentChecked, ControlValu
 	}
 
 	ngAfterContentChecked() {
-		this.opennerBtnTemplate = this.templates?.opennerBtnTemplate ? this.templates.opennerBtnTemplate : this.defaultOpenerTemplate;
+		this.openerBtnTemplate = this.templates?.openerBtnTemplate ? this.templates.openerBtnTemplate : this.defaultOpenerTemplate;
 		this.itemsListDefaultTmpl = this.templates?.itemslistTemplate ? this.templates.itemslistTemplate : this.itemsListDefaultTmpl;
 		if (this.templates?.selectedItemTemplate) {
 			this.selectedItemTemplate = this.templates.selectedItemTemplate;
@@ -261,7 +283,7 @@ export class SelectComponent implements OnInit, AfterContentChecked, ControlValu
 		this.onBlur.emit($event);
 	}
 
-	get label(): string {
+	get label() {
 		const label = this.selectedOption ? this.getOptionLabel(this.selectedOption)
 			: (!!this.placeholder?.length) ? this.placeholder
 				: (!!this.options?.length) ? this.getOptionLabel(this.options[0]) : null;
@@ -272,12 +294,16 @@ export class SelectComponent implements OnInit, AfterContentChecked, ControlValu
 		return this.optionLabelKey ? resolveFieldData(option, this.optionLabelKey) : resolveFieldData(option);
 	}
 
-	getOptionValue(option: any) {
-		return this.optionValue ? resolveFieldData(option, this.optionValue) : this.optionLabelKey || option.value === undefined ? option : option.value;
+	getOptionValue(option: any): string | null {
+		if (!option) return null;
+		if (typeof option === 'string') return option;
+
+		return option.label ? option.label :
+			resolveFieldData(option);
 	}
 
-	isOptionDisabled(option: any) {
-		return this.optionDisabled ? resolveFieldData(option, this.optionDisabled) : option.disabled !== undefined ? option.disabled : false;
+	isOptionDisabled(option: any): boolean {
+		return !!option?.disabled || false;
 	}
 
 	onItemClick($itemEvent: IOptionClickEvent) {
@@ -386,7 +412,7 @@ export class SelectComponent implements OnInit, AfterContentChecked, ControlValu
 				).subscribe(searchTerm => this.optionsToDisplay = !!searchTerm.length ?
 					this.options?.filter((opt) => {
 						const optionValue = this.getOptionValue(opt);
-						const found = !!(this.optionLabelKey?.length && (<string>optionValue[this.optionLabelKey].toLowerCase()).includes(searchTerm.toLowerCase()));
+						const found = !!(optionValue?.toLowerCase().includes(searchTerm.toLowerCase()));
 						return found;
 					})
 					: this.options

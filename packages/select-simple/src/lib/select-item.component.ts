@@ -1,18 +1,6 @@
 /* eslint-disable @angular-eslint/no-host-metadata-property */
 import { Component, Input, TemplateRef, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
-
-export interface ISelectItem<T = unknown> {
-	label?: string;
-	value: T;
-	styleClass?: string;
-	icon?: string;
-	title?: string;
-	disabled?: boolean;
-}
-export interface IOptionClickEvent {
-	baseEvent: MouseEvent;
-	option: string | ISelectItem;
-}
+import { ISelectItem, IOptionClickEvent } from './settings/models';
 
 @Component({
 	selector: 'ngxd-select-item',
@@ -42,11 +30,12 @@ export interface IOptionClickEvent {
 	`,
 	host: {
 		'[attr.role]': '"option"',
-		'[ngStyle]': '{  "height": "getItemHeight()", "visibility": "getItemVisibility()", "background-color": "itemBg" }',
+		'[attr.disabled]': 'disabled',
+		'[ngStyle]': '{ "height": "getItemHeight()", "visibility": "getItemVisibility()", "background-color": "itemBg", "color": "color" }',
 		'[class.select-item]': 'true',
 		'[class.item-highlight]': 'selected',
 		'[class.item-disabled]': 'disabled',
-		'[ngClass]': 'option.styleClass',
+		'[ngClass]': 'option?.styleClass',
 		'(click)': 'onOptionClick($event)'
 	},
 	changeDetection: ChangeDetectionStrategy.OnPush
@@ -57,8 +46,9 @@ export class SelectItemComponent {
 	@Input() disabled = false;
 	@Input() visible = true;
 	@Input() itemBg = 'transparent';
+	@Input() color = '#ddd';
 	@Input() itemSize: number | undefined = 25;
-	@Input() label?: string = undefined;
+	@Input() label: string | null = null;
 	@Input() template?: TemplateRef<HTMLElement>;
 	@Output() optionClick: EventEmitter<IOptionClickEvent> = new EventEmitter();
 

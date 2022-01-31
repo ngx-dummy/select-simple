@@ -1,4 +1,5 @@
 import { moduleMetadata, Story, Meta } from '@storybook/angular';
+import { SelectSimpleModule } from '..';
 import { SelectItemComponent } from './select-item.component';
 
 export default {
@@ -6,7 +7,7 @@ export default {
   component: SelectItemComponent,
   decorators: [
     moduleMetadata({
-      imports: [],
+      imports: [SelectSimpleModule],
     })
   ],
 } as Meta<SelectItemComponent>;
@@ -19,11 +20,11 @@ const Template: Story<SelectItemComponent> = (args: SelectItemComponent) => ({
 
 export const Primary = Template.bind({});
 Primary.args = {
-    option:  undefined,
-    selected:  false,
-    disabled:  false,
-    visible:  true,
-    itemSize:  25,
-    label:  '',
-    itemBg:  '',
-}
+  option: { label: 'Hello World', disabled: false },
+  
+  selected: false,
+  visible: true,
+  itemSize: 25,
+  // label: '',
+  itemBg: 'green',
+};

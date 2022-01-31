@@ -92,7 +92,7 @@ export class AppModule {}
 #### with `Options` (Array of Strings) binding:
 
 ```html
-<ngxd-select id="select1" [options]="options" [readonly]="false" [required]="true" [none]="true" formControlName="selector" placeholder="Select a City"></ngxd-select>
+<ngxd-select id="select1" [options]="options" [readonly]="false" [required]="true" [resetBtn]="true" formControlName="selector" placeholder="Select a City"></ngxd-select>
 ```
 
 ```ts
@@ -106,7 +106,7 @@ options = ['opt1', 'opt2', 'opt2'];
 #### with `Options` (Array of Strings) binding:
 
 ```html
-<ngxd-select id="select1" [options]="options" [readonly]="false" [required]="true" [none]="true" formControlName="selector" placeholder="Select a City" optionLabelKey="name"></ngxd-select>
+<ngxd-select id="select1" [options]="options" [readonly]="false" [required]="true" [resetBtn]="true" formControlName="selector" placeholder="Select a City" optionLabelKey="name"></ngxd-select>
 ```
 
 ```ts
@@ -120,7 +120,7 @@ options = [{ name: 'opt1' , value: { param1: 'para1', param2: 'para2' } }, ...];
 #### with `Options` (Array of Strings) binding:
 
 ```html
-<ngxd-select id="select1" [options]="options" [readonly]="false" [required]="true" [none]="true" formControlName="selector" placeholder="Select a City" optionLabelKey="name"></ngxd-select>
+<ngxd-select id="select1" [options]="options" [readonly]="false" [required]="true" [resetBtn]="true" formControlName="selector" placeholder="Select a City" optionLabelKey="name"></ngxd-select>
 ```
 
 ```ts
@@ -134,7 +134,7 @@ options = [{ name: 'opt1' , value: { param1: 'para1', param2: 'para2' } }, ...];
 #### and `Option` are declared directly:
 
 ```html
-<ngxd-select id="select1" [options]="options" [readonly]="false" [required]="true" [none]="true" formControlName="selector" placeholder="Select a City" optionLabelKey="name">
+<ngxd-select id="select1" [options]="options" [readonly]="false" [required]="true" [resetBtn]="true" formControlName="selector" placeholder="Select a City" optionLabelKey="name">
 	<ngxd-select-item [label]="'Option 1'" [option]="'Opt1'" (onClick)="selected = $event"></ngxd-select-item>
 </ngxd-select>
 ```

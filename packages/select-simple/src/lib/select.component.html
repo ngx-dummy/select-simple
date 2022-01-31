@@ -5,8 +5,8 @@
 
 
 <div class="select-trigger" role="button" [attr.aria-expanded]="overlayVisible">
-	<ng-container *ngIf="opennerBtnTemplate">
-		<ng-container *ngTemplateOutlet="opennerBtnTemplate; context: { $implicit: overlayVisible }"></ng-container>
+	<ng-container *ngIf="openerBtnTemplate">
+		<ng-container *ngTemplateOutlet="openerBtnTemplate; context: { $implicit: overlayVisible }"></ng-container>
 	</ng-container>
 </div>
 
@@ -16,9 +16,7 @@
 	</ng-container>
 
 	<ng-container
-		*ngIf="!!options?.length && !!optionsToDisplay?.length; then itemsListDefaultTmpl; else noInputOptionsTmpl">
-	</ng-container>
-
+		 *ngIf="!!optionsToDisplay?.length; then itemsListDefaultTmpl; else noInputOptionsTmpl"> </ng-container>
 
 	<button *ngIf="resetBtn" class="reset" (click)="reset()">
 		<span>Reset</span>
@@ -32,13 +30,11 @@
 </ng-template>
 
 <ng-template #selectedItemSelectedTmpl>
-	<ng-container *ngTemplateOutlet="selectedItemTemplate; context: { $implicit: label, selectedOption: selectedOption }">
-	</ng-container>
+	<ng-container *ngTemplateOutlet="selectedItemTemplate; context: { $implicit: label, selectedOption: selectedOption  }"> </ng-container>
 </ng-template>
 
 <ng-template #defaultSelectIconTmpl let-overlayVisible>
-	<span class="select-trigger-icon" [ngClass]="selectIconClass"
-		[ngClass]="{ open: overlayVisible, close: !overlayVisible }">
+	<span class="select-trigger-icon" [ngClass]="selectIconClass" [ngClass]="{ open: overlayVisible, close: !overlayVisible }">
 		<img class="select-trigger__default-img" [src]="trigger_icon" />
 	</span>
 </ng-template>
@@ -66,16 +62,15 @@
 <ng-template #searchTermTmpl>
 	<div class="search-term__container">
 		<div class="search-term__sub-container">
-			<input type="text" class="search-term" placeholder="search for an item ..."
-				(click)="$event.preventDefault();$event.stopPropagation()" />
-			<svg class="search-term__icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
-				xmlns="http://www.w3.org/2000/svg">
+			<input type="text" class="search-term" placeholder="search for an item ..." (click)="$event.preventDefault(); $event.stopPropagation()" />
+			<svg class="search-term__icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
 				<path d="M18.8167 18.0154L12.15 11.8615" stroke="#adc9cebf" stroke-width="3" />
 				<path
 					d="M8.33335 13.8461C12.0153 13.8461 15 11.091 15 7.6923C15 4.29362 12.0153 1.53845 8.33335 1.53845C4.65146 1.53845 1.66669 4.29362 1.66669 7.6923C1.66669 11.091 4.65146 13.8461 8.33335 13.8461Z"
-					stroke="#adc9cebf" stroke-width="3" />
+					stroke="#adc9cebf"
+					stroke-width="3"
+				/>
 			</svg>
-
 		</div>
 	</div>
 </ng-template>

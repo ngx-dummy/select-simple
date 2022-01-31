@@ -1,4 +1,5 @@
 import { moduleMetadata, Story, Meta } from '@storybook/angular';
+import { SelectSimpleModule } from '..';
 import { SelectComponent } from './select.component';
 
 export default {
@@ -6,7 +7,7 @@ export default {
   component: SelectComponent,
   decorators: [
     moduleMetadata({
-      imports: [],
+      imports: [SelectSimpleModule],
     })
   ],
 } as Meta<SelectComponent>;
@@ -19,19 +20,24 @@ const Template: Story<SelectComponent> = (args: SelectComponent) => ({
 
 export const Primary = Template.bind({});
 Primary.args = {
-    headerStyle:  '',
-    panelStyle:  '',
-    panelStyleClass:  'panel',
-    styleClass:  '',
-    readonly:  false,
-    required:  false,
-    none:  false,
-    autofocus:  false,
-    placeholder:  '',
-    optionLabelKey:  '',
-    selectIconClass:  '',
-    optionValue:  '',
-    tabindex:  0,
-    optionDisabled:  '',
-    disabled:  false,
-}
+  headerStyle: {
+    backgroundColor: 'red'
+    , color: 'yellow'
+  },
+  panelStyle: {
+    color: '#CAA'
+  },
+  panelStyleClass: 'panel',
+  styleClass: 'panel__teal',
+  readonly: false,
+  required: false,
+  resetBtn: false,
+  autofocus: false,
+  options: [{ country: 'RF', cities: ['Moscow', 'Kaluga'] }, { country: 'USA', cities: ['New York', 'Dallas'] }],
+  optionLabelKey: '',
+  selectIconClass: '',
+  placeholder: 'Select a city',
+  tabindex: 0,
+  // optionDisabled: '',
+  disabled: false,
+};
