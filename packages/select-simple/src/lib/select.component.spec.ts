@@ -31,7 +31,7 @@ describe('SelectComponent', () => {
 		component.options = countries;
 
 		const elPanel: HTMLElement = fixture.nativeElement.querySelector(panelSelector);
-		elPanel.click();
+		elPanel?.click();
 		fixture.detectChanges();
 		expect(component.overlayVisible).toBe(true);
 		expect(selectEl(fixture, overlaySelector)).toBeTruthy();
@@ -41,7 +41,7 @@ describe('SelectComponent', () => {
 	it('should be disabled / non-clickable if disabled prop set to `true` ', async () => {
 		component.disabled = true;
 		const elPanel: HTMLElement = fixture.nativeElement.querySelector(panelSelector);
-		elPanel.click();
+		elPanel?.click();
 		fixture.detectChanges();
 
 		expect(component.overlayVisible).toBe(false);

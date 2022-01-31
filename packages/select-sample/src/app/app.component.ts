@@ -2,7 +2,7 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 
-import { ITemplates } from '@ngx-dummy/select-simple';
+import { BasicStylesSet, ITemplates } from '@ngx-dummy/select-simple';
 
 @Component({
 	selector: 'ngx-dummy-root',
@@ -22,22 +22,31 @@ export class AppComponent implements OnInit {
 	selectedCity3: unknown = undefined;
 	templates: ITemplates = {};
 
-	headStyle = {
-		background: 'lightgreen',
+	headStyle: BasicStylesSet = {
+		backgroundColor: '#4d537c',
+		border: '4px dotted teal',
+		color: '#e2e1e1',
+		padding: '1rem',
+		boxShadow: 'teal 3px 3px 11px',
+		borderRadius: '1rem',
+		width: '100%',
+		maxWidth: '25rem',
+		alignSelf: 'center'
 	};
-	panelStyling = {
-		background: '#10882a38',
-		color: '#91c',
+	panelStyling: BasicStylesSet = {
+		color: '#fff',
+		backgroundColor: '#0e4a3bcc',
+		padding: '10%',
 		fontSize: '700',
 		lineHeight: '200%',
 		borderRadius: '1rem',
 		border: 'none',
-		boxShadow: '1px 5px 2px rgba(155, 225, 225, .25)',
+		boxShadow: '2px 5px 2px #DDD',
 		left: '.5rem',
-		width: '200%',
 		display: 'flex',
+		width: '110%',
 		flexDirection: 'column',
-		alignItems: 'center',
+		alignItems: 'flex-start',
 		justifyContent: 'space-around',
 	};
 
@@ -49,7 +58,7 @@ export class AppComponent implements OnInit {
 		{ name: 'London', code: 'LDN' },
 		{ name: 'Paris', code: 'PRS' },
 	];
-	
+
 	simpleCitiesArray = [...this.cities].map(({ name }) => name);
 
 	form = new FormGroup({
@@ -63,7 +72,7 @@ export class AppComponent implements OnInit {
 
 	ngOnInit() {
 		this.templates = {
-			opennerBtnTemplate: this.bntOpenTmpl,
+			openerBtnTemplate: this.bntOpenTmpl,
 			selectedItemTemplate: this.selectedItemTemplate,
 		};
 		this.form.valueChanges.subscribe((formValue) => {

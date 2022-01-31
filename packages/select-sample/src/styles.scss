@@ -1,5 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat+Alternates:ital,wght@0,500;1,400;1,900&display=swap');
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
 :root {
 	--light-bg: #fafafa;
 	--medium-bg: #f4f4f4;
@@ -32,15 +37,15 @@ body {
 	padding: 0.5rem;
 	width: 100%;
 	text-align: center;
-	font-family: 'Montserrat', sans-serif;
-	font-variant: small-caps;
-	h1 {
-		font-size: 1.4rem;
-	}
-	h2 {
-		font-size: 1rem;
-		font-style: italic;
-	}
+	// font-family: 'Montserrat', sans-serif;
+	// font-variant: small-caps;
+	// h1 {
+	// 	font-size: 1.4rem;
+	// }
+	// h2 {
+	// 	font-size: 1rem;
+	// 	font-style: italic;
+	// }
 }
 
 h4 {
@@ -62,3 +67,6 @@ h4 {
 .pad-1_2 {
 	padding: 1rem 2rem;
 }
+
+
+/* You can add global styles to this file, and also import other style files */

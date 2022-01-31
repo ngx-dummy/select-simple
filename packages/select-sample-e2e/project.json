@@ -1,29 +1,28 @@
 {
-	"root": "packages/select-sample-e2e",
-	"sourceRoot": "packages/select-sample-e2e/src",
-	"projectType": "application",
-	"targets": {
-		"e2e": {
-			"executor": "@nrwl/cypress:cypress",
-			"options": {
-				"cypressConfig": "packages/select-sample-e2e/cypress.json",
-				"devServerTarget": "select-sample:serve:development",
-				"tsConfig": "packages/select-sample-e2e/tsconfig.json"
-			},
-			"configurations": {
-				"production": {
-					"devServerTarget": "select-sample:serve:production"
-				}
-			}
-		},
-		"lint": {
-			"executor": "@nrwl/linter:eslint",
-			"outputs": ["{options.outputFile}"],
-			"options": {
-				"lintFilePatterns": ["packages/select-sample-e2e/**/*.{js,ts}"]
-			}
-		}
-	},
-	"tags": [],
-	"implicitDependencies": ["select-sample"]
+  "root": "packages/select-sample-e2e",
+  "sourceRoot": "packages/select-sample-e2e/src",
+  "projectType": "application",
+  "targets": {
+    "e2e": {
+      "executor": "@nrwl/cypress:cypress",
+      "options": {
+        "cypressConfig": "packages/select-sample-e2e/cypress.json",
+        "devServerTarget": "select-sample:serve:development"
+      },
+      "configurations": {
+        "production": {
+          "devServerTarget": "select-sample:serve:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/select-sample-e2e/**/*.{js,ts}"]
+      }
+    }
+  },
+  "tags": [],
+  "implicitDependencies": ["select-sample"]
 }

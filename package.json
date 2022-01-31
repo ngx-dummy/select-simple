@@ -1,56 +1,23 @@
 {
   "name": "ngx-dummy",
-  "version": "0.0.4",
-  "author": {
-    "name": "Vladimir Ovsyukov",
-    "email": "vovansuper@mail.ru",
-    "url": "https://github.com/VovanSuper"
-  },
-  "engines": {
-    "node": ">14.0.1",
-    "npm": ">=6.12.1"
-  },
-  "description": "A simple Select component to use in Angular / Ionic projects",
-  "keywords": [
-    "Select",
-    "Select component",
-    "Dropdown",
-    "Angular",
-    "Ionic",
-    "Typescript",
-    "Javascript",
-    "widget",
-    "expandable",
-    "dropdown",
-    "ui"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/ngx-dummy/select-simple.git"
-  },
-  "bugs": {
-    "email": "ovsyukov@yandex.com",
-    "url": "https://github.com/ngx-dummy/select-simple/issues"
-  },
-  "homepage": "https://github.com/ngx-dummy/select-simple#README",
+  "version": "0.0.1",
   "license": "MIT",
-  "private": false,
   "scripts": {
     "start": "nx serve select-sample --open --port=8081",
     "build": "nx build",
-    "build:app": "nx build select-sample",
     "build:prod": "nx build --prod",
     "lint": "nx workspace-lint && nx lint",
     "test:lib": "nx test select-simple",
     "test:app": "nx test select-sample",
     "test": "npm run test:lib",
     "test:w": "npm run test:lib -- --watch",
+    "postinstall": "ngcc --properties es2015 browser module main",
+    "publish:npm": "rimraf dist && sh ./scripts/publish.sh",
     "story:select": "nx run select-simple:storybook",
-    "pretty-quick": "pretty-quick",
-    "prepublish:npm": "rimraf dist && sh ./scripts/prepublish.sh"
+    "pretty-quick": "pretty-quick"
   },
+  "private": true,
   "dependencies": {
-    "@angular-architects/module-federation": "^14.0.1",
     "@angular/animations": "^13.2.0",
     "@angular/common": "^13.2.0",
     "@angular/compiler": "^13.2.0",
@@ -59,13 +26,12 @@
     "@angular/platform-browser": "^13.2.0",
     "@angular/platform-browser-dynamic": "^13.2.0",
     "@angular/router": "^13.2.0",
-    "@nrwl/angular": "^13.7.1",
+    "@nrwl/angular": "^13.6.1",
     "rxjs": "^7.5.2",
     "tslib": "^2.3.1",
-    "zone.js": "^0.11.4"
+    "zone.js": "~0.11.4"
   },
   "devDependencies": {
-    "@angular-devkit/architect": "^0.1302.0",
     "@angular-devkit/build-angular": "^13.2.0",
     "@angular-eslint/eslint-plugin": "^13.0.1",
     "@angular-eslint/eslint-plugin-template": "^13.0.1",
@@ -80,15 +46,20 @@
     "@nrwl/linter": "^13.7.1",
     "@nrwl/tao": "^13.7.1",
     "@nrwl/workspace": "^13.7.1",
+    "@nrwl/storybook": "^13.6.1",
+    "@storybook/addon-essentials": "^6.4.15",
+    "@storybook/angular": "^6.4.15",
+    "@storybook/builder-webpack5": "^6.4.15",
+    "@storybook/manager-webpack5": "^6.4.15",
     "@types/jest": "^27.4.0",
     "@types/node": "^17.0.13",
     "@typescript-eslint/eslint-plugin": "^5.10.1",
     "@typescript-eslint/parser": "^5.10.1",
+    "autoprefixer": "^10.4.2",
     "cypress": "^9.3.1",
     "eslint": "^8.8.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-cypress": "^2.12.1",
-    "husky": "^7.0.4",
     "jest": "^27.4.7",
     "jest-preset-angular": "^11.1.0",
     "ng-packagr": "^13.2.0",
@@ -97,7 +68,7 @@
     "postcss-preset-env": "^7.2.3",
     "postcss-url": "^10.1.3",
     "prettier": "^2.5.1",
-    "pretty-quick": "^3.1.3",
+    "tailwindcss": "^3.0.17",
     "ts-jest": "^27.1.3",
     "typescript": "~4.5.5"
   }

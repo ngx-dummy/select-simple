@@ -11833,7 +11833,7 @@ function SelectComponent_ng_container_3_Template(rf, ctx) {
   if (rf & 2) {
     const ctx_r2 = fesm2015_core_js_["ɵɵnextContext"]();
     fesm2015_core_js_["ɵɵadvance"](1);
-    fesm2015_core_js_["ɵɵproperty"]("ngTemplateOutlet", ctx_r2.opennerBtnTemplate)("ngTemplateOutletContext", fesm2015_core_js_["ɵɵpureFunction1"](2, _c1, ctx_r2.overlayVisible));
+    fesm2015_core_js_["ɵɵproperty"]("ngTemplateOutlet", ctx_r2.openerBtnTemplate)("ngTemplateOutletContext", fesm2015_core_js_["ɵɵpureFunction1"](2, _c1, ctx_r2.overlayVisible));
   }
 }
 
@@ -12303,7 +12303,7 @@ let SelectComponent = /*#__PURE__*/(() => {
     ngAfterContentChecked() {
       var _a, _b, _c, _d;
 
-      this.opennerBtnTemplate = ((_a = this.templates) === null || _a === void 0 ? void 0 : _a.opennerBtnTemplate) ? this.templates.opennerBtnTemplate : this.defaultOpenerTemplate;
+      this.openerBtnTemplate = ((_a = this.templates) === null || _a === void 0 ? void 0 : _a.openerBtnTemplate) ? this.templates.openerBtnTemplate : this.defaultOpenerTemplate;
       this.itemsListDefaultTmpl = ((_b = this.templates) === null || _b === void 0 ? void 0 : _b.itemslistTemplate) ? this.templates.itemslistTemplate : this.itemsListDefaultTmpl;
 
       if ((_c = this.templates) === null || _c === void 0 ? void 0 : _c.selectedItemTemplate) {
@@ -12725,7 +12725,7 @@ let SelectComponent = /*#__PURE__*/(() => {
         fesm2015_core_js_["ɵɵadvance"](1);
         fesm2015_core_js_["ɵɵattribute"]("aria-expanded", ctx.overlayVisible);
         fesm2015_core_js_["ɵɵadvance"](1);
-        fesm2015_core_js_["ɵɵproperty"]("ngIf", ctx.opennerBtnTemplate);
+        fesm2015_core_js_["ɵɵproperty"]("ngIf", ctx.openerBtnTemplate);
         fesm2015_core_js_["ɵɵadvance"](1);
         fesm2015_core_js_["ɵɵproperty"]("ngIf", ctx.overlayVisible);
       }
@@ -12878,7 +12878,7 @@ let AppComponent = /*#__PURE__*/(() => {
 
     ngOnInit() {
       this.templates = {
-        opennerBtnTemplate: this.bntOpenTmpl,
+        openerBtnTemplate: this.bntOpenTmpl,
         selectedItemTemplate: this.selectedItemTemplate
       };
       this.form.valueChanges.subscribe(formValue => {

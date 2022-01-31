@@ -33,7 +33,40 @@
 			"options": {
 				"lintFilePatterns": ["packages/select-simple/src/**/*.ts", "packages/select-simple/src/**/*.html"]
 			}
+		},
+		"storybook": {
+			"executor": "@nrwl/storybook:storybook",
+			"options": {
+				"uiFramework": "@storybook/angular",
+				"port": 4400,
+				"config": {
+					"configFolder": "packages/select-simple/.storybook"
+				},
+				"projectBuildConfig": "select-simple:build-storybook"
+			},
+			"configurations": {
+				"ci": {
+					"quiet": true
+				}
+			}
+		},
+		"build-storybook": {
+			"executor": "@nrwl/storybook:build",
+			"outputs": ["{options.outputPath}"],
+			"options": {
+				"uiFramework": "@storybook/angular",
+				"outputPath": "dist/storybook/select-simple",
+				"config": {
+					"configFolder": "packages/select-simple/.storybook"
+				},
+				"projectBuildConfig": "select-simple:build-storybook"
+			},
+			"configurations": {
+				"ci": {
+					"quiet": true
+				}
+			}
 		}
 	},
-	"tags": ["select", ""]
+	"tags": []
 }
