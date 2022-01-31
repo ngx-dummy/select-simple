@@ -6,38 +6,40 @@
   </a>
   <h2 align="center"><b style="color: teal;"><a href="https://www.npmjs.com/package/@ngx-dummy/select-simple" target="_blank">@Ngx-dummy/Select-simple</a></b> <i>library</i></h2>
 
-[![npm version](https://badge.fury.io/js/@ngx-dummy%2Fselect-simple.svg?style=flat-square)](https://badge.fury.io/js/@ngx-dummy%2Fselect-simple)
+<br />
+
+[![npm version](https://flat.badgen.net/npm/v/@ngx-dummy/select-simple?scale=1.5&color=f11&labelColor=F62&label=latest%20version&icon=npm)](https://www.npmjs.com/package/@ngx-dummy/select-simple)
 
 </center>
 
+---
+
+
 [![GitHub license](https://img.shields.io/github/license/ngx-dummy/select-simple?style=flat-square)](https://github.com/ngx-dummy/select-simple/blob/main/LICENSE)
 
-[![npm-deploy](https://github.com/ngx-dummy/select-simple/actions/workflows/npm-deploy.yml/badge.svg)](https://github.com/ngx-dummy/select-simple/actions/workflows/npm-deploy.yml)
 
 [![GitHub issues](https://img.shields.io/github/issues/ngx-dummy/select-simple?style=flat-square)](https://github.com/ngx-dummy/select-simple/issues)
 [![GitHub forks](https://img.shields.io/github/forks/ngx-dummy/select-simple?style=flat-square)](https://github.com/ngx-dummy/select-simple/network)
 [![GitHub stars](https://img.shields.io/github/stars/ngx-dummy/select-simple?style=flat-square)](https://github.com/ngx-dummy/select-simple/stargazers)
-[![GitHub Release](https://badgen.net/github/release/ngx-dummy/select-simple)](https://github.com/ngx-dummy/select-simple/releases)
-[![GitHub Branches](https://badgen.net/github/branches/ngx-dummy/select-simple)](https://github.com/ngx-dummy/select-simple/branches)
-[![GitHub Tags](https://badgen.net/github/tags/ngx-dummy/select-simple)](https://github.com/ngx-dummy/select-simple/tags)
-[![GitHub Issues](https://badgen.net/github/issues/ngx-dummy/select-simple)](https://github.com/ngx-dummy/select-simple/issues)
-[![GitHub Forks](https://badgen.net/github/forks/ngx-dummy/select-simple)](https://github.com/ngx-dummy/select-simple/network/members)
-[![GitHub Status](https://badgen.net/github/status/ngx-dummy/select-simple)](https://github.com/ngx-dummy/select-simple/network/members)
-[![size](https://badgen.net/packagephobia/publish/@ngx-dummy/select-simple)](https://bundlephobia.com/result?p=ngx-dummy/select-simple)
-[![Npm downloads](https://badgen.net/npm/dt/@ngx-dummy/select-simple)](https://www.npmjs.com/package/@ngx-dummy/select-simple)
-[![GitHub monthly downloads](https://badgen.net/npm/dm/@ngx-dummy/select-simple)](https://www.npmjs.com/package/@ngx-dummy/select-simple)
-
+[![GitHub Release](https://flat.badgen.net/github/release/ngx-dummy/select-simple)](https://github.com/ngx-dummy/select-simple/releases)
+[![GitHub Branches](https://flat.badgen.net/github/branches/ngx-dummy/select-simple)](https://github.com/ngx-dummy/select-simple/branches)
+[![GitHub Tags](https://flat.badgen.net/github/tags/ngx-dummy/select-simple)](https://github.com/ngx-dummy/select-simple/tags)
+[![GitHub Issues](https://flat.badgen.net/github/issues/ngx-dummy/select-simple)](https://github.com/ngx-dummy/select-simple/issues)
+[![GitHub Forks](https://flat.badgen.net/github/forks/ngx-dummy/select-simple)](https://github.com/ngx-dummy/select-simple/network/members)
+[![GitHub Status](https://flat.badgen.net/github/status/ngx-dummy/select-simple)](https://github.com/ngx-dummy/select-simple/network/members)
+[![size](https://flat.badgen.net/packagephobia/publish/@ngx-dummy/select-simple)](https://bundlephobia.com/package/@ngx-dummy/select-simple)
+[![size](https://flat.badgen.net/bundlephobia/min/@ngx-dummy/select-simple)](https://bundlephobia.com/package/@ngx-dummy/select-simple)
+[![size](https://flat.badgen.net/bundlephobia/minzip/@ngx-dummy/select-simple)](https://bundlephobia.com/package/@ngx-dummy/select-simple)
+[![Npm downloads](https://flat.badgen.net/npm/dt/@ngx-dummy/select-simple)](https://www.npmjs.com/package/@ngx-dummy/select-simple)
+[![Npm monthly downloads](https://flat.badgen.net/npm/dm/@ngx-dummy/select-simple)](https://www.npmjs.com/package/@ngx-dummy/select-simple)
 [![](https://data.jsdelivr.com/v1/package/npm/@ngx-dummy/select-simple/badge?style=flat-square)](https://www.jsdelivr.com/package/npm/@ngx-dummy/select-simple)
-
-<!--
-
-[![Twitter](https://img.shields.io/twitter/url?style=social)](https://twitter.com/intent/tweet?text=Wow:&url=https%3A%2F%2Fgithub.com%2Fngx-dummy%2Fselect-simple) -->
-
+[![Twitter Follow](https://img.shields.io/twitter/follow/OvsyukovV.svg?style=flat-square&logo=twitter)](https://twitter.com/OvsyukovV)
 [![Donations](https://img.shields.io/badge/Donate-PayPal-green.svg?style=flat-square)](https://paypal.me/ovsyukov)
 
-[![Twitter Follow](https://img.shields.io/twitter/follow/OvsyukovV.svg?style=social)](https://twitter.com/OvsyukovV)
-
 ---
+
+[![npm-deploy](https://github.com/ngx-dummy/select-simple/actions/workflows/npm-deploy.yml/badge.svg?style=flat)](https://github.com/ngx-dummy/select-simple/actions/workflows/npm-deploy.yml)
+
 
 ## Features
 
@@ -92,7 +94,7 @@ export class AppModule {}
 #### with `Options` (Array of Strings) binding:
 
 ```html
-<ngxd-select id="select1" [options]="options" [readonly]="false" [required]="true" [none]="true" formControlName="selector" placeholder="Select a City"></ngxd-select>
+<ngxd-select id="select1" [options]="options" [readonly]="false" [required]="true" [resetBtn]="true" formControlName="selector" placeholder="Select a City"></ngxd-select>
 ```
 
 ```ts
@@ -106,7 +108,7 @@ options = ['opt1', 'opt2', 'opt2'];
 #### with `Options` (Array of Strings) binding:
 
 ```html
-<ngxd-select id="select1" [options]="options" [readonly]="false" [required]="true" [none]="true" formControlName="selector" placeholder="Select a City" optionLabelKey="name"></ngxd-select>
+<ngxd-select id="select1" [options]="options" [readonly]="false" [required]="true" [resetBtn]="true" formControlName="selector" placeholder="Select a City" optionLabelKey="name"></ngxd-select>
 ```
 
 ```ts
@@ -120,7 +122,7 @@ options = [{ name: 'opt1' , value: { param1: 'para1', param2: 'para2' } }, ...];
 #### with `Options` (Array of Strings) binding:
 
 ```html
-<ngxd-select id="select1" [options]="options" [readonly]="false" [required]="true" [none]="true" formControlName="selector" placeholder="Select a City" optionLabelKey="name"></ngxd-select>
+<ngxd-select id="select1" [options]="options" [readonly]="false" [required]="true" [resetBtn]="true" formControlName="selector" placeholder="Select a City" optionLabelKey="name"></ngxd-select>
 ```
 
 ```ts
@@ -134,7 +136,7 @@ options = [{ name: 'opt1' , value: { param1: 'para1', param2: 'para2' } }, ...];
 #### and `Option` are declared directly:
 
 ```html
-<ngxd-select id="select1" [options]="options" [readonly]="false" [required]="true" [none]="true" formControlName="selector" placeholder="Select a City" optionLabelKey="name">
+<ngxd-select id="select1" [options]="options" [readonly]="false" [required]="true" [resetBtn]="true" formControlName="selector" placeholder="Select a City" optionLabelKey="name">
 	<ngxd-select-item [label]="'Option 1'" [option]="'Opt1'" (onClick)="selected = $event"></ngxd-select-item>
 </ngxd-select>
 ```
@@ -201,7 +203,7 @@ supports Angular 11 - 13.
 
 |     Name      |                    URL                     |
 | :-----------: | :----------------------------------------: |
-| **Accordion Simple** | *https://github.com/ngx-dummy/accordion-simple* |
+| **Accordion Simple** | *https://www.npmjs.com/package/@ngx-dummy/accordion-simple* |
 
 </details>
 
