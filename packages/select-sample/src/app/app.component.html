@@ -5,7 +5,7 @@
 			<ngxd-select
 				id="select1"
 				[options]="cities"
-				[templates]="templates"
+				[templates]="itemsTemplates"
 				[readonly]="false"
 				[required]="true"
 				[resetBtn]="true"
@@ -41,11 +41,10 @@
 	<h4>Sample using content projection of items:</h4>
 	<ngxd-select id="select3" [tabindex]="3" [(ngModel)]="selectedCity3" placeholder="Via Projection">
 		<div class="simple-items">
-			<ngxd-select-item [visible]="true" [label]="'Kaluga label'" [option]="'Kaluga'" (onClick)="selectedCity3 = $event"></ngxd-select-item>
-
-			<ngxd-select-item [visible]="true" [label]="'Vladivostok'" [option]="'Vladivostok'" (onClick)="selectedCity3 = $event"></ngxd-select-item>
-			<!--and also via iterable-->
-			<ngxd-select-item *ngFor="let item of cities" [option]="item.name" [label]="item.name"></ngxd-select-item>
+			<ngxd-select-item [visible]="true" label="Kaluga" option="Kaluga" (optionClick)="selectedCity3 = $event"></ngxd-select-item>
+			<ngxd-select-item [visible]="true" label="Vladivostok" [option]="{ name: 'Vladivostok' }" (optionClick)="selectedCity3 = $event"></ngxd-select-item>
+			<!--and additional via iterable-->
+			<ngxd-select-item *ngFor="let item of cities" [option]="item" [label]="item.name"></ngxd-select-item>
 		</div>
 	</ngxd-select>
 	<div class="box">

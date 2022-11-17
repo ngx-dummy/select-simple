@@ -1,18 +1,14 @@
-/* eslint-disable @angular-eslint/no-host-metadata-property */
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
-
+import { Component, HostBinding, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { BasicStylesSet, ITemplates } from '@ngx-dummy/select-simple';
 
 @Component({
 	selector: 'ngx-dummy-root',
 	templateUrl: './app.component.html',
 	styleUrls: ['./app.component.scss'],
-	host: {
-		class: 'flex pad-1_2',
-	},
 })
 export class AppComponent implements OnInit {
+	@HostBinding('class') class = 'flex pad-1_2';
 	@ViewChild('btnTmpl', { static: true }) bntOpenTmpl!: TemplateRef<HTMLElement>;
 	@ViewChild('selectedItemTemplate', { static: true }) selectedItemTemplate!: TemplateRef<HTMLElement>;
 	title = 'Select-sample';
@@ -20,7 +16,7 @@ export class AppComponent implements OnInit {
 	selectedCity1: unknown = undefined;
 	selectedCity2: unknown = undefined;
 	selectedCity3: unknown = undefined;
-	templates: ITemplates = {};
+	itemsTemplates: ITemplates = {};
 
 	headStyle: BasicStylesSet = {
 		backgroundColor: '#4d537c',
@@ -31,7 +27,6 @@ export class AppComponent implements OnInit {
 		borderRadius: '1rem',
 		width: '100%',
 		maxWidth: '25rem',
-		alignSelf: 'center'
 	};
 	panelStyling: BasicStylesSet = {
 		color: '#fff',
@@ -44,7 +39,6 @@ export class AppComponent implements OnInit {
 		boxShadow: '2px 5px 2px #DDD',
 		left: '.5rem',
 		display: 'flex',
-		width: '110%',
 		flexDirection: 'column',
 		alignItems: 'flex-start',
 		justifyContent: 'space-around',
@@ -71,7 +65,7 @@ export class AppComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		this.templates = {
+		this.itemsTemplates = {
 			openerBtnTemplate: this.bntOpenTmpl,
 			selectedItemTemplate: this.selectedItemTemplate,
 		};

@@ -1,6 +1,6 @@
 @import './theming/vars.scss';
 
-:host, 
+:host,
 .select {
 	width: max-content;
 	box-sizing: border-box;
@@ -101,6 +101,7 @@
 
 		.select-items-wrapper {
 			overflow: auto;
+			width: 100%;
 		}
 
 		.select-items {

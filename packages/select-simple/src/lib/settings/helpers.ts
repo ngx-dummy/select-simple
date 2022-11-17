@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 /*!
  * @ngx-dummy/select-Simple library
  * Simple select created for angular / ionic projects.
@@ -9,7 +8,7 @@
  */
 import { SecurityContext } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { ISelectItem } from './models';
+import { IOption, ISelectItem } from './models';
 
 export const imgBase64ToBlob = (Base64Image: string, imageType = 'image/png') => {
 	const parts = Base64Image.split(';base64,');
@@ -34,40 +33,46 @@ export const blobToSafeRes = (blob: Blob, sanitizer: DomSanitizer) => prepRes(UR
  * @param field - the key (or complex lookup object key) of data object to resolve value by
  * @returns resolved single option value (Input for SelectItem)
  */
-export const resolveFieldData = (data: ISelectItem<unknown> | Record<string, string> | string | undefined, field?: string): string | null => {
-	if (!data) return null;
+export const resolveFieldData = (data: IOption, field?: string): string | null => {
+	if (isEmpty(data)) return null;
 	if (isString(data)) return data;
-	if (isJsObject(data)) {
-		if (data.label) return data['label'];
-		else if (data.value) data = data.value as unknown as Record<string, string>;
+	if (isSelectItem(data)) {
+		if (data['label']) return data['label'];
+		if (data['value']) data = data['value'];
 	}
 
 	if (field) {
 		if (isString(field) && field.indexOf('.') === -1) {
-			return (<Record<string, string>>data)[field];
-		}
-		else if (isString(field)) {
+			return data[field];
+		} else if (isString(field)) {
 			const fields: string[] = field.split('.');
-			let value = (<Record<string, string>>data);
+			let value = data;
 			for (let i = 0, len = fields.length; i < len; ++i) {
 				if (value == null) {
 					return null;
 				}
-				value = value[fields[i]] as any;
+				value = value[fields[i]];
 			}
 			return resolveFieldData(value);
 		}
 	} else {
-		return resolveFieldData(Object.values(data)[0]);
+		return resolveFieldData(Object.values(data)[0] as Record<string, string>);
 	}
 	return null;
 };
 
-export const isString = (obj: any): obj is string => typeof obj === 'string';
-export const isJsObject = (obj: any): obj is object => (typeof obj !== 'undefined' && !Array.isArray(obj) && typeof obj === 'object');
-export const equals = (obj1: any, obj2: any, field?: string): boolean => {
+export const isValue = <T>(obj: T): obj is T => obj !== undefined && obj !== null;
+export const isEmpty = <T>(obj: T): obj is T => !isValue(obj);
+export const isString = (obj: IOption): obj is string => typeof obj === 'string';
+export const isObject = <T extends object | string>(obj: T): obj is T => typeof obj !== 'string' && !Array.isArray(obj) && typeof obj === 'object';
+export const isSelectItem = (obj: ISelectItem | string): obj is ISelectItem => (isObject(obj) && !!(<ISelectItem>obj).value) || !!(<ISelectItem>obj).label;
+export const areEqual = (obj1: IOption | null, obj2: IOption | null, field?: string): boolean => {
+	if (isEmpty(obj1) || isEmpty(obj2)) return false;
+	if (isString(obj1) && isString(obj2)) return obj1 === obj2;
+
 	if (field) return resolveFieldData(obj1, field) === resolveFieldData(obj2, field);
-	else return JSON.stringify(obj1) === JSON.stringify(obj2);
+
+	return JSON.stringify(obj1) === JSON.stringify(obj2);
 };
 
 export enum OptionKeyboardEventHandleKeys {
@@ -79,5 +84,5 @@ export enum OptionKeyboardEventHandleKeys {
 	Esc = 'Esc',
 	Up = 'Up',
 	Tab = 'Tab',
-	Space = ' '
+	Space = ' ',
 }

@@ -1,0 +1,39 @@
+{
+	"stylelint.enable": true,
+	"css.validate": false,
+	"scss.validate": false,
+	"editor.codeActionsOnSave": {
+		"source.addMissingImports": true,
+		"source.organizeImports": true,
+		"source.fixAll.prettier": true,
+		"source.fixAll.eslint": true,
+		"source.fixAll.markdownlint": true,
+		"source.fixAll.stylelint": true
+	},
+	"eslint.validate": ["javascript", "typescript"],
+	"editor.formatOnSave": false,
+	"editor.formatOnPaste": true,
+	"[javascript]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode",
+		"editor.formatOnSave": true
+	},
+	"[typescript]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode",
+		"editor.formatOnSave": true
+	},
+	"[json]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode",
+		"editor.formatOnSave": true,
+		"editor.wordSeparators": "`!%&()[{]}|;'\",?#" // ability to select '$propery', 'json-variable', 'editor.wordSeparators', '>=0.0.2' at once
+	},
+	"[css]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode",
+		"editor.formatOnSave": true,
+		"editor.wordSeparators": "`~!%^&*()=+[{]}\\|;:'\",.<>/?$" // ability to select '#fff', 'font-family', '--cssVariable' at once
+	},
+	"[scss]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode",
+		"editor.formatOnSave": true,
+		"editor.wordSeparators": "`~!%^&*()=+[{]}\\|;:'\",.<>/?" // ability to select '#fff', 'font-family', '--cssVariable', '$var' at once
+	}
+}

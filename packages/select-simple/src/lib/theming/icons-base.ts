@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 /*!
  * @ngx-dummy/select-Simple library
  * Simple select created for angular / ionic projects.

@@ -27,9 +27,9 @@
 [![GitHub Issues](https://flat.badgen.net/github/issues/ngx-dummy/select-simple)](https://github.com/ngx-dummy/select-simple/issues)
 [![GitHub Forks](https://flat.badgen.net/github/forks/ngx-dummy/select-simple)](https://github.com/ngx-dummy/select-simple/network/members)
 [![GitHub Status](https://flat.badgen.net/github/status/ngx-dummy/select-simple)](https://github.com/ngx-dummy/select-simple/network/members)
-[![size](https://flat.badgen.net/packagephobia/publish/@ngx-dummy/select-simple)](https://bundlephobia.com/package/@ngx-dummy/select-simple)
-[![size](https://flat.badgen.net/bundlephobia/min/@ngx-dummy/select-simple)](https://bundlephobia.com/package/@ngx-dummy/select-simple)
-[![size](https://flat.badgen.net/bundlephobia/minzip/@ngx-dummy/select-simple)](https://bundlephobia.com/package/@ngx-dummy/select-simple)
+[![publish size](https://flat.badgen.net/packagephobia/publish/@ngx-dummy/select-simple)](https://bundlephobia.com/package/@ngx-dummy/select-simple)
+[![min size](https://flat.badgen.net/bundlephobia/min/@ngx-dummy/select-simple)](https://bundlephobia.com/package/@ngx-dummy/select-simple)
+[![minzip size](https://flat.badgen.net/bundlephobia/minzip/@ngx-dummy/select-simple)](https://bundlephobia.com/package/@ngx-dummy/select-simple)
 [![Npm downloads](https://flat.badgen.net/npm/dt/@ngx-dummy/select-simple)](https://www.npmjs.com/package/@ngx-dummy/select-simple)
 [![Npm monthly downloads](https://flat.badgen.net/npm/dm/@ngx-dummy/select-simple)](https://www.npmjs.com/package/@ngx-dummy/select-simple)
 [![](https://data.jsdelivr.com/v1/package/npm/@ngx-dummy/select-simple/badge?style=flat-square)](https://www.jsdelivr.com/package/npm/@ngx-dummy/select-simple)
@@ -43,13 +43,18 @@
 
 ## Features
 
-This is an Angular "version" of html [select](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/select) element (which could hardly be styled / templated ... hence the library)
+This is an "Angular version" of html [select](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/select)  (which could hardly be styled / templated ... hence the library)
 
 - :gear: **Completely customizable:** you can change the colors, styles ...
+
 - :pencil2: **Create your own templates:** create your own Options' templates
+
 - :ok_hand: **You can use right away:** there are basic items styles included
+
 - :rocket: **No extra deps:** depends only on `@angular/core / @angular/common`
+
 - :satellite: **Options' Elements object bindings** data-bind `Option`s to **_string_** of complex objects
+
 
 <br/>
 
@@ -105,39 +110,26 @@ options = ['opt1', 'opt2', 'opt2'];
 
 <br />
 
-#### with `Options` (Array of Strings) binding:
+#### with `Options` (Array of Objects) and `optionLabelKey` (for resolving every options' caption) binding:
 
 ```html
 <ngxd-select id="select1" [options]="options" [readonly]="false" [required]="true" [resetBtn]="true" formControlName="selector" placeholder="Select a City" optionLabelKey="name"></ngxd-select>
 ```
 
 ```ts
-//... Select-items's Captions resolved by `optionLabelKey` param
-options = [{ name: 'opt1' , value: { param1: 'para1', param2: 'para2' } }, ...];
+//... Select-items's Captions resolved by `optionLabelKey` param (could be simple name of property key or, in case of nested property, dot-separated, ie, `value.para1` )
+options = [{ name: 'opt1' , value: { param1: 'para1', param2: 'para2' } }, { name: 'opt2' , value: { param1: 'para1', param2: 'para2' } },];
 //...
 ```
 
 <br />
 
-#### with `Options` (Array of Strings) binding:
-
-```html
-<ngxd-select id="select1" [options]="options" [readonly]="false" [required]="true" [resetBtn]="true" formControlName="selector" placeholder="Select a City" optionLabelKey="name"></ngxd-select>
-```
-
-```ts
-//... Select-items's Captions resolved by `optionLabelKey` param
-options = [{ name: 'opt1' , value: { param1: 'para1', param2: 'para2' } }, ...];
-//...
-```
-
-<br />
-
-#### and `Option` are declared directly:
+#### and `Option` are projected (content projection \ transclusion):
 
 ```html
 <ngxd-select id="select1" [options]="options" [readonly]="false" [required]="true" [resetBtn]="true" formControlName="selector" placeholder="Select a City" optionLabelKey="name">
 	<ngxd-select-item [label]="'Option 1'" [option]="'Opt1'" (onClick)="selected = $event"></ngxd-select-item>
+	<ngxd-select-item [label]="'Option 2'" [option]="'Opt2'" (onClick)="selected = $event"></ngxd-select-item>
 </ngxd-select>
 ```
 

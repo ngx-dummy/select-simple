@@ -7,15 +7,27 @@ export interface ITemplates {
 	itemslistTemplate?: TemplateRef<HTMLElement>;
 }
 
-export interface ISelectItem<T = unknown> {
+export type ISelectItem<T = Record<string, string | object> | string> = {
 	label?: string;
-	value: T;
+	value?: T;
 	styleClass?: string;
 	icon?: string;
 	title?: string;
 	disabled?: boolean;
-}
+};
+
+export type IOption = ISelectItem | ISelectItem | Record<string, string | object> | string | undefined;
+
 export interface IOptionClickEvent {
 	baseEvent: MouseEvent;
-	option: string | ISelectItem;
+	option: IOption;
 }
+
+type StylesSet = {
+	[K in keyof CSSStyleDeclaration]: CSSStyleDeclaration[K];
+};
+
+/**
+ * @type {StylesSet} BasicStylesSet - common styles' set to be applied to header / overlay of the Select component
+ */
+export type BasicStylesSet = Partial<StylesSet>;

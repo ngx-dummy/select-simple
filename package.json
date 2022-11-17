@@ -1,7 +1,40 @@
 {
   "name": "ngx-dummy",
-  "version": "0.0.5",
+  "version": "0.0.4",
   "license": "MIT",
+  "description": "A simple select component to use in Angular / Ionic projects .. (WIP) and sample app using it",
+	"keywords": [
+		"Select",
+		"Select component",
+		"Dropdown",
+		"Angular",
+		"Ionic",
+		"Typescript",
+		"Javascript",
+		"widget",
+		"expandable",
+		"dropdown",
+		"ui"
+	],
+	"private": false,
+	"author": {
+		"name": "Vladimir Ovsyukov",
+		"email": "ovsyukov@yandex.com",
+		"url": "https://www.ovsyukov.ru"
+	},
+	"engines": {
+		"node": ">=16.10.0 || >=18.9.0",
+		"npm": ">=8.15.0 || >=9.1.0"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/ngx-dummy/select-simple.git"
+	},
+	"bugs": {
+		"email": "ovsyukov@yandex.com",
+		"url": "https://github.com/ngx-dummy/select-simple/issues"
+	},
+	"homepage": "https://github.com/ngx-dummy/select-simple#README",
   "scripts": {
     "start": "nx serve select-sample --open --port=8081",
     "build": "nx build",
@@ -13,10 +46,9 @@
     "test:w": "npm run test:lib -- --watch",
     "postinstall": "ngcc --properties es2015 browser module main",
     "story:select": "nx run select-simple:storybook",
-    "prepublish:npm": "rimraf dist && sh ./scripts/prepublish.sh",
+    "ci:prepublish:npm": "sh ./scripts/ci-prepublish.sh",
     "pretty-quick": "pretty-quick"
   },
-  "private": true,
   "dependencies": {
     "@angular/animations": "^13.3.2",
     "@angular/common": "^13.3.2",
