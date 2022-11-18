@@ -2,19 +2,19 @@
 	<ng-container *ngIf="!selectedItemTemplate; else selectedItemSelectedTmpl">{{ label }}</ng-container>
 </span>
 
-
-<div class="select-trigger" role="button" [attr.aria-expanded]="overlayVisible">
+<div class="select-trigger" role="button" [attr.aria-expanded]="overlayVisible$ | async">
 	<ng-container *ngIf="openerBtnTemplate">
-		<ng-container *ngTemplateOutlet="openerBtnTemplate; context: { $implicit: overlayVisible }"></ng-container>
+		<ng-container *ngTemplateOutlet="openerBtnTemplate; context: { $implicit: overlayVisible$ | async }"></ng-container>
 	</ng-container>
 </div>
 
-<div *ngIf="overlayVisible" class="select-panel" [ngStyle]="panelStyle" [class]="panelStyleClass">
-	<ng-container *ngIf="searchField && !!options?.length">
+<div *ngIf="overlayVisible$ | async" class="select-panel" [ngStyle]="panelStyle" [class]="panelStyleClass">
+	<ng-container *ngIf="searchField">
 		<ng-container *ngTemplateOutlet="searchTermTmpl"></ng-container>
 	</ng-container>
 
-	<ng-container *ngIf="!!optionsToDisplay?.length; then itemsListDefaultTmpl; else noInputOptionsTmpl"> </ng-container>
+	<ng-container *ngIf="!!(optionsToDisplay$ | async)?.length; then itemsListDefaultTmpl; else noInputOptionsTmpl">
+	</ng-container>
 
 	<button *ngIf="resetBtn" class="reset" (click)="reset()">
 		<span>Reset</span>
@@ -44,11 +44,13 @@
 <ng-template #itemsListDefaultTmpl>
 	<div class="select-items-wrapper">
 		<div class="select-items">
-			<ng-template ngFor let-option let-i="index" [ngForOf]="optionsToDisplay">
-				<ngxd-select-item [id]="i" [selected]="selectedOption === option" [label]="getOptionLabel(option)"
-					[disabled]="isOptionDisabled(option)" (optionClick)="onItemClick($event)" [template]="itemTemplate"
-					[itemSize]="itemSize"></ngxd-select-item>
-			</ng-template>
+			<ng-container *ngIf="optionsToDisplay$ | async as optionsToDisplay">
+				<ng-template ngFor let-option let-i="index" [ngForOf]="optionsToDisplay">
+					<ngxd-select-item [id]="i" [selected]="selectedOption === option" [label]="getOptionLabel(option)"
+						[disabled]="isOptionDisabled(option)" (optionClick)="onItemClick($event)" [template]="itemTemplate"
+						[itemSize]="itemSize"></ngxd-select-item>
+				</ng-template>
+			</ng-container>
 		</div>
 	</div>
 </ng-template>
