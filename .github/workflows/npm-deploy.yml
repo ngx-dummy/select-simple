@@ -29,6 +29,7 @@ jobs:
         uses: JS-DevTools/npm-publish@v1
         with:
           checkVersion: true
+          node-version: '18.x'
           token: ${{ secrets.NPM_PUBLISH_TOKEN }}
           access: 'public'
           registry: 'https://registry.npmjs.org/'
