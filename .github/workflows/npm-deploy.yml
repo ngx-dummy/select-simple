@@ -9,7 +9,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    if: startsWith('ngx-dummy')
+    if: startsWith(github.repository_owner, 'ngx-dummy')
 
     name: Deploying package to npm packages registry
     steps:

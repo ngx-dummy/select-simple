@@ -1,6 +1,6 @@
 {
 	"name": "ngx-dummy",
-	"version": "0.0.4",
+	"version": "0.0.5",
 	"license": "MIT",
 	"description": "A simple select component to use in Angular / Ionic projects .. (WIP) and sample app using it",
 	"keywords": [
@@ -39,7 +39,7 @@
 		"start": "nx serve select-sample --open --port=8081",
 		"build": "nx build",
 		"build:prod": "nx build --prod",
-		"build:sample": "nx build select-sample -- --delete-output-path --output-path ./docs",
+		"build:sample": "nx build select-sample",
 		"lint": "nx workspace-lint && nx lint",
 		"test:lib": "nx test select-simple",
 		"test:app": "nx test select-sample",
