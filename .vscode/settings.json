@@ -13,6 +13,11 @@
 	"eslint.validate": ["javascript", "typescript"],
 	"editor.formatOnSave": false,
 	"editor.formatOnPaste": true,
+	"[html]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode",
+		"editor.formatOnSave": true
+	},
+
 	"[javascript]": {
 		"editor.defaultFormatter": "esbenp.prettier-vscode",
 		"editor.formatOnSave": true

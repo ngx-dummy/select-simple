@@ -9,6 +9,7 @@
 	"printWidth": 180,
 	"useTabs": true,
 	"proseWrap": "preserve",
+	"singleAttributePerLine": true,
 	"overrides": [
 		{
 			"files": ["*.scss"],
