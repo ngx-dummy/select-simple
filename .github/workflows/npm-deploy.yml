@@ -35,6 +35,7 @@ jobs:
           workspace: "./dist/packages/select-simple"
           publish_args: "--non-interactive"
           checkVersion: true
+          node-version: '18.x'
           token: ${{ secrets.NPM_PUBLISH_TOKEN }}
           access: 'public'
           registry: 'https://registry.npmjs.org/'
