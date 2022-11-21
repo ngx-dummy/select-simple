@@ -28,9 +28,7 @@ jobs:
       - id: publish
         uses: pascalgn/npm-publish-action@1.3.9
         with:
-          tag_name: "v%s"
-          tag_message: "v%s"
-          create_tag: "true"
+          create_tag: "false"
           commit_pattern: "^Release (\\S+)"
           workspace: "./dist/packages/select-simple"
           publish_args: "--non-interactive"
