@@ -1,14 +1,17 @@
-import { Component, HostBinding, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
-import { BasicStylesSet, ITemplates } from '@ngx-dummy/select-simple';
+import { JsonPipe, NgForOf, NgIf, NgStyle } from '@angular/common';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+import { BasicStylesSet, ITemplates, SelectSimpleModule } from '@ngx-dummy/select-simple';
 
 @Component({
-	selector: 'ngx-dummy-root',
+	standalone: true,
+	imports: [NgForOf, NgIf, JsonPipe, ReactiveFormsModule, FormsModule, NgStyle, SelectSimpleModule],
+	selector: 'ngxd-sample-root',
 	templateUrl: './app.component.html',
-	styleUrls: ['./app.component.scss'],
+	schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AppComponent implements OnInit {
-	@HostBinding('class') class = 'flex pad-1_2';
 	@ViewChild('btnTmpl', { static: true }) bntOpenTmpl!: TemplateRef<HTMLElement>;
 	@ViewChild('selectedItemTemplate', { static: true }) selectedItemTemplate!: TemplateRef<HTMLElement>;
 	title = 'Select-sample';
@@ -28,8 +31,9 @@ export class AppComponent implements OnInit {
 		width: '100%',
 		maxWidth: '25rem',
 	};
+
 	panelStyling: BasicStylesSet = {
-		color: '#fff',
+		color: 'var(--item-color)',
 		backgroundColor: '#0e4a3bcc',
 		padding: '10%',
 		fontSize: '700',

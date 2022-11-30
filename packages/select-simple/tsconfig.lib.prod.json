@@ -1,24 +1,9 @@
 {
   "extends": "./tsconfig.lib.json",
-	"compilerOptions": {
-		"declarationMap": true,
-		"declaration": true,
-		"forceConsistentCasingInFileNames": true,
-		"strictPropertyInitialization": false,
-		"strict": true,
-		"noImplicitReturns": true,
-		"noFallthroughCasesInSwitch": true,
-		"inlineSources": true
-	},
-	"angularCompilerOptions": {
-		"enableIvy": true,
-		"fullTemplateTypeCheck": true,
-		"strictInjectionParameters": true,
-		"skipTemplateCodegen": true,
-		"strictMetadataEmit": true,
-		"strictInputAccessModifiers": true,
-		"strictTemplates": true,
-		"enableResourceInlining": true,
-		"compilationMode": "partial"
-	}
+  "compilerOptions": {
+    "declarationMap": false
+  },
+  "angularCompilerOptions": {
+    "compilationMode": "partial"
+  }
 }

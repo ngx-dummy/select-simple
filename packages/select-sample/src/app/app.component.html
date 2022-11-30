@@ -1,111 +1,211 @@
-<section class="demo">
-	<h4>Reactive form sample:</h4>
-	<form [formGroup]="form" (ngSubmit)="checkFormValid($event)">
-		<div class="resources">
-			<ngxd-select
-				id="select1"
-				[options]="cities"
-				[templates]="itemsTemplates"
-				[readonly]="false"
-				[required]="true"
-				[resetBtn]="true"
-				[searchField]="true"
-				formControlName="selector"
-				placeholder="Select a City"
-				optionLabelKey="name"
-				[tabindex]="1"
-				[autofocus]="true"
-			></ngxd-select>
-			<button class="resource gutter-1" type="submit" [disabled]="!form.valid || form.pristine">Submit (is the form Valid)</button>
+<div class="container-fluid w-full flex flex-col gap-2 p-2 px-5">
+	<section class="w-full max-w-5xl flex flex-col gap-4 self-center my-4">
+		<h4 class="font-semibold p-0 m-0">Reactive form sample:</h4>
+		<form
+			[formGroup]="form"
+			(ngSubmit)="checkFormValid($event)"
+		>
+			<div
+				class="flex flex-row justify-between flex-wrap text-center list-none p-1 gap-2"
+			>
+				<ngxd-select
+					id="select1"
+					[options]="cities"
+					[templates]="itemsTemplates"
+					[readonly]="false"
+					[required]="true"
+					[resetBtn]="true"
+					[searchField]="true"
+					formControlName="selector"
+					placeholder="Select a City"
+					optionLabelKey="name"
+					[tabindex]="1"
+					[autofocus]="true"
+				></ngxd-select>
+				<button
+					class="border max-w-fit border-1 bg-lightBlue hover:bg-darkBg transition ease-in text-darkBg hover:text-darkBlue font-bold hover:cursor-pointer px-12 py-4 disabled:cursor-not-allowed disabled:opacity-50 disabled:bg-slate-900 disabled:text-darkBg"
+					type="submit"
+					[disabled]="!form.valid || form.pristine"
+				>
+					Submit (is the formValid)
+				</button>
+			</div>
+		</form>
+
+		<div class="">
+			<pre
+				class="border border-radius-lg bg-[var(--medium-bg)] text-darkBg font-bold p-4"
+				>{{ selectedCity1 | json }}</pre
+			>
 		</div>
-	</form>
+	</section>
 
-	<div class="box">
-		<pre>{{ selectedCity1 | json }}</pre>
-	</div>
-</section>
+	<hr class="w-full border-2 border-dashed border-[var(--medium-bg)]" />
 
-<hr />
-
-<section class="demo">
-	<h4>ngModel sample with custom templates (bound to simple strings):</h4>
-	<ngxd-select id="select2" [tabindex]="2" [options]="simpleCitiesArray" [panelStyle]="panelStyling" [headerStyle]="headStyle" [(ngModel)]="selectedCity2"></ngxd-select>
-	<div class="box">
-		<pre>{{ selectedCity2 | json }}</pre>
-	</div>
-</section>
-
-<hr />
-
-<section class="demo">
-	<h4>Sample using content projection of items:</h4>
-	<ngxd-select id="select3" [tabindex]="3" [(ngModel)]="selectedCity3" placeholder="Via Projection">
-		<div class="simple-items">
-			<ngxd-select-item [visible]="true" label="Kaluga" option="Kaluga" (optionClick)="selectedCity3 = $event"></ngxd-select-item>
-			<ngxd-select-item [visible]="true" label="Vladivostok" [option]="{ name: 'Vladivostok' }" (optionClick)="selectedCity3 = $event"></ngxd-select-item>
-			<!--and additional via iterable-->
-			<ngxd-select-item *ngFor="let item of cities" [option]="item" [label]="item.name"></ngxd-select-item>
+	<section class="w-full max-w-5xl flex flex-col gap-4 self-center my-4">
+		<h4 class="font-semibold p-0 m-0">
+			ngModel sample with custom templates (bound to simple strings):
+		</h4>
+		<ngxd-select
+			id="select2"
+			[tabindex]="2"
+			[styleClass]="'panelClass'"
+			[options]="simpleCitiesArray"
+			[panelStyle]="panelStyling"
+			[headerStyle]="headStyle"
+			[(ngModel)]="selectedCity2"
+		></ngxd-select>
+		<div class="box">
+			<pre
+				class="border border-radius-lg bg-[var(--medium-bg)] text-darkBg p-4"
+				>{{ selectedCity2 | json }}</pre
+			>
 		</div>
-	</ngxd-select>
-	<div class="box">
-		<pre>{{ selectedCity3 | json }}</pre>
-	</div>
-</section>
+	</section>
 
-<hr />
+	<hr class="w-full border-2 border-dashed border-[var(--medium-bg)]" />
 
-<section class="demo">
-	<h4>Disabled sample:</h4>
-	<ngxd-select id="select4" [tabindex]="4" placeholder="Disabled" [disabled]="true"></ngxd-select>
-</section>
+	<section class="w-full max-w-5xl flex flex-col gap-4 self-center my-4">
+		<h4 class="font-semibold p-0 m-0">
+			Sample using content projection of items:
+		</h4>
+		<ngxd-select
+			id="select3"
+			[tabindex]="3"
+			[(ngModel)]="selectedCity3"
+			placeholder="Via Projection"
+		>
+			<div class="simple-items">
+				<ngxd-select-item
+					[visible]="true"
+					label="Kaluga"
+					option="Kaluga"
+					(optionClick)="selectedCity3 = $event"
+				>
+				</ngxd-select-item>
+				<ngxd-select-item
+					[visible]="true"
+					label="Vladivostok"
+					[option]="{ name: 'Vladivostok' }"
+					(optionClick)="selectedCity3 = $event"
+				></ngxd-select-item>
+				<!--and additional via iterable-->
+				<ngxd-select-item
+					*ngFor="let item of cities"
+					[option]="item"
+					[label]="item.name"
+				></ngxd-select-item>
+			</div>
+		</ngxd-select>
+		<div class="box">
+			<pre
+				class="border border-radius-lg text-[var(--dark-bg)] bg-[var(--medium-bg)] p-4"
+				>{{ selectedCity3 | json }}</pre
+			>
+		</div>
+	</section>
 
-<hr />
+	<hr class="w-full border-2 border-dashed border-[var(--medium-bg)]" />
 
-<section class="demo">
-	<h4>Readonly sample:</h4>
-	<ngxd-select id="select5" [readonly]="true" [options]="simpleCitiesArray"></ngxd-select>
-</section>
+	<section class="w-full max-w-5xl flex flex-col gap-4 self-center my-4">
+		<h4 class="font-semibold p-0 m-0">Disabled sample:</h4>
+		<ngxd-select
+			id="select4"
+			[tabindex]="4"
+			placeholder="Disabled"
+			[disabled]="true"
+		></ngxd-select>
+	</section>
 
-<ng-template #btnTmpl let-visible>
-	<style>
-		.open-btn {
-			display: grid;
-			place-content: center;
-			margin: 0.1rem 1rem;
-			padding: 1rem;
-			border-radius: 0.2rem;
-			color: #ffffff;
-			font-size: 14px;
-			border-color: red;
-			position: relative;
-			background: blue
-				url("data:image/svg+xml;utf8,<svg viewBox='0 0 140 140' width='24' height='24' xmlns='http://www.w3.org/2000/svg'><g><path d='m121.3,34.6c-1.6-1.6-4.2-1.6-5.8,0l-51,51.1-51.1-51.1c-1.6-1.6-4.2-1.6-5.8,0-1.6,1.6-1.6,4.2 0,5.8l53.9,53.9c0.8,0.8 1.8,1.2 2.9,1.2 1,0 2.1-0.4 2.9-1.2l53.9-53.9c1.7-1.6 1.7-4.2 0.1-5.8z' fill='white'/></g></svg>")
-				no-repeat;
-			background-position: right 5px top 50%;
-		}
-		.up {
-			transform: rotate(180deg);
-		}
-	</style>
-	<span class="open-btn" [class.up]="visible"></span>
-</ng-template>
+	<hr class="w-full border-2 border-dashed border-[var(--medium-bg)]" />
 
-<ng-template #selectedItemTemplate let-label>
-	<style>
-		.selected-container {
-			background-color: aqua;
-			border-radius: .1rem;
-			min-height: 2rem;
-			padding: 0.2rem 0.4rem;
-			margin: 0.1rem;
-			display: flex;
-			justify-content: space-around;
-			align-items: center;
-		}
-	</style>
-	<div class="selected-container">
-		<ion-icon name="add-circle-outline"></ion-icon>
-		&nbsp;
-		<span class="label">{{ label }}</span>
-	</div>
-</ng-template>
+	<section class="w-full max-w-5xl flex flex-col gap-4 self-center my-4">
+		<h4 class="font-semibold p-0 m-0">Readonly sample:</h4>
+		<ngxd-select
+			id="select5"
+			[readonly]="true"
+			[options]="simpleCitiesArray"
+		></ngxd-select>
+	</section>
+
+	<ng-template
+		#btnTmpl
+		let-visible
+	>
+		<style>
+			.open-btn {
+				display: grid;
+				place-content: center;
+				margin: 0.1rem 1rem;
+				padding: 1rem;
+				border-radius: 0.2rem;
+				color: var(--accent-color);
+				font-size: 14px;
+				border-color: var(--dark-blue-color);
+				position: relative;
+				background: var(--light-blue-color)
+					url("data:image/svg+xml;utf8,<svg viewBox='0 0 140 140' width='24' height='24' xmlns='http://www.w3.org/2000/svg'><g><path d='m121.3,34.6c-1.6-1.6-4.2-1.6-5.8,0l-51,51.1-51.1-51.1c-1.6-1.6-4.2-1.6-5.8,0-1.6,1.6-1.6,4.2 0,5.8l53.9,53.9c0.8,0.8 1.8,1.2 2.9,1.2 1,0 2.1-0.4 2.9-1.2l53.9-53.9c1.7-1.6 1.7-4.2 0.1-5.8z' fill='white'/></g></svg>")
+					no-repeat;
+				background-position: right 5px top 50%;
+			}
+
+			.up {
+				transform: rotate(180deg);
+			}
+		</style>
+		<span
+			class="open-btn"
+			[class.up]="visible"
+		></span>
+	</ng-template>
+
+	<ng-template
+		#selectedItemTemplate
+		let-label
+	>
+		<style scoped>
+			.selected-container {
+				background-color: var(--accent-color);
+				color: var(--dark-bg);
+				font-weight: 700;
+				border-radius: 0.1rem;
+				min-height: 2rem;
+				padding: 0.2rem 0.4rem;
+				margin: 0.1rem;
+				display: flex;
+				justify-content: space-around;
+				align-items: center;
+			}
+		</style>
+		<div class="selected-container">
+			<ion-icon name="add-circle-outline"></ion-icon>
+			&nbsp;
+			<span class="label">{{ label }}</span>
+		</div>
+	</ng-template>
+
+	<ng-template
+		#containerTmpl
+		let-label
+	>
+		<style scoped>
+			.selected-container {
+				background-color: var(--accent-color);
+				color: var(--dark-bg);
+				font-weight: 700;
+				border-radius: 0.1rem;
+				min-height: 2rem;
+				padding: 0.2rem 0.4rem;
+				margin: 0.1rem;
+				display: flex;
+				justify-content: space-around;
+				align-items: center;
+			}
+		</style>
+		<div class="selected-container">
+			<ion-icon name="add-circle-outline"></ion-icon>
+			&nbsp;
+			<span class="label">{{ label }}</span>
+		</div>
+	</ng-template>
+</div>

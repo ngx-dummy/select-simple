@@ -35,6 +35,7 @@
 [![](https://data.jsdelivr.com/v1/package/npm/@ngx-dummy/select-simple/badge?style=flat-square)](https://www.jsdelivr.com/package/npm/@ngx-dummy/select-simple)
 [![Twitter Follow](https://img.shields.io/twitter/follow/OvsyukovV.svg?style=flat-square&logo=twitter)](https://twitter.com/OvsyukovV)
 [![Donations](https://img.shields.io/badge/Donate-PayPal-green.svg?style=flat-square)](https://paypal.me/ovsyukov)
+[![Dependents](https://badgen.net/npm/dependents/@ngx-dummy/select-simple)](https://badgen.net/npm/dependents/got)
 
 ---
 
@@ -143,6 +144,7 @@ selected = undefined;
 
 <details>
 <summary>More detailed showcase (the video clip demonstrates most of use cases of the library)</summary>
+
 <center>
 
 [![Using @ngx-dummy/select-simple](https://raw.githubusercontent.com/ngx-dummy/select-simple/v9/docs/Select-simple-usage.png)](https://vimeo.com/579375725/749b80e96c)

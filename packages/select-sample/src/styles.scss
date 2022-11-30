@@ -1,14 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat+Alternates:ital,wght@0,500;1,400;1,900&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-
 :root {
-	--light-bg: #fafafa;
-	--medium-bg: #f4f4f4;
-	--dark-bg: #e2e1e1;
+	--light: #fafafa;
+	--medium-bg: #a5a5a5;
+	--dark-bg: #2f2f2f;
 	--light-blue-color: #4d4dfa;
 	--yellow-color: #dcdf36;
 	--darker-color: #607386;
@@ -23,50 +20,22 @@ body {
 	height: 100%;
 	margin: 0;
 	padding: 0;
-	background-color: var(--dark-bg);
+	background-color: var(--darker-color);
+	color: var(--light);
 	box-sizing: border-box;
 	font-size: 14px;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
+	font-family: 'Montserrat', sans-serif;
 	font-weight: 400;
 }
 
-.header {
-	background-color: var(--accent-color);
-	color: var(--light-blue-color);
-	padding: 0.5rem;
-	width: 100%;
-	text-align: center;
-	// font-family: 'Montserrat', sans-serif;
-	// font-variant: small-caps;
-	// h1 {
-	// 	font-size: 1.4rem;
-	// }
-	// h2 {
-	// 	font-size: 1rem;
-	// 	font-style: italic;
-	// }
+.panelClass:hover {
+	z-index: 99;
+	transition: all 0.2s ease;
+	transform: scale(1.01);
+	& > span {
+		transition: all 0.2s ease;
+		color: var(--accent-color);
+	}
 }
-
-h4 {
-	margin: 0;
-}
-
-*:focus {
-	outline: none;
-}
-
-.flex {
-	display: flex;
-	flex-direction: column;
-	align-items: stretch;
-	justify-content: center;
-	gap: 1.5rem;
-}
-
-.pad-1_2 {
-	padding: 1rem 2rem;
-}
-
-
-/* You can add global styles to this file, and also import other style files */

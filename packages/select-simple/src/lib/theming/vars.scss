@@ -14,14 +14,3 @@ $color-secondary: #0b2424;
 $color-disabled: #8a8a8a80;
 $item-header__bg--active: lighten($color-primary, 15%);
 $item-header__bg--opened: darken($color-primary, 10%);
-
-:root {
-	--color-white: #{$white};
-	--ngxd-primary-color: #{$color-primary};
-	--ngxd-secondary-color: #{$color-secondary};
-	--ngxd-primary-color-t50: #{$color-primary-t50};
-	--ngxd-disabled: #{$color-disabled};
-	--ngxd-primary-icon-color: #{$color-icon-primary};
-	--ngxd-primary-color--active: #{$item-header__bg--active};
-	--ngxd-primary-color--opened: #{$item-header__bg--opened};
-}

@@ -1,13 +1,15 @@
 {
-  "root": "packages/select-sample-e2e",
+  "name": "select-sample-e2e",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/select-sample-e2e/src",
   "projectType": "application",
   "targets": {
     "e2e": {
       "executor": "@nrwl/cypress:cypress",
       "options": {
-        "cypressConfig": "packages/select-sample-e2e/cypress.json",
-        "devServerTarget": "select-sample:serve:development"
+        "cypressConfig": "packages/select-sample-e2e/cypress.config.ts",
+        "devServerTarget": "select-sample:serve:development",
+        "testingType": "e2e"
       },
       "configurations": {
         "production": {

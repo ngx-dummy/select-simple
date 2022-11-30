@@ -1,6 +1,5 @@
 {
-	"name": "@ngx-dummy/select-simple",
-	"version": "0.0.7",
+	"version": "0.0.8",
 	"license": "MIT",
 	"description": "A simple select component to use in Angular / Ionic projects .. (WIP) and sample app using it",
 	"keywords": [
@@ -35,11 +34,11 @@
 		"url": "https://github.com/ngx-dummy/select-simple/issues"
 	},
 	"homepage": "https://github.com/ngx-dummy/select-simple#README",
-	"dependencies": {
-		"tslib": "^2.3.1"
-	},
 	"peerDependencies": {
-		"@angular/common": "^13.2.0",
-		"@angular/core": "^13.2.0"
+		"@angular/common": "^15.0.0",
+		"@angular/core": "^15.0.0"
+	},
+	"dependencies": {
+		"tslib": "^2.4.0"
 	}
 }

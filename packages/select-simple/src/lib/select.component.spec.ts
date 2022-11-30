@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SelectSimpleModule } from './select-simple.module';
 import { SelectComponent } from './select.component';
 
-const panelSelector = '.select-trigger';
+const panelSelector = '.select';
 const overlaySelector = '.select-panel';
 const countries = ['Russia', 'USA', 'Germany'];
 
@@ -33,21 +33,20 @@ describe('SelectComponent', () => {
 		component.options = countries;
 
 		const elPanel: HTMLElement = fixtureNativeElement?.querySelector(panelSelector) as HTMLElement;
-		fixtureNativeElement?.click();
+		elPanel?.click();
 		fixture.detectChanges();
-		fixture.whenStable().then(() => {
-			expect(selectEl(elPanel, overlaySelector)).toBeTruthy();
-			expect(selectEl(elPanel, overlaySelector).innerHTML?.length).toBeTruthy();
-		});
+		expect(component.overlayVisible).toBe(true);
+		expect(selectEl(elPanel, overlaySelector)).toBeTruthy();
+		expect(selectEl(elPanel, overlaySelector).innerHTML?.length).toBeTruthy();
 	});
 
 	it('should be disabled / non-clickable if disabled prop set to `true` ', async () => {
 		component.disabled = true;
 		const elPanel: HTMLElement = fixtureNativeElement?.querySelector(panelSelector) as HTMLElement;
-		fixtureNativeElement?.click();
+		elPanel?.click();
 		fixture.detectChanges();
 
-		expect(selectEl(elPanel, overlaySelector)).toBeFalsy();
+		expect(component.overlayVisible).toBe(false);
 	});
 });
 

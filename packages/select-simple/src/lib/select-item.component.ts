@@ -9,6 +9,7 @@ import { IOption, IOptionClickEvent } from './settings/models';
 			:host {
 				display: block;
 				padding: 0.1rem;
+
 				.item-disabled {
 					cursor: not-allowed !important;
 					pointer-events: none;

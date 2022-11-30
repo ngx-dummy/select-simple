@@ -7,7 +7,7 @@ export interface ITemplates {
 	itemslistTemplate?: TemplateRef<HTMLElement>;
 }
 
-export type ISelectItem<T = Record<string, string | object> | string> = {
+export type ISelectItem<T = Record<string, string | object>> = {
 	label?: string;
 	value?: T;
 	styleClass?: string;
@@ -16,7 +16,7 @@ export type ISelectItem<T = Record<string, string | object> | string> = {
 	disabled?: boolean;
 };
 
-export type IOption = ISelectItem | ISelectItem | Record<string, string | object> | string | undefined;
+export type IOption = ISelectItem | Record<string, string | object> | string | undefined;
 
 export interface IOptionClickEvent {
 	baseEvent: MouseEvent;
@@ -28,6 +28,6 @@ type StylesSet = {
 };
 
 /**
- * @type {StylesSet} BasicStylesSet - common styles' set to be applied to header / overlay of the Select component
+ * @type {StylesSet} BasicStylesSet - common styles'set to be applied to header / overlay of the Select component
  */
 export type BasicStylesSet = Partial<StylesSet>;

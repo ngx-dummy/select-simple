@@ -12,23 +12,23 @@
         "project": ["packages/select-sample/tsconfig.*?.json"]
       },
       "rules": {
-        "@angular-eslint/directive-selector": [
-          "error",
-          {
-            "type": "attribute",
-            "prefix": "ngxDummy",
-            "style": "camelCase"
-          }
-        ],
-        "@angular-eslint/component-selector": [
-          "error",
-          {
-            "type": "element",
-            "prefix": "ngx-dummy",
-            "style": "kebab-case"
-          }
-        ]
-      }
+				"@angular-eslint/directive-selector": [
+					"error",
+					{
+						"type": "attribute",
+						"prefix": "ngxdSample",
+						"style": "camelCase"
+					}
+				],
+				"@angular-eslint/component-selector": [
+					"error",
+					{
+						"type": "element",
+						"prefix": "ngxd-sample",
+						"style": "kebab-case"
+					}
+				]
+			}
     },
     {
       "files": ["*.html"],

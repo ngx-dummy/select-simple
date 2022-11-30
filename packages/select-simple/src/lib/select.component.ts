@@ -1,7 +1,6 @@
 import {
 	AfterContentInit,
 	ChangeDetectionStrategy,
-	ChangeDetectorRef,
 	Component,
 	ContentChildren,
 	ElementRef,
@@ -17,8 +16,6 @@ import {
 	SimpleChanges,
 	TemplateRef,
 	ViewChild,
-	ViewEncapsulation,
-	ViewRef,
 } from '@angular/core';
 import { AbstractControl, ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -45,7 +42,7 @@ export const NG_VALIDATORS_PROVIDER: Provider = {
 	templateUrl: 'select.component.html',
 	providers: [SELECT_VALUE_ACCESSOR_PROVIDER, NG_VALIDATORS_PROVIDER],
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	encapsulation: ViewEncapsulation.None,
+	// encapsulation: ViewEncapsulation.None,
 	styleUrls: ['select.component.scss'],
 	host: {
 		'[class]': 'styleClass',
@@ -57,6 +54,7 @@ export const NG_VALIDATORS_PROVIDER: Provider = {
 		'[class.select-open]': 'overlayVisible',
 		'[attr.tabIndex]': 'tabindex',
 		'[attr.autofocus]': 'autofocus',
+		'[attr.disabled]': 'disabled',
 		'[attr.name]': 'name',
 		'(blur)': 'onHostBlur($event)',
 		'(focus)': 'onHostFocus($event)',
@@ -74,7 +72,7 @@ export class SelectComponent implements AfterContentInit, OnChanges, ControlValu
 	/** set additional custom classList to the Select component's panel   */
 	@Input() panelStyleClass = 'panel';
 	/** set additional custom classList to the Select component   */
-	@Input() styleClass = '';
+	@Input() styleClass = 'select ';
 	@Input() readonly = false;
 	@Input() required = false;
 	/** whether to display reset button in the end of the options   */
@@ -86,7 +84,7 @@ export class SelectComponent implements AfterContentInit, OnChanges, ControlValu
 	/** default component caption (panel caption) */
 	@Input() placeholder?: string = undefined;
 	/** string key of the Options input (in case of complex object) of kind: 'key' / 'key.subkey'...  if set, would resolve the options' captions */
-	@Input() optionLabelKey?: string | undefined = undefined;
+	@Input() optionLabelKey: string | undefined = undefined;
 	@Input() selectIconClass = '';
 	@Input() tabindex = 0;
 	@Input() itemSize: number | undefined;
@@ -115,19 +113,8 @@ export class SelectComponent implements AfterContentInit, OnChanges, ControlValu
 		boxShadow: '2px 5px 10px rgba(55, 55, 55, 0.8)',
 	};
 
-	overlayVisible$: Observable<boolean> = this._overlayVisible$$.asObservable().pipe(
-		shareReplay({
-			refCount: true,
-			bufferSize: 1,
-		})
-	);
-
-	optionsToDisplay$: Observable<IOption[]> = this._optionsToDisplay$$.asObservable().pipe(
-		shareReplay({
-			refCount: true,
-			bufferSize: 1,
-		})
-	);
+	overlayVisible$: Observable<boolean> = this._overlayVisible$$.asObservable().pipe(shareReplay({ refCount: true, bufferSize: 1 }));
+	optionsToDisplay$: Observable<IOption[]> = this._optionsToDisplay$$.asObservable().pipe(shareReplay({ refCount: true, bufferSize: 1 }));
 
 	itemTemplate: TemplateRef<HTMLElement> | undefined;
 	selectedItemTemplate: TemplateRef<HTMLElement> | null = null;
@@ -152,7 +139,7 @@ export class SelectComponent implements AfterContentInit, OnChanges, ControlValu
 
 	/**
 	 * @property
-	 * @param {BasicStylesSet} headStyleObj - styles to override the defaults of Select component panel
+	 * @param {BasicStylesSet} headStyleObj - styles to override the defaults of Select component header
 	 */
 	@Input() set headerStyle(headStyleObj: BasicStylesSet) {
 		if (!!headStyleObj && !!Object.keys(headStyleObj).length) {
@@ -166,6 +153,10 @@ export class SelectComponent implements AfterContentInit, OnChanges, ControlValu
 		return this._headerStyle;
 	}
 
+	/**
+	 * @property
+	 * @param {BasicStylesSet} stylesObj - styles to override the defaults of Select component panel
+	 */
 	@Input() set panelStyle(stylesObj: BasicStylesSet) {
 		if (!!stylesObj && !!Object.keys(stylesObj).length) {
 			this._panelStyle = {
@@ -191,15 +182,11 @@ export class SelectComponent implements AfterContentInit, OnChanges, ControlValu
 	@Input() get disabled(): boolean {
 		return this._disabled;
 	}
-	set disabled(_disabled: boolean) {
-		if (_disabled) {
+	set disabled(disabled: boolean) {
+		this._disabled = disabled;
+		if (disabled) {
 			this.focused = false;
 			if (this._overlayVisible$$.value) this.hide();
-		}
-
-		this._disabled = _disabled;
-		if (!(this.cd as ViewRef).destroyed) {
-			this.cd.detectChanges();
 		}
 	}
 
@@ -207,7 +194,7 @@ export class SelectComponent implements AfterContentInit, OnChanges, ControlValu
 		// @Self() @Optional() ngControl: NgControl,
 		public el: ElementRef<Element>,
 		public renderer: Renderer2,
-		public cd: ChangeDetectorRef,
+		// public cd: ChangeDetectorRef,
 		private sanitizer: DomSanitizer,
 		public zone: NgZone
 	) {
@@ -224,7 +211,8 @@ export class SelectComponent implements AfterContentInit, OnChanges, ControlValu
 
 				this.openerBtnTemplate = change.currentValue['openerBtnTemplate'] || this.defaultOpenerTemplate;
 				this.itemsListDefaultTmpl = change.currentValue['itemslistTemplate'] || this.itemsListDefaultTmpl;
-				this.cd.markForCheck();
+				// should use it ?
+				// this.cd.markForCheck();
 			}
 		});
 	}
@@ -246,7 +234,6 @@ export class SelectComponent implements AfterContentInit, OnChanges, ControlValu
 					const iconContainer = (<HTMLElement>ev.target)?.classList?.contains('select-trigger-icon');
 
 					if (this.isOutsideClicked(ev) && !iconContainer) {
-						this.cd.markForCheck();
 						this.hide();
 					}
 					return of(ev);
@@ -324,7 +311,8 @@ export class SelectComponent implements AfterContentInit, OnChanges, ControlValu
 	writeValue(value: any) {
 		this.value = value;
 		this.updateSelectedOption();
-		this.cd.markForCheck();
+		//TODO: could remove?
+		// this.cd.markForCheck();
 	}
 
 	validate({ value }: AbstractControl) {
@@ -340,7 +328,7 @@ export class SelectComponent implements AfterContentInit, OnChanges, ControlValu
 	updateSelectedOption() {
 		// this.selectedOption = this.findOption(val, this.optionsToDisplay);
 		if (!this.placeholder && !this.selectedOption && this._optionsToDisplay$$.value?.length) {
-			this.selectedOption = this._optionsToDisplay$$.value[0];
+			this.selectedOption = this._optionsToDisplay$$.value?.[0];
 		}
 	}
 
@@ -352,11 +340,6 @@ export class SelectComponent implements AfterContentInit, OnChanges, ControlValu
 		this.onModelTouched = fn;
 	}
 
-	setDisabledState(val: boolean) {
-		this.disabled = val;
-		this.cd.markForCheck();
-	}
-
 	onMouseclick($event: Event) {
 		if (this.disabled) {
 			return;
@@ -364,11 +347,11 @@ export class SelectComponent implements AfterContentInit, OnChanges, ControlValu
 		if (!this.readonly) {
 			this.onClick.emit($event);
 		}
-
-		if (this._overlayVisible$$.value) this.hide();
-		else this.show();
-
-		this.cd.detectChanges();
+		if (this._overlayVisible$$.value) {
+			this.hide();
+		} else {
+			this.show();
+		}
 	}
 
 	reset() {

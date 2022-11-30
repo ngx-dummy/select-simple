@@ -1,7 +1,24 @@
 @import './theming/vars.scss';
 
-:host,
-.select {
+$white: #fff;
+$color-primary: #adc9cebf;
+$color-primary-t50: #00556680;
+$color-icon-primary: #89a5aa40;
+$color-secondary: #0b2424;
+$color-disabled: #8a8a8a80;
+$item-header__bg--active: lighten($color-primary, 15%);
+$item-header__bg--opened: darken($color-primary, 10%);
+
+:host {
+	--ngxd-white: #{$white};
+	--ngxd-primary-color: #{$color-primary};
+	--ngxd-secondary-color: #{$color-secondary};
+	--ngxd-primary-color-t50: #{$color-primary-t50};
+	--ngxd-disabled: #{$color-disabled};
+	--ngxd-primary-icon-color: #{$color-icon-primary};
+	--ngxd-primary-color--active: #{$item-header__bg--active};
+	--ngxd-primary-color--opened: #{$item-header__bg--opened};
+
 	width: max-content;
 	box-sizing: border-box;
 	min-height: 2rem;
@@ -15,6 +32,7 @@
 	gap: 1rem;
 	padding: 0.5rem;
 	background: var(--ngxd-primary-color);
+	// color: var(--ngxd-secondary-color);
 	border-radius: 3px;
 	border: 1px solid var(--color-white);
 	transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
@@ -42,6 +60,11 @@
 		cursor: not-allowed !important;
 		pointer-events: none;
 		color: var(--ngxd-disabled);
+
+		&:focus,
+		&:focus-visible {
+			outline: var(--ngxd-disabled);
+		}
 	}
 
 	.select-trigger {
@@ -119,7 +142,7 @@
 
 				&.item-highlight {
 					background-color: var(--ngxd-primary-color--opened);
-					color: var($color-secondary);
+					color: var(--ngxd-secondary-color);
 				}
 				&:hover {
 					background-color: var(-ngxd-primary-color-t50);
@@ -131,7 +154,7 @@
 		.search-term__container {
 			padding: 0.75rem 1.25rem;
 			border: none;
-			border-bottom: 1px solid var(--color-white);
+			border-bottom: 1px solid var(--ngxd-white);
 			color: var(--ngxd-secondary-color);
 			background: transparent;
 			margin: 0;
@@ -178,23 +201,6 @@
 			place-content: center;
 			border-radius: 0.2rem;
 			background-color: var(--ngxd-primary-color);
-		}
-	}
-
-	@-webkit-keyframes fadein {
-		0% {
-			opacity: 0;
-		}
-		100% {
-			opacity: 1;
-		}
-	}
-	@keyframes fadein {
-		0% {
-			opacity: 0;
-		}
-		100% {
-			opacity: 1;
 		}
 	}
 }

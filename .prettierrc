@@ -6,10 +6,10 @@
 	"bracketSpacing": true,
 	"singleQuote": true,
 	"trailingComma": "es5",
+	"singleAttributePerLine": true,
 	"printWidth": 180,
 	"useTabs": true,
 	"proseWrap": "preserve",
-	"singleAttributePerLine": true,
 	"overrides": [
 		{
 			"files": ["*.scss"],

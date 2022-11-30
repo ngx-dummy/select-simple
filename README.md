@@ -143,6 +143,7 @@ selected = undefined;
 
 <details>
 <summary>More detailed showcase (the video clip demonstrates most of use cases of the library)</summary>
+
 <center>
 
 [![Using @ngx-dummy/select-simple](https://raw.githubusercontent.com/ngx-dummy/select-simple/v9/docs/Select-simple-usage.png)](https://vimeo.com/579375725/749b80e96c)
