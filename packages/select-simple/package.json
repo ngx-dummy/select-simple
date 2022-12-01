@@ -35,8 +35,8 @@
 	},
 	"homepage": "https://github.com/ngx-dummy/select-simple#README",
 	"peerDependencies": {
-		"@angular/common": "^15.0.0",
-		"@angular/core": "^15.0.0"
+		"@angular/common": "13.x || 14.x || 15.x",
+		"@angular/core": "13.x || 14.x || 15.x"
 	},
 	"dependencies": {
 		"tslib": "^2.4.0"
