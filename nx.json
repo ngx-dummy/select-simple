@@ -32,5 +32,5 @@
 			"inputs": ["default", "{workspaceRoot}/.eslintrc.json"]
 		}
 	},
-	"defaultProject": "select-sample"
+	"defaultProject": "select-simple"
 }
