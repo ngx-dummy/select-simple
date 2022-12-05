@@ -37,8 +37,8 @@
 	"homepage": "https://github.com/ngx-dummy/select-simple#README",
 	"scripts": {
 		"start": "nx serve select-sample --configuration development --open --port=8081",
-		"build": "nx build",
-		"build:prod": "nx build --configuration production",
+		"build": "nx build select-simple",
+		"build:prod": "nx build select-simple --configuration production",
 		"build:sample": "nx build select-sample",
 		"lint": "nx workspace-lint && nx lint",
 		"test:lib": "nx test select-simple",

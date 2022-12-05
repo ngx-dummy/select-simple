@@ -35,9 +35,11 @@ describe('SelectComponent', () => {
 		const elPanel: HTMLElement = fixtureNativeElement?.querySelector(panelSelector) as HTMLElement;
 		elPanel?.click();
 		fixture.detectChanges();
-		expect(component.overlayVisible).toBe(true);
-		expect(selectEl(elPanel, overlaySelector)).toBeTruthy();
-		expect(selectEl(elPanel, overlaySelector).innerHTML?.length).toBeTruthy();
+		component.overlayVisible$.subscribe((overlayVisible) => {
+			expect(overlayVisible).toBe(true);
+			expect(selectEl(elPanel, overlaySelector)).toBeTruthy();
+			expect(selectEl(elPanel, overlaySelector).innerHTML?.length).toBeTruthy();
+		});
 	});
 
 	it('should be disabled / non-clickable if disabled prop set to `true` ', async () => {
@@ -45,8 +47,9 @@ describe('SelectComponent', () => {
 		const elPanel: HTMLElement = fixtureNativeElement?.querySelector(panelSelector) as HTMLElement;
 		elPanel?.click();
 		fixture.detectChanges();
-
-		expect(component.overlayVisible).toBe(false);
+		component.overlayVisible$.subscribe((overlayVisible) => {
+			expect(overlayVisible).toBe(false);
+		});
 	});
 });
 
