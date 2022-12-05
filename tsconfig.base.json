@@ -1,23 +1,22 @@
 {
-	"compilerOptions": {
-		"target": "es2020",
-		"emitDecoratorMetadata": true,
-		"experimentalDecorators": true,
-		"module": "esnext",
-		"rootDir": "./",
-		"baseUrl": "./",
-		"moduleResolution": "node",
-		"esModuleInterop": true,
-		"forceConsistentCasingInFileNames": true,
-		"sourceMap": true,
-		"declaration": true,
-		"importHelpers": true,
-		"lib": ["ES2022", "dom"],
-		"skipLibCheck": true,
-		"skipDefaultLibCheck": true,
-		"paths": {
-			"@ngx-dummy/select-simple": ["packages/select-simple/src/index.ts"]
-		}
-	},
-	"exclude": ["node_modules", "tmp"]
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es2015",
+    "module": "esnext",
+    "lib": ["es2017", "dom"],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@ngx-dummy/select-simple": ["packages/select-simple/src/index.ts"]
+    }
+  },
+  "exclude": ["node_modules", "tmp"]
 }

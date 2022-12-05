@@ -1,9 +1,0 @@
-{
-	"version": 2,
-	"projects": {
-		"select-sample": "packages/select-sample",
-		"select-sample-e2e": "packages/select-sample-e2e",
-		"select-simple": "packages/select-simple",
-		"select-simple-e2e": "packages/select-simple-e2e"
-	}
-}

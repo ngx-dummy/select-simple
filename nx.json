@@ -1,13 +1,43 @@
 {
-	"extends": "nx/presets/npm.json",
 	"$schema": "./node_modules/nx/schemas/nx-schema.json",
+	"npmScope": "ngx-dummy",
 	"tasksRunnerOptions": {
 		"default": {
 			"runner": "nx/tasks-runners/default",
 			"options": {
-				"cacheableOperations": ["build", "lint", "test", "e2e", "build-storybook"]
+				"cacheableOperations": ["build", "lint", "test", "e2e"]
 			}
 		}
+	},
+	"targetDefaults": {
+		"build": {
+			"dependsOn": ["^build"],
+			"inputs": ["production", "^production"]
+		},
+		"test": {
+			"inputs": ["default", "^production", "{workspaceRoot}/jest.preset.js"]
+		},
+		"lint": {
+			"inputs": ["default", "{workspaceRoot}/.eslintrc.json"]
+		},
+		"e2e": {
+			"inputs": ["default", "^production"]
+		}
+	},
+	"namedInputs": {
+		"default": ["{projectRoot}/**/*", "sharedGlobals"],
+		"production": [
+			"default",
+			"!{projectRoot}/**/?(*.)+(spec|test).[jt]s?(x)?(.snap)",
+			"!{projectRoot}/tsconfig.spec.json",
+			"!{projectRoot}/jest.config.[jt]s",
+			"!{projectRoot}/.eslintrc.json"
+		],
+		"sharedGlobals": []
+	},
+	"workspaceLayout": {
+		"appsDir": "packages",
+		"libsDir": "packages"
 	},
 	"generators": {
 		"@nrwl/angular:application": {
@@ -23,14 +53,5 @@
 		"@nrwl/angular:component": {
 			"style": "css"
 		}
-	},
-	"targetDefaults": {
-		"test": {
-			"inputs": ["default", "^default", "{workspaceRoot}/jest.preset.js"]
-		},
-		"lint": {
-			"inputs": ["default", "{workspaceRoot}/.eslintrc.json"]
-		}
-	},
-	"defaultProject": "select-simple"
+	}
 }

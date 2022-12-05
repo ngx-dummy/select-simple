@@ -1,4 +1,5 @@
 {
+	"name": "@ngx-dummy/select-simple",
 	"version": "0.0.8",
 	"license": "MIT",
 	"description": "A simple select component to use in Angular / Ionic projects .. (WIP) and sample app using it",
@@ -39,6 +40,6 @@
 		"@angular/core": "13.x || 14.x || 15.x"
 	},
 	"dependencies": {
-		"tslib": "^2.4.0"
+		"tslib": "^2.3.0"
 	}
 }
