@@ -11,7 +11,6 @@ npm version patch --git-tag-version=false
 popd
 
 echo Patching root Package.json version and committing Release version...
-npm version patch --git-tag-version=false --message 'Release %s'
 git add .
-git commit -am 'Release %s'
+npm version patch --git-tag-version=false --message "Release %s" | git commit -am "awk '{print $1}'"
 git push origin --no-verify

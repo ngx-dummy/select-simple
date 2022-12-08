@@ -1,6 +1,6 @@
 {
 	"name": "@ngx-dummy/select-simple",
-	"version": "0.0.10",
+	"version": "0.0.8",
 	"license": "MIT",
 	"description": "A simple select component to use in Angular / Ionic projects .. (WIP) and sample app using it",
 	"keywords": [
