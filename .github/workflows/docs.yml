@@ -23,10 +23,10 @@ jobs:
       - name: Build the Sample for Docs...
         run: |
           echo Installing packages
-          npm i -f
+          npm i -g nx @angular/cli
+          npm ci
           echo Building the sample app
-          npm run build:docs --if-present
-
+          npm run prepare:docs --if-present
   # Deployment to pages
   deploy:
     needs: build
@@ -35,4 +35,4 @@ jobs:
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: docs
+          folder: ./docs
