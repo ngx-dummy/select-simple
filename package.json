@@ -40,7 +40,7 @@
 		"build": "nx build select-simple",
 		"build:prod": "nx build select-simple --configuration production",
 		"build:sample": "nx build select-sample --configuration production",
-		"build:docs": "nx build select-sample --configuration production --outputPath=docs ",
+		"build:docs": "nx build select-sample --configuration production --outputPath=./docs ",
 		"lint": "nx workspace-lint && nx lint",
 		"test:lib": "nx test select-simple",
 		"test:app": "nx test select-sample",
