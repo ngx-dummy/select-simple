@@ -12,19 +12,20 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Setup Pages
-        uses: actions/configure-pages@v2
-      - name: Build the Sample
+      # - name: Setup Pages
+      #   uses: actions/configure-pages@v2
+      - name: Preparing...
         uses: actions/setup-node@v3
         with:
           node-version: '18.x'
           registry-url: 'https://registry.npmjs.org'
           scope: '@ngx-dummy'
-      - run: |
+      - name: Build the Sample for Docs...
+        run: |
           echo Installing packages
           npm i -f
           echo Building the sample app
-          npm run build:sample --if-present
+          npm run build:docs --if-present
 
   # Deployment to pages
   deploy:
