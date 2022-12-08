@@ -10,6 +10,7 @@
 	"printWidth": 180,
 	"useTabs": true,
 	"proseWrap": "preserve",
+	"plugins": ["prettier-plugin-organize-imports", "prettier-plugin-tailwindcss"],
 	"overrides": [
 		{
 			"files": ["*.scss"],

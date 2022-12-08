@@ -1,12 +1,12 @@
-<div class="container-fluid w-full flex flex-col gap-2 p-2 px-5">
-	<section class="w-full max-w-5xl flex flex-col gap-4 self-center my-4">
-		<h4 class="font-semibold p-0 m-0">Reactive form sample:</h4>
+<div class="container-fluid flex w-full flex-col gap-2 p-2 px-5">
+	<section class="my-4 flex w-full max-w-5xl flex-col gap-4 self-center">
+		<h4 class="m-0 p-0 font-semibold">Reactive form sample:</h4>
 		<form
 			[formGroup]="form"
 			(ngSubmit)="checkFormValid($event)"
 		>
 			<div
-				class="flex flex-row justify-between flex-wrap text-center list-none p-1 gap-2"
+				class="flex list-none flex-row flex-wrap justify-between gap-2 p-1 text-center"
 			>
 				<ngxd-select
 					id="select1"
@@ -23,7 +23,7 @@
 					[autofocus]="true"
 				></ngxd-select>
 				<button
-					class="border max-w-fit border-1 bg-lightBlue hover:bg-darkBg transition ease-in text-darkBg hover:text-darkBlue font-bold hover:cursor-pointer px-12 py-4 disabled:cursor-not-allowed disabled:opacity-50 disabled:bg-slate-900 disabled:text-darkBg"
+					class="border-1 bg-lightBlue hover:bg-darkBg text-darkBg hover:text-darkBlue disabled:text-darkBg max-w-fit border px-12 py-4 font-bold transition ease-in hover:cursor-pointer disabled:cursor-not-allowed disabled:bg-slate-900 disabled:opacity-50"
 					type="submit"
 					[disabled]="!form.valid || form.pristine"
 				>
@@ -34,7 +34,7 @@
 
 		<div class="">
 			<pre
-				class="border border-radius-lg bg-[var(--medium-bg)] text-darkBg font-bold p-4"
+				class="border-radius-lg text-darkBg border bg-[var(--medium-bg)] p-4 font-bold"
 				>{{ selectedCity1 | json }}</pre
 			>
 		</div>
@@ -42,8 +42,8 @@
 
 	<hr class="w-full border-2 border-dashed border-[var(--medium-bg)]" />
 
-	<section class="w-full max-w-5xl flex flex-col gap-4 self-center my-4">
-		<h4 class="font-semibold p-0 m-0">
+	<section class="my-4 flex w-full max-w-5xl flex-col gap-4 self-center">
+		<h4 class="m-0 p-0 font-semibold">
 			ngModel sample with custom templates (bound to simple strings):
 		</h4>
 		<ngxd-select
@@ -57,7 +57,7 @@
 		></ngxd-select>
 		<div class="box">
 			<pre
-				class="border border-radius-lg bg-[var(--medium-bg)] text-darkBg p-4"
+				class="border-radius-lg text-darkBg border bg-[var(--medium-bg)] p-4"
 				>{{ selectedCity2 | json }}</pre
 			>
 		</div>
@@ -65,8 +65,8 @@
 
 	<hr class="w-full border-2 border-dashed border-[var(--medium-bg)]" />
 
-	<section class="w-full max-w-5xl flex flex-col gap-4 self-center my-4">
-		<h4 class="font-semibold p-0 m-0">
+	<section class="my-4 flex w-full max-w-5xl flex-col gap-4 self-center">
+		<h4 class="m-0 p-0 font-semibold">
 			Sample using content projection of items:
 		</h4>
 		<ngxd-select
@@ -99,7 +99,7 @@
 		</ngxd-select>
 		<div class="box">
 			<pre
-				class="border border-radius-lg text-[var(--dark-bg)] bg-[var(--medium-bg)] p-4"
+				class="border-radius-lg border bg-[var(--medium-bg)] p-4 text-[var(--dark-bg)]"
 				>{{ selectedCity3 | json }}</pre
 			>
 		</div>
@@ -107,8 +107,8 @@
 
 	<hr class="w-full border-2 border-dashed border-[var(--medium-bg)]" />
 
-	<section class="w-full max-w-5xl flex flex-col gap-4 self-center my-4">
-		<h4 class="font-semibold p-0 m-0">Disabled sample:</h4>
+	<section class="my-4 flex w-full max-w-5xl flex-col gap-4 self-center">
+		<h4 class="m-0 p-0 font-semibold">Disabled sample:</h4>
 		<ngxd-select
 			id="select4"
 			[tabindex]="4"
@@ -119,8 +119,8 @@
 
 	<hr class="w-full border-2 border-dashed border-[var(--medium-bg)]" />
 
-	<section class="w-full max-w-5xl flex flex-col gap-4 self-center my-4">
-		<h4 class="font-semibold p-0 m-0">Readonly sample:</h4>
+	<section class="my-4 flex w-full max-w-5xl flex-col gap-4 self-center">
+		<h4 class="m-0 p-0 font-semibold">Readonly sample:</h4>
 		<ngxd-select
 			id="select5"
 			[readonly]="true"

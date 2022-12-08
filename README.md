@@ -17,7 +17,6 @@
 
 [![GitHub license](https://img.shields.io/github/license/ngx-dummy/select-simple?style=flat-square)](https://github.com/ngx-dummy/select-simple/blob/main/LICENSE)
 
-
 [![GitHub issues](https://img.shields.io/github/issues/ngx-dummy/select-simple?style=flat-square)](https://github.com/ngx-dummy/select-simple/issues)
 [![GitHub forks](https://img.shields.io/github/forks/ngx-dummy/select-simple?style=flat-square)](https://github.com/ngx-dummy/select-simple/network)
 [![GitHub stars](https://img.shields.io/github/stars/ngx-dummy/select-simple?style=flat-square)](https://github.com/ngx-dummy/select-simple/stargazers)
@@ -39,6 +38,9 @@
 ---
 
 [![npm-deploy](https://github.com/ngx-dummy/select-simple/actions/workflows/npm-deploy.yml/badge.svg?style=flat)](https://github.com/ngx-dummy/select-simple/actions/workflows/npm-deploy.yml)
+
+
+[ngx-dummy.github.io/select-simple/](ngx-dummy.github.io/select-simple/)
 
 
 ## Features

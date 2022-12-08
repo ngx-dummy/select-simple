@@ -31,6 +31,7 @@
 		},
 		"lint": {
 			"executor": "@nrwl/linter:eslint",
+			"outputs": ["{options.outputFile}"],
 			"options": {
 				"lintFilePatterns": ["packages/select-simple/**/*.ts", "packages/select-simple/**/*.html"]
 			}
@@ -63,13 +64,7 @@
 					"quiet": true
 				}
 			}
-		},
-		"test-storybook": {
-			"executor": "nx:run-commands",
-			"options": {
-				"command": "test-storybook -c packages/select-simple/.storybook --url=http://localhost:4400"
-			}
 		}
 	},
-	"tags": ["select-simple", "lib"]
+	"tags": ["libs", "ui"]
 }

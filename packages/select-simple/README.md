@@ -14,9 +14,7 @@
 
 ---
 
-
 [![GitHub license](https://img.shields.io/github/license/ngx-dummy/select-simple?style=flat-square)](https://github.com/ngx-dummy/select-simple/blob/main/LICENSE)
-
 
 [![GitHub issues](https://img.shields.io/github/issues/ngx-dummy/select-simple?style=flat-square)](https://github.com/ngx-dummy/select-simple/issues)
 [![GitHub forks](https://img.shields.io/github/forks/ngx-dummy/select-simple?style=flat-square)](https://github.com/ngx-dummy/select-simple/network)
@@ -41,10 +39,9 @@
 
 [![npm-deploy](https://github.com/ngx-dummy/select-simple/actions/workflows/npm-deploy.yml/badge.svg?style=flat)](https://github.com/ngx-dummy/select-simple/actions/workflows/npm-deploy.yml)
 
-
 ## Features
 
-This is an "Angular version" of html [select](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/select)  (which could hardly be styled / templated ... hence the library)
+This is an "Angular version" of html [select](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/select) (which could hardly be styled / templated ... hence the library)
 
 - :gear: **Completely customizable:** you can change the colors, styles ...
 
@@ -55,7 +52,6 @@ This is an "Angular version" of html [select](https://developer.mozilla.org/en-U
 - :rocket: **No extra deps:** depends only on `@angular/core / @angular/common`
 
 - :satellite: **Options' Elements object bindings** data-bind `Option`s to **_string_** of complex objects
-
 
 <br/>
 
@@ -100,7 +96,15 @@ export class AppModule {}
 #### with `Options` (Array of Strings) binding:
 
 ```html
-<ngxd-select id="select1" [options]="options" [readonly]="false" [required]="true" [resetBtn]="true" formControlName="selector" placeholder="Select a City"></ngxd-select>
+<ngxd-select
+	id="select1"
+	[options]="options"
+	[readonly]="false"
+	[required]="true"
+	[resetBtn]="true"
+	formControlName="selector"
+	placeholder="Select a City"
+></ngxd-select>
 ```
 
 ```ts
@@ -114,12 +118,24 @@ options = ['opt1', 'opt2', 'opt2'];
 #### with `Options` (Array of Objects) and `optionLabelKey` (for resolving every options' caption) binding:
 
 ```html
-<ngxd-select id="select1" [options]="options" [readonly]="false" [required]="true" [resetBtn]="true" formControlName="selector" placeholder="Select a City" optionLabelKey="name"></ngxd-select>
+<ngxd-select
+	id="select1"
+	[options]="options"
+	[readonly]="false"
+	[required]="true"
+	[resetBtn]="true"
+	formControlName="selector"
+	placeholder="Select a City"
+	optionLabelKey="name"
+></ngxd-select>
 ```
 
 ```ts
 //... Select-items's Captions resolved by `optionLabelKey` param (could be simple name of property key or, in case of nested property, dot-separated, ie, `value.para1` )
-options = [{ name: 'opt1' , value: { param1: 'para1', param2: 'para2' } }, { name: 'opt2' , value: { param1: 'para1', param2: 'para2' } },];
+options = [
+	{ name: 'opt1', value: { param1: 'para1', param2: 'para2' } },
+	{ name: 'opt2', value: { param1: 'para1', param2: 'para2' } },
+];
 //...
 ```
 
@@ -128,9 +144,26 @@ options = [{ name: 'opt1' , value: { param1: 'para1', param2: 'para2' } }, { nam
 #### and `Option` are projected (content projection \ transclusion):
 
 ```html
-<ngxd-select id="select1" [options]="options" [readonly]="false" [required]="true" [resetBtn]="true" formControlName="selector" placeholder="Select a City" optionLabelKey="name">
-	<ngxd-select-item [label]="'Option 1'" [option]="'Opt1'" (onClick)="selected = $event"></ngxd-select-item>
-	<ngxd-select-item [label]="'Option 2'" [option]="'Opt2'" (onClick)="selected = $event"></ngxd-select-item>
+<ngxd-select
+	id="select1"
+	[options]="options"
+	[readonly]="false"
+	[required]="true"
+	[resetBtn]="true"
+	formControlName="selector"
+	placeholder="Select a City"
+	optionLabelKey="name"
+>
+	<ngxd-select-item
+		[label]="'Option 1'"
+		[option]="'Opt1'"
+		(onClick)="selected = $event"
+	></ngxd-select-item>
+	<ngxd-select-item
+		[label]="'Option 2'"
+		[option]="'Opt2'"
+		(onClick)="selected = $event"
+	></ngxd-select-item>
 </ngxd-select>
 ```
 
@@ -195,8 +228,8 @@ supports Angular 11 - 13.
 <details closed>
 <summary>Other projects:</summary>
 
-|     Name      |                    URL                     |
-| :-----------: | :----------------------------------------: |
+|         Name         |                             URL                             |
+| :------------------: | :---------------------------------------------------------: |
 | **Accordion Simple** | *https://www.npmjs.com/package/@ngx-dummy/accordion-simple* |
 
 </details>
