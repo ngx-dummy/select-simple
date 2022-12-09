@@ -12,7 +12,7 @@ popd
 
 echo Patching root Package.json version and committing Release version...
 
-RELEASE_VERSION=$(npm version patch --git-tag-version=false --message 'Release %s')
+RELEASE_VERSION="$(npm version patch --git-tag-version=false --message 'Release %s')"
 
 git add .
 

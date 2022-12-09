@@ -3,7 +3,7 @@
 echo Preparing a docs ...
 
 ROOT=$(pwd)
-DOCS_DIR=/docs
+DOCS_DIR=$ROOT/docs
 
 if [[ ! -e $DOCS_DIR ]]; then
     mkdir $DOCS_DIR

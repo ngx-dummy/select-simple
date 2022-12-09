@@ -27,12 +27,8 @@ jobs:
           npm ci
           echo Building the sample app
           npm run prepare:docs --if-present
-  # Deployment to pages
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
+          
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: /docs
+          folder: ./docs
