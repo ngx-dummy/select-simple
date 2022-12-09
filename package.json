@@ -1,6 +1,6 @@
 {
 	"name": "ngx-dummy",
-	"version": "0.0.7",
+	"version": "0.0.16",
 	"license": "MIT",
 	"description": "A simple select component to use in Angular / Ionic projects .. (WIP) and sample app using it",
 	"keywords": [
